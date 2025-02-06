@@ -18,6 +18,10 @@ the value of the property will be multiplied by the value of the curve at the cu
 in a particle's lifetime. Use the curve to change a property over the particle lifetime. Very
 complex behavior can be expressed this way.
 
+.. note::
+  This page covers how to use ParticleProcessMaterial for 3D scenes specifically.
+  For information on how to use it in a 2D Scene see :ref:`doc_particle_process_material_2d`.
+
 Time
 ~~~~
 
@@ -44,7 +48,7 @@ When the ``Disable Z`` property is enabled, particles will not move along the Z-
 Whether that is going to be the particle system's local Z-axis or the world Z-axis is
 determined by the :ref:`Local Coords <doc_3d_particles_properties_draw>` property.
 
-The ``Daming as Friction`` property changes the behavior of damping from a constant
+The ``Damping as Friction`` property changes the behavior of damping from a constant
 deceleration to a deceleration based on speed.
 
 Spawn
