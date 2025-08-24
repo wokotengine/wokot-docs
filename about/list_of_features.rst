@@ -36,6 +36,13 @@ Platforms
 - :ref:`Web browsers <doc_using_the_web_editor>`. Experimental in 4.0,
   using Godot 3.x is recommended instead when targeting HTML5.
 
+.. note::
+
+    Linux supports rv64 (RISC-V), ppc64 & ppc32 (PowerPC), and loongarch64. However
+    you must compile the editor for that platform (as well as export templates)
+    yourself, no official downloads are currently provided. RISC-V compiling
+    instructions can be found on the :ref:`doc_compiling_for_linuxbsd` page.
+
 **Runs exported projects:**
 
 - iOS.
@@ -346,7 +353,7 @@ See :ref:`doc_renderers` for a detailed comparison of the rendering methods.
 
 **Post-processing:**
 
-- Tonemapping (Linear, Reinhard, Filmic, ACES).
+- Tonemapping (Linear, Reinhard, Filmic, ACES, AgX).
 - Automatic exposure adjustments based on viewport brightness (and manual exposure override).
 - Near and far depth of field with adjustable bokeh simulation (box, hexagon, circle).
 - Screen-space ambient occlusion (SSAO) at half or full resolution.
@@ -451,16 +458,16 @@ Scripting
 - Support for :ref:`cross-language scripting <doc_cross_language_scripting>`.
 - Many 2D, 3D and 4D linear algebra data types such as vectors and transforms.
 
-:ref:`GDScript: <toc-learn-scripting-gdscript>`
+:ref:`GDScript: <doc_gdscript>`
 
-- :ref:`High-level interpreted language <doc_gdscript>` with
+- :ref:`High-level interpreted language <doc_gdscript_reference>` with
   :ref:`optional static typing <doc_gdscript_static_typing>`.
 - Syntax inspired by Python. However, GDScript is **not** based on Python.
 - Syntax highlighting is provided on GitHub.
 - :ref:`Use threads <doc_using_multiple_threads>` to perform asynchronous actions
   or make use of multiple processor cores.
 
-:ref:`C#: <toc-learn-scripting-C#>`
+:ref:`C#: <doc_c_sharp>`
 
 - Packaged in a separate binary to keep file sizes and dependencies down.
 - Supports .NET 8 and higher.
@@ -645,6 +652,8 @@ Mobile
   and :ref:`iOS <doc_plugins_for_ios>`.
 - Support for advertisements using third-party modules.
 
+.. _doc_xr_support:
+
 XR support (AR and VR)
 ----------------------
 
@@ -656,6 +665,11 @@ XR support (AR and VR)
 
   - Including support for popular stand alone headsets like the Meta Quest 1/2/3 and Pro, Pico 4, Magic Leap 2, and Lynx R1.
 
+- Out of the box limited support for visionOS Apple headsets.
+
+  - Currently only exporting an application for use on a flat plane within the
+    headset is supported. Immersive experiences are not supported.
+ 
 - Other devices supported through an XR plugin structure.
 - Various advanced toolkits are available that implement common features required by XR applications.
 

@@ -4,7 +4,7 @@ Unit testing
 ============
 
 Godot Engine allows to write unit tests directly in C++. The engine integrates
-the `doctest <https://github.com/onqtam/doctest>`_ unit testing framework which
+the `doctest <https://github.com/doctest/doctest>`_ unit testing framework which
 gives ability to write test suites and test cases next to production code, but
 since the tests in Godot go through a different ``main`` entry point, the tests
 reside in a dedicated ``tests/`` directory instead, which is located at the root
@@ -113,8 +113,7 @@ Here's a minimal working test suite with a single test case written:
 
 .. code-block:: cpp
 
-    #ifndef TEST_STRING_H
-    #define TEST_STRING_H
+    #pragma once
 
     #include "tests/test_macros.h"
 
@@ -126,8 +125,6 @@ Here's a minimal working test suite with a single test case written:
     }
 
     } // namespace TestString
-
-    #endif // TEST_STRING_H
 
 .. note::
     You can quickly generate new tests using the ``create_test.py`` script found in the ``tests/`` directory.
@@ -208,7 +205,7 @@ for more complex ones if you think that it deserves a better explanation.
 
 .. seealso::
 
-    `doctest: Assertion macros <https://github.com/onqtam/doctest/blob/master/doc/markdown/assertions.md>`_.
+    `doctest: Assertion macros <https://github.com/doctest/doctest/blob/master/doc/markdown/assertions.md>`_.
 
 Logging
 ~~~~~~~
@@ -236,7 +233,7 @@ output can be redirected to an XML file:
 
 .. seealso::
 
-    `doctest: Logging macros <https://github.com/onqtam/doctest/blob/master/doc/markdown/logging.md>`_.
+    `doctest: Logging macros <https://github.com/doctest/doctest/blob/master/doc/markdown/logging.md>`_.
 
 Testing failure paths
 ~~~~~~~~~~~~~~~~~~~~~
@@ -271,17 +268,19 @@ Special tags in test case names
 
 These tags can be added to the test case name to modify or extend the test environment:
 
-+-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| **Tag**           | **Description**                                                                                                                                                      |
-+-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``[SceneTree]``   | Required for test cases that rely on a scene tree with MessageQueue to be available. It also enables a mock rendering server and :ref:`ThemeDB<class_ThemeDB>`.      |
-+-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``[Editor]``      | Like ``[SceneTree]``, but with additional editor-related infrastructure available, such as :ref:`EditorSettings<class_EditorSettings>`.                              |
-+-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``[Audio]``       | Initializes the :ref:`AudioServer<class_AudioServer>` using a mock audio driver.                                                                                     |
-+-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| ``[Navigation]``  | Creates the default 2D/3D navigation servers and makes them available for testing.                                                                                   |
-+-------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
++--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **Tag**            | **Description**                                                                                                                                                      |
++--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``[SceneTree]``    | Required for test cases that rely on a scene tree with MessageQueue to be available. It also enables a mock rendering server and :ref:`ThemeDB<class_ThemeDB>`.      |
++--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``[Editor]``       | Like ``[SceneTree]``, but with additional editor-related infrastructure available, such as :ref:`EditorSettings<class_EditorSettings>`.                              |
++--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``[Audio]``        | Initializes the :ref:`AudioServer<class_AudioServer>` using a mock audio driver.                                                                                     |
++--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``[Navigation2D]`` | Creates the default 2D navigation server and makes it available for testing.                                                                                         |
++--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| ``[Navigation3D]`` | Creates the default 3D navigation server and makes it available for testing.                                                                                         |
++--------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 
 You can use them together to combine multiple test environment extensions.
 

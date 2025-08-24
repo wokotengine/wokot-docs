@@ -17,6 +17,10 @@ New NavigationAgent nodes will automatically join the default navigation map on 
 NavigationsAgent nodes are optional and not a hard requirement to use the navigation system.
 Their entire functionality can be replaced with scripts and direct calls to the NavigationServer API.
 
+.. tip::
+
+    For more advanced uses consider :ref:`doc_navigation_using_navigationpathqueryobjects` over NavigationAgent nodes.
+
 NavigationAgent Pathfinding
 ---------------------------
 
@@ -40,7 +44,7 @@ NavigationAgent Pathfollowing
 After a ``target_position`` has been set for the agent, the next position to follow in the path
 can be retrieved with the ``get_next_path_position()`` function.
 
-Once the next path position is received move the parent actor node of the agent
+Once the next path position is received, move the parent actor node of the agent
 towards this path position with your own movement code.
 
 .. note::
@@ -91,7 +95,7 @@ NavigationAgent Avoidance
 
 This section explains how to use the navigation avoidance specific to NavigationAgents.
 
-In order for NavigationAgents to use the avoidance feature the ``enable_avoidance`` property must be set to ``true``.
+In order for NavigationAgents to use the avoidance feature the ``avoidance_enabled`` property must be set to ``true``.
 
 .. image:: img/agent_avoidance_enabled.png
 
@@ -137,7 +141,7 @@ NavigationObstacles can be used to add some environment constrains to the avoida
     RVO avoidance makes implicit assumptions about natural agent behavior. E.g. that agents move on reasonable passing sides that can be assigned when they encounter each other.
     This means that very clinical avoidance test scenarios will commonly fail. E.g. agents moved directly against each other with perfect opposite velocities will fail because the agents can not get their passing sides assigned.
 
-Using the NavigationAgent ``enable_avoidance`` property is the preferred option
+Using the NavigationAgent ``avoidance_enabled`` property is the preferred option
 to toggle avoidance. The following code snippets can be used to
 toggle avoidance on agents, create or delete avoidance callbacks or switch avoidance modes.
 
@@ -505,7 +509,7 @@ The following sections provides script templates for nodes commonly used with Na
 
             @export var movement_speed: float = 4.0
             @onready var navigation_agent: NavigationAgent3D = get_node("NavigationAgent3D")
-            var movement_delta: float
+            var physics_delta: float
 
             func _ready() -> void:
                 navigation_agent.velocity_computed.connect(Callable(_on_velocity_computed))
@@ -514,22 +518,23 @@ The following sections provides script templates for nodes commonly used with Na
                 navigation_agent.set_target_position(movement_target)
 
             func _physics_process(delta):
+                # Save the delta for use in _on_velocity_computed.
+                physics_delta = delta
                 # Do not query when the map has never synchronized and is empty.
                 if NavigationServer3D.map_get_iteration_id(navigation_agent.get_navigation_map()) == 0:
                     return
                 if navigation_agent.is_navigation_finished():
                     return
 
-                movement_delta = movement_speed * delta
                 var next_path_position: Vector3 = navigation_agent.get_next_path_position()
-                var new_velocity: Vector3 = global_position.direction_to(next_path_position) * movement_delta
+                var new_velocity: Vector3 = global_position.direction_to(next_path_position) * movement_speed
                 if navigation_agent.avoidance_enabled:
                     navigation_agent.set_velocity(new_velocity)
                 else:
                     _on_velocity_computed(new_velocity)
 
             func _on_velocity_computed(safe_velocity: Vector3) -> void:
-                global_position = global_position.move_toward(global_position + safe_velocity, movement_delta)
+                global_position = global_position.move_toward(global_position + safe_velocity, physics_delta * movement_speed)
 
          .. code-tab:: gdscript CharacterBody3D
 

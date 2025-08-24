@@ -85,7 +85,7 @@ help on one of the many `active
 communities <https://godotengine.org/community>`_.
 
 The best place to ask questions and find already answered ones is the
-official `Questions & Answers <https://ask.godotengine.org/>`_ site. These
+official `Godot Forum <https://forum.godotengine.org/>`_. These
 responses show up in search engine results and get saved, allowing other users
 to benefit from discussions on the platform. Once you have asked a question there,
 you can share its link on other social platforms. Before asking a question, be
@@ -125,7 +125,7 @@ information:
    `more information here <https://support.apple.com/guide/mac-help/take-a-screenshot-mh26782/mac>`_).
 
    Alternatively, you can use a program like `ShareX <https://getsharex.com/>`_
-   on Windows, or `FlameShot <https://flameshot.org/>`_ on Linux.
+   on Windows, or `Flameshot <https://flameshot.org/>`_ on Windows/macOS/Linux.
 
 5. Sharing a video of your running game can also be really **useful to
    troubleshoot your game**. You can use programs like `OBS Studio

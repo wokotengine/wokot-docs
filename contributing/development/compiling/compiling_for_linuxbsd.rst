@@ -109,20 +109,9 @@ Distro-specific one-liners
             sudo dnf install -y \
               scons \
               pkgconfig \
-              libX11-devel \
-              libXcursor-devel \
-              libXrandr-devel \
-              libXinerama-devel \
-              libXi-devel \
-              wayland-devel \
-              mesa-libGL-devel \
-              mesa-libGLU-devel \
-              alsa-lib-devel \
-              pulseaudio-libs-devel \
-              libudev-devel \
               gcc-c++ \
               libstdc++-static \
-              libatomic-static
+              wayland-devel
 
     .. tab:: FreeBSD
 
@@ -312,21 +301,28 @@ Running a headless/server build
 -------------------------------
 
 To run in *headless* mode which provides editor functionality to export
-projects in an automated manner, use the normal build::
+projects in an automated manner, use the normal build:
+
+::
 
     scons platform=linuxbsd target=editor
 
-And then use the ``--headless`` command line argument::
+And then use the ``--headless`` command line argument:
+
+::
 
     ./bin/godot.linuxbsd.editor.x86_64 --headless
 
 To compile a debug *server* build which can be used with
-:ref:`remote debugging tools <doc_command_line_tutorial>`, use::
+:ref:`remote debugging tools <doc_command_line_tutorial>`, use:
+
+::
 
     scons platform=linuxbsd target=template_debug
 
-To compile a *server* build which is optimized to run dedicated game servers,
-use::
+To compile a *server* build which is optimized to run dedicated game servers, use:
+
+::
 
     scons platform=linuxbsd target=template_release production=yes
 
@@ -336,7 +332,7 @@ Building export templates
 .. warning:: Linux binaries usually won't run on distributions that are
              older than the distribution they were built on. If you wish to
              distribute binaries that work on most distributions,
-             you should build them on an old distribution such as Ubuntu 16.04.
+             you should build them on an old distribution such as Ubuntu 20.04.
              You can use a virtual machine or a container to set up a suitable
              build environment.
 
@@ -370,7 +366,7 @@ must be copied to:
 
 and named like this (even for \*BSD which is seen as "Linux/X11" by Godot):
 
-::
+.. code:: text
 
     linux_debug.arm32
     linux_debug.arm64
@@ -383,9 +379,10 @@ and named like this (even for \*BSD which is seen as "Linux/X11" by Godot):
 
 However, if you are writing your custom modules or custom C++ code, you
 might instead want to configure your binaries as custom export templates
-here:
+in the project export menu. You must have **Advanced Options** enabled
+to set this.
 
-.. image:: img/lintemplates.png
+.. image:: img/lintemplates.webp
 
 You don't even need to copy them, you can just reference the resulting
 files in the ``bin/`` directory of your Godot source folder, so the next
@@ -400,8 +397,8 @@ To cross-compile Godot for RISC-V devices, we need to setup the following items:
   While we are not going to use this directly, it provides us with a sysroot, as well
   as header and libraries files that we will need. There are many versions to choose
   from, however, the older the toolchain, the more compatible our final binaries will be.
-  If in doubt, `use this version <https://github.com/riscv-collab/riscv-gnu-toolchain/releases/tag/2021.12.22>`__,
-  and download ``riscv64-glibc-ubuntu-18.04-nightly-2021.12.22-nightly.tar.gz``. Extract
+  If in doubt, `use this version <https://github.com/riscv-collab/riscv-gnu-toolchain/releases/tag/2023.07.07>`__,
+  and download ``riscv64-glibc-ubuntu-20.04-gcc-nightly-2023.07.07-nightly.tar.gz``. Extract
   it somewhere and remember its path.
 - `mold <https://github.com/rui314/mold/releases>`__. This fast linker,
   is the only one that correctly links the resulting binary. Download it, extract it,
@@ -456,7 +453,7 @@ indicates to Clang the target architecture, and OS we want to build for.
 If all went well, you should now see a ``bin`` directory, and within it,
 a binary similar to the following:
 
-::
+.. code:: text
 
     godot.linuxbsd.editor.rv64.llvm
 
@@ -479,7 +476,9 @@ the default GCC + GNU ld setup:
 - Clang tends to give more useful error messages compared to GCC.
 
 To do so, install Clang and the ``lld`` package from your distribution's package manager
-then use the following SCons command::
+then use the following SCons command:
+
+::
 
     scons platform=linuxbsd use_llvm=yes linker=lld
 
@@ -489,7 +488,9 @@ created in the ``bin/`` folder.
 It's still recommended to use GCC for production builds as they can be compiled using
 link-time optimization, making the resulting binaries smaller and faster.
 
-If this error occurs::
+If this error occurs:
+
+.. code:: text
 
     /usr/bin/ld: cannot find -l:libatomic.a: No such file or directory
 
@@ -520,7 +521,9 @@ repositories, so you will have to install its binaries manually.
     PATH="$HOME/.local/share/mold/bin:$PATH"
 
 - Open a new terminal (or run ``source "$HOME/.bash_profile"``),
-  then use the following SCons command when compiling Godot::
+  then use the following SCons command when compiling Godot:
+
+  ::
 
     scons platform=linuxbsd linker=mold
 
@@ -567,6 +570,7 @@ listed in the :ref:`doc_compiling_for_linuxbsd_oneliners`:
               libmbedtls-dev \
               libminiupnpc-dev \
               libpcre2-dev \
+              libsdl3-dev \
               libzstd-dev \
               libsquish-dev \
               libicu-dev
@@ -588,7 +592,8 @@ listed in the :ref:`doc_compiling_for_linuxbsd_oneliners`:
               libwebp-devel \
               libzstd-devel \
               mbedtls-devel \
-              miniupnpc-devel
+              miniupnpc-devel \
+              SDL3-devel
 
 After installing all required packages, use the following command to build Godot:
 
@@ -597,7 +602,7 @@ After installing all required packages, use the following command to build Godot
 
 ::
 
-    scons platform=linuxbsd builtin_embree=no builtin_enet=no builtin_freetype=no builtin_graphite=no builtin_harfbuzz=no builtin_libogg=no builtin_libpng=no builtin_libtheora=no builtin_libvorbis=no builtin_libwebp=no builtin_mbedtls=no builtin_miniupnpc=no builtin_pcre2=no builtin_zlib=no builtin_zstd=no
+    scons platform=linuxbsd builtin_embree=no builtin_enet=no builtin_freetype=no builtin_graphite=no builtin_harfbuzz=no builtin_libogg=no builtin_libpng=no builtin_libtheora=no builtin_libvorbis=no builtin_libwebp=no builtin_mbedtls=no builtin_miniupnpc=no builtin_pcre2=no builtin_sdl=no builtin_zlib=no builtin_zstd=no
 
 On Debian stable, you will need to remove `builtin_embree=no` as the system-provided
 Embree version is too old to work with Godot's latest `master` branch
@@ -608,7 +613,7 @@ running ``scons -h``, then looking for options starting with ``builtin_``.
 
 .. warning::
 
-    When using system libraries, the resulting library is **not** portable
+    When using system libraries, the resulting binary is **not** portable
     across Linux distributions anymore. Do not use this approach for creating
     binaries you intend to distribute to others, unless you're creating a
     package for a Linux distribution.

@@ -8,9 +8,9 @@ Godot supports video playback with the :ref:`class_VideoStreamPlayer` node.
 Supported playback formats
 --------------------------
 
-The only supported format in core is **Ogg Theora** (not to be confused with Ogg
-Vorbis audio). It's possible for extensions to bring support for additional
-formats, but no such extensions exist yet as of July 2022.
+The only supported format in core is **Ogg Theora** (not to be confused with
+Ogg Vorbis audio) with optional Ogg Vorbis audio tracks. It's possible for
+extensions to bring support for additional formats.
 
 H.264 and H.265 cannot be supported in core Godot, as they are both encumbered
 by software patents. AV1 is royalty-free, but it remains slow to decode on the
@@ -22,7 +22,7 @@ as it was too buggy and difficult to maintain.
 
 .. note::
 
-    You may find videos with an ``.ogg`` or ``.ogx`` extensions, which are generic
+    You may find videos with a ``.ogg`` or ``.ogx`` extensions, which are generic
     extensions for data within an Ogg container.
 
     Renaming these file extensions to ``.ogv`` *may* allow the videos to be
@@ -34,7 +34,7 @@ Setting up VideoStreamPlayer
 
 1. Create a VideoStreamPlayer node using the Create New Node dialog.
 2. Select the VideoStreamPlayer node in the scene tree dock, go to the inspector
-   and load an ``.ogv`` file in the Stream property.
+   and load a ``.ogv`` file in the Stream property.
 
    - If you don't have your video in Ogg Theora format yet, jump to
      :ref:`doc_playing_videos_recommended_theora_encoding_settings`.
@@ -150,12 +150,11 @@ To ensure your videos decode smoothly on varied hardware:
 Playback limitations
 --------------------
 
-There are several limitations with the current implementation of video playback in Godot:
+There are some limitations with the current implementation of video playback in Godot:
 
-- Seeking a video to a certain point is not supported.
-- Changing playback speed is not supported. VideoStreamPlayer also won't follow
-  :ref:`Engine.time_scale<class_Engine_property_time_scale>`.
 - Streaming a video from a URL is not supported.
+- Only mono and stereo audio output is supported. Videos with 4, 5.1 and 7.1
+  audio channels are supported but down-mixed to stereo.
 
 .. _doc_playing_videos_recommended_theora_encoding_settings:
 
@@ -181,9 +180,8 @@ you should use a lossless or uncompressed format as an intermediate format to
 maximize the quality of the output Ogg Theora video, but this can require a lot
 of disk space.
 
-`HandBrake <https://handbrake.fr/>`__
-(GUI) and `FFmpeg <https://ffmpeg.org/>`__ (CLI) are popular open source tools
-for this purpose. FFmpeg has a steeper learning curve, but it's more powerful.
+`FFmpeg <https://ffmpeg.org/>`__ (CLI) is a popular open source tool
+for this purpose. FFmpeg has a steep learning curve, but it's a powerful tool.
 
 Here are example FFmpeg commands to convert an MP4 video to Ogg Theora. Since
 FFmpeg supports a lot of input formats, you should be able to use the commands
@@ -194,6 +192,21 @@ below with almost any input video format (AVI, MOV, WebM, …).
    Make sure your copy of FFmpeg is compiled with libtheora and libvorbis support.
    You can check this by running ``ffmpeg`` without any arguments, then looking
    at the ``configuration:`` line in the command output.
+
+.. warning::
+
+   Current official FFmpeg releases have some bugs in their Ogg/Theora
+   multiplexer. It's highly recommended to use one of the latest static daily
+   builds, or build from their master branch to get the latest fixes.
+
+.. UPDATE: When the FFmpeg bugfixes for https://trac.ffmpeg.org/ticket/11451 and
+.. https://trac.ffmpeg.org/ticket/11454 are included in a stable FFmpeg release,
+.. this warning can be removed. That will likely be FFmpeg 7.2 or 8.0, and will
+.. likely happen during the Godot 4.5 or 4.6 release cycle.
+.. Commits fixing the issues:
+.. - https://github.org/FFmpeg/FFmpeg@22aa71d4da37a4ad2b0d28deeace64b57aa2ef50
+.. - https://github.org/FFmpeg/FFmpeg@84d85e7ad4ace228265af0c8c5caccc0730042fd
+.. - https://github.org/FFmpeg/FFmpeg@6e26f57f672b05e7b8b052007a83aef99dc81ccb
 
 Balancing quality and file size
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -217,6 +230,20 @@ dropouts in case of high system load. See
 for a table listing Ogg Vorbis audio quality presets and their respective
 variable bitrates.
 
+The **GOP (Group of Pictures) size** (``-g:v``) is the max interval between
+keyframes. Increasing this value can improve compression with almost no impact
+on quality. The default size (``12``) is too low for most types of content,
+it's therefore recommended using higher GOP values before reducing video
+quality. Compression benefits will fade away as the GOP size increases though.
+Values between ``64`` and ``512`` usually give the best compression.
+
+.. note::
+
+   Higher GOP sizes will increase max seek times with a sudden increase when
+   going beyond powers of two starting at ``64``. Max seek times with GOP size
+   ``65`` can be almost twice as long as with GOP size ``64``, depending on
+   decoding speed.
+
 FFmpeg: Convert while preserving original video resolution
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -227,7 +254,7 @@ static scenes).
 
 ::
 
-    ffmpeg -i input.mp4 -q:v 6 -q:a 6 output.ogv
+    ffmpeg -i input.mp4 -q:v 6 -q:a 6 -g:v 64 output.ogv
 
 FFmpeg: Resize the video then convert it
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -238,7 +265,7 @@ significantly if the source is recorded at a higher resolution than 720p:
 
 ::
 
-    ffmpeg -i input.mp4 -vf "scale=-1:720" -q:v 6 -q:a 6 output.ogv
+    ffmpeg -i input.mp4 -vf "scale=-1:720" -q:v 6 -q:a 6 -g:v 64 output.ogv
 
 
 .. Chroma Key Functionality Documentation

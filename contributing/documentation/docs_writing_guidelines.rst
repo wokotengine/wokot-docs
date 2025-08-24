@@ -37,6 +37,8 @@ There are 3 rules to describe classes:
     See the :ref:`content guidelines <doc_content_guidelines>` for information
     on the types of documentation you can write in the official documentation.
 
+.. _doc_docs_writing_guidelines_clear_english_rules:
+
 7 rules for clear English
 -------------------------
 
@@ -283,6 +285,8 @@ element of a list with more than two elements.
 How to write methods and classes
 --------------------------------
 
+.. _doc_docs_writing_guidelines_dynamic_typing:
+
 Dynamic vs static typing
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -334,6 +338,8 @@ The exception is topics that explain static typing concepts to users.
         var size = arguments.size()
         var choice = randi() % size
         return arguments[choice]
+
+.. _doc_docs_writing_guidelines_real_world_code_example:
 
 Use real-world code examples where appropriate
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -452,6 +458,7 @@ documentation and in Godot, it will display like ``this``. When you edit XML
 files in the Godot repository, replace existing arguments written like 'this' or
 \`this\` with ``[code]this[/code]``.
 
+.. _doc_docs_writing_guidelines_common_vocabulary:
 
 Common vocabulary to use in Godot's documentation
 -------------------------------------------------
@@ -487,6 +494,8 @@ class names, which you can't fold, are ``Classes`` e.g. the
 ``properties``. E.g. ``position`` or ``modulate color`` are both
 ``properties``.
 
+.. _doc_docs_writing_guidelines_keyboard_shortcuts:
+
 Keyboard shortcut guidelines
 ----------------------------
 
@@ -507,6 +516,7 @@ examples with the ``:kbd:`` tag left as-is for better visibility:
 - Press ``:kbd:`Space``` and hold the left mouse button to pan in the 2D editor.
 - Press ``:kbd:`Shift + Up Arrow``` to move the node upwards by 8 pixels.
 
+.. _doc_docs_writing_guidelines_manual_style:
 
 Manual style guidelines
 -----------------------
@@ -549,7 +559,7 @@ Emphasis
 
 Use either **bold style** or *italic style* to emphasize words or sentences.
 In most cases, either **bold** or *italics* is fine. Use whichever seems best,
-or whatever the page already uses. 
+or whatever the page already uses.
 
 Prefer using **bold style** for simple emphasis.
 
@@ -567,6 +577,8 @@ is fine too.
     - Godot uses *nodes* with *scripts* in a *scene tree*.
     - Godot uses **nodes** with **scripts** in a **scene tree**.
 
+.. _doc_docs_writing_guidelines_literals:
+
 Literals
 ~~~~~~~~
 
@@ -575,6 +587,8 @@ Use ``code style`` for literal values. Literals include:
     - Integer or ``int`` literals like ``0``, ``-2``, or ``100``
     - Float literals like ``0.0``, ``0.5``, ``-2.0``, or ``100.0``
     - Vector literals like ``(0.0, 0.0)``, ``(0.5, -0.5, 0.5)``, or ``(1.0, 2.0, 3.0, 4.0)``.
+
+.. _doc_docs_writing_guidelines_class_properties_methods:
 
 Classes, properties, and methods
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -590,6 +604,8 @@ link.
 
 When discussing properties in the context of the inspector, use **bold style**
 instead.
+
+.. _doc_docs_writing_guidelines_editor_ui:
 
 Editor UI
 ~~~~~~~~~
@@ -613,6 +629,8 @@ reader must navigate. Use ``>`` as a separator. You can omit ellipses in menu na
 .. note:: Sometimes, ``->`` or ``→`` is used as a separator. This is nonstandard.
     Replace it with ``>`` if you are already making changes to a section.
 
+.. _doc_docs_writing_guidelines_project_settings:
+
 Project settings
 ~~~~~~~~~~~~~~~~
 
@@ -624,6 +642,60 @@ rendered, prefer splitting the setting name and the section when the link is lon
     - Set the :ref:`Application > Run > Max FPS<class_ProjectSettings_property_application/run/max_fps>` setting to ``60``.
     - In the project settings under **Application > Run**, set :ref:`Max FPS<class_ProjectSettings_property_application/run/max_fps>` to ``60``.
     - In **Project Settings > Application > Run**, set :ref:`Max FPS<class_ProjectSettings_property_application/run/max_fps>` to ``60``.
+
+Code blocks and adominitions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Code blocks should use the ``::`` syntax on its own line. Do not use the short
+form where it's at the end of a paragraph, as the trailing ``::`` would be included
+in the localizable string otherwise. Weblate would show a warning due to the trailing ``::``,
+and if the localized string does not end with ``::``, it would break the code block entirely
+in the translated manual.
+
+
+**Bad:**
+
+::
+
+    This is a code block::
+
+        The code block's contents.
+
+**Good:**
+
+::
+
+    This is a code block:
+
+    ::
+
+        The code block's contents.
+
+As for admonitions (note, warning, etc. blocks), you should write the admonition tag on its own line,
+then the admonition's contents indented by 4 spaces. Do not write the first line of the contents
+on the same line as the admonition tag.
+
+**Bad:**
+
+::
+
+    This is an admonition:
+
+    .. note:: First line of the note's contents.
+              Second line of the note's contents.
+
+**Good:**
+
+::
+
+    This is an admonition:
+
+    .. note::
+
+        First line of the note's contents.
+        Second line of the note's contents.
+
+.. _doc_docs_writing_guidelines_manually_wrapping_lines:
 
 Manually wrapping lines
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -710,6 +782,8 @@ See the `Sphinx documentation <https://www.sphinx-doc.org/en/master/usage/restru
 and the `reStructuredText documentation <https://docutils.sourceforge.io/docs/ref/rst/restructuredtext.html#sections>`__
 for more information.
 
+.. _doc_docs_writing_guidelines_specific_version:
+
 When to refer to a specific Godot version
 -----------------------------------------
 
@@ -737,6 +811,107 @@ Follow these guidelines for when to refer to a specific Godot version:
 - If the default approach to a problem is changed in a 4.x minor version, **do
   specify** the minor version in which a new default approach was added. For example,
   the change from ``TileMap`` to ``TileMapLayer`` in 4.3.
-- If a feature was added in a 3.x major or minor version, **do not specify** when 
+- If a feature was added in a 3.x major or minor version, **do not specify** when
   the feature was added. These features are old enough that the exact version
   in which they were added is not relevant.
+
+Use roles for editor UI
+-----------------------
+
+Much of the manual involves describing a sequence of UI actions in the editor,
+like clicking a button, opening a menu, or setting a property in the inspector.
+To keep formatting standardized, we use custom Sphinx roles for UI elements.
+
+The following roles are defined:
+
+- ``:button:``  A button, toggle, or other clickable UI element. If the reader
+  is meant to click on it, and it's not a menu, use this. Renders as
+  :button:`bold, with a background`.
+- ``:menu:``  A series of menus to click through. When listing a series of
+  menus, separate them with ``>``.  Renders as :menu:`bold, with a background`.
+- ``:inspector:`` A property *in the inspector*. When describing a property in
+  *code*, instead either use ``code style`` or link to the property, as
+  described earlier. Renders as :inspector:`bold`. 
+- ``:ui:`` A role for any other editor UI elements. Use this if you would have
+  otherwise just used **bold style**. Use this for input fields, docks, tabs,
+  windows, bottom panels, etc. Also used for nested project settings or
+  inspector sections. Renders as :ui:`bold`.
+
+The first two roles, ``:button:`` and ``:menu:`` are used for editor UI that the
+reader is meant to click on, and they use an attention-grabbing visual style. The
+other roles, ``:inspector:`` and ``:ui:``, are used for other UI and show up 
+often in text, so they just use bold text to be less distracting.
+
+Our custom roles are inspired by the Sphinx `guilabel <https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-guilabel>`_
+and `menuselection <https://www.sphinx-doc.org/en/master/usage/restructuredtext/roles.html#role-menuselection>`_
+roles. However, we use our own implementation to better match the specific needs
+of Godot's documentation, using `custom RST roles <https://docutils.sourceforge.io/docs/ref/rst/directives.html#custom-interpreted-text-roles>`_
+and some custom CSS.
+
+Examples
+~~~~~~~~
+
+These are some example sections that use the roles, in context. Check the source
+of this page to see which roles are used.
+
+Adding a sprite and setting some properties
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In the :ui:`Scene` dock, click :button:`2D Scene` to create a new scene.
+
+Add a new :ref:`Sprite2D <class_Sprite2D>` to the scene by right-clicking on the
+root node and choosing :button:`Add Child Node...`. In the :ui:`Create New Node`
+window, search for "Sprite2D", select it, and then click :button:`Create`.
+
+On the sprite, under :ui:`Offset`, set :inspector:`Offset` to ``(16, 32)``
+and enable :inspector:`Flip H`. Set :inspector:`Animation > HFrames` to ``10``.
+In :ui:`CanvasItem > Visibility`, set the :inspector:`Modulate` color to
+``ff0000``.
+
+.. tip:: 
+    
+    Don't forget to save your scene in :menu:`Scene > Save Scene...`. When the
+    :ui:`Save Scene As...` window pops up, enter "my_scene.tscn" in the
+    :ui:`File` field, then click :button:`Save`.
+
+Setting project settings
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+Go to :menu:`Project > Project Settings`, then select the
+:ref:`Max FPS <class_ProjectSettings_property_application/run/max_fps>`
+setting under :ui:`Application > Run`. Don't forget to click the
+:button:`Advanced Settings` toggle. Then, in :ui:`Filter Settings`, search for
+"physics". Under :ui:`Physics > 3D > Solver`, set
+:inspector:`Solver Iterations` to ``16``.
+
+All styles in context
+^^^^^^^^^^^^^^^^^^^^^
+
+Use this section to see how the custom roles look, particularly within admonitions. 
+
+|styleroles|
+
+.. note::
+    
+    |styleroles|
+
+.. warning::
+
+    |styleroles|
+
+.. danger::
+
+    |styleroles|
+
+.. tip::
+
+    |styleroles|
+
+.. admonition:: Custom admonition
+
+    |styleroles|
+
+.. All the inline roles which are used in the docs. External links don't work in a substitution.
+.. |styleroles| replace:: Built-in styles: ``code``, **bold**, and *italics*.
+    Built-in roles: :kbd:`kbd`, :ref:`ref <doc_about_intro>`, :ref:`ref <class_node>`.
+    Custom roles: :button:`button`, :menu:`menu > submenu`, :inspector:`inspector`, :ui:`ui`.

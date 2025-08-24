@@ -189,6 +189,9 @@ other than *Mix* forces the object to go through the transparent pipeline.
   screen.
 * **Mul:** The final color of the object is multiplied with the color of the
   screen.
+* **Premultiplied Alpha:** The color of the object is expected to have already been
+  multiplied by the alpha. This behaves like **Add** when the alpha is ``0.0``
+  (fully transparent) and like **Mix** when the alpha is ``1.0`` (opaque).
 
 .. image:: img/spatial_material8.png
 
@@ -322,6 +325,11 @@ Disable Fog
 
 Makes the object unaffected by depth-based or volumetric fog. This is useful for particles or other additively blended materials that would otherwise show the shape of the mesh (even in places where it would be invisible without the fog).
 
+Disable Specular Occlusion
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Makes the object not have its reflections reduced where they would usually be occluded.
+
 Vertex Color
 ------------
 
@@ -414,6 +422,43 @@ and wider compatibility.
   popular engines) can be found
   `here <http://wiki.polycount.com/wiki/Normal_Map_Technical_Details>`__.
 
+Bent normal map
+---------------
+
+A bent normal map describes the average direction of ambient lighting. Unlike a
+regular normal map, this is used to improve how a material reacts to lighting
+rather than add surface detail.
+
+This is achieved in two ways:
+
+* Indirect diffuse lighting is made to match global illumination more closely.
+* If specular occlusion is enabled, it is calculated using the bent normals and
+  ambient occlusion instead of just from ambient light.
+  This includes screen-space ambient occlusion (SSAO) and other sources of
+  ambient occlusion.
+
+.. image:: img/spatial_material_bentnormals.webp
+
+Godot only uses the red and green channels of a bent normal map for better
+compression and wider compatibility.
+
+When creating a bent normal map, there are three things required for it to
+work correctly in Godot:
+
+* A **cosine distribution** of rays has to be used when baking.
+* The texture must be created in **tangent space**.
+* The bent normal map needs to use the X+, Y+, and Z+ coordinates, this is
+  known as OpenGL style. If you've imported a material made to be used with
+  another engine it may be DirectX style, in which case the bent normal map
+  needs to be converted so its Y axis is flipped. This can be achieved by
+  setting the green channel under the **Channel Remap** section to
+  **Inverted Green** in the import dock.
+
+.. note::
+
+  A bent normal map is different from a regular normal map. The two are not
+  interchangeable.
+
 Rim
 ---
 
@@ -491,6 +536,8 @@ Back Lighting
 This controls how much light from the lit side (visible to light) is transferred
 to the dark side (opposite from the light). This works well for thin objects
 such as plant leaves, grass, human ears, etc.
+
+.. image:: img/spatial_material22.png
 
 Refraction
 ----------
@@ -696,14 +743,35 @@ Point Size
 
 When drawing points, specify the point size in pixels.
 
-Transmission
-~~~~~~~~~~~~
+Use Particle Trails
+~~~~~~~~~~~~~~~~~~~
 
-This controls how much light from the lit side (visible to light) is transferred
-to the dark side (opposite from the light). This works well for thin objects
-such as plant leaves, grass, human ears, etc.
+If true, enables parts of the shader required for GPUParticles3D trails to function.
+This also requires using a mesh with appropriate skinning, such as RibbonTrailMesh
+or TubeTrailMesh. Enabling this feature outside of materials used in GPUParticles3D
+meshes will break material rendering.
 
-.. image:: img/spatial_material22.png
+Use Z Clip Scale
+~~~~~~~~~~~~~~~~
+
+Scales the object being rendered towards the camera to avoid clipping into things
+like walls. This is intended to be used for objects that are fixed with respect to
+the camera like player arms, tools, etc. Lighting and shadows will continue to work
+correctly when this setting is adjusted, but screen-space effects like SSAO and SSR
+may break with lower scales. Therefore, try to keep this setting as close to 1.0 as
+possible.
+
+Use FOV Override
+~~~~~~~~~~~~~~~~
+
+Overrides the ``Camera3D``'s field of view angle (in degrees).
+
+.. note::
+
+  This behaves as if the field of view is set on a ``Camera3D`` with
+  ``Camera3D.keep_aspect`` set to ``Camera3D.KEEP_HEIGHT``. Additionally, it may not
+  look correct on a non-perspective camera where the field of view setting is
+  ignored.
 
 Proximity and Distance Fade
 ---------------------------

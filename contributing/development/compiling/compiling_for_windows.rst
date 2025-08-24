@@ -38,15 +38,19 @@ For compiling under Windows, the following is required:
   Studio releases.
 
 .. note:: If you have `Scoop <https://scoop.sh/>`_ installed, you can easily
-          install MinGW and other dependencies using the following command::
+          install MinGW and other dependencies using the following command:
 
-              scoop install gcc python scons make mingw
+          ::
 
+              scoop install python mingw
+
+          Scons will still need to be installed via pip
 .. note:: If you have `MSYS2 <https://www.msys2.org/>`_ installed, you can easily
-          install MinGW and other dependencies using the following command::
+          install MinGW and other dependencies using the following command:
 
-              pacman -S mingw-w64-x86_64-python3-pip mingw-w64-x86_64-gcc  \
-                  mingw-w64-i686-python3-pip mingw-w64-i686-gcc make
+          ::
+
+              pacman -S mingw-w64-x86_64-gcc mingw-w64-i686-gcc make python-pip
 
           For each MSYS2 MinGW subsystem, you should then run
           `pip3 install scons` in its shell.
@@ -60,7 +64,9 @@ For compiling under Windows, the following is required:
 Setting up SCons
 ----------------
 
-To install SCons, open the command prompt and run the following command::
+To install SCons, open the command prompt and run the following command:
+
+::
 
     python -m pip install scons
 
@@ -204,7 +210,9 @@ optional PIX and Agility SDK components).
              which is needed to generate some files.
           2. Clone the `godot-nir-static <https://github.com/godotengine/godot-nir-static>`_
              directory and navigate to it.
-          3. Run the following::
+          3. Run the following:
+
+          ::
 
               git submodule update --init
               ./update_mesa.sh
@@ -243,7 +251,9 @@ Optionally, you can compile with the following for additional features:
           developer mode in Windows; otherwise it won't be used.
 
 .. note:: If you want to use a PIX with MinGW build, navigate to PIX runtime
-          directory and use the following commands to generate import library::
+          directory and use the following commands to generate import library:
+
+          ::
 
             # For x86-64:
             gendef ./bin/x64/WinPixEventRuntime.dll
@@ -290,16 +300,20 @@ By default, Godot is built with dynamically linked ANGLE, you can use it by plac
 To compile Godot with statically linked ANGLE:
 
 - Download pre-built static libraries from `godot-angle-static library <https://github.com/godotengine/godot-angle-static/releases>`_, and unzip them.
-- When building Godot, add ``angle_libs={path}`` to tell SCons where to look for the ANGLE libraries::
+- When building Godot, add ``angle_libs={path}`` to tell SCons where to look for the ANGLE libraries:
 
-    scons platform=windows angle_libs=<...>
+    ::
+
+        scons platform=windows angle_libs=<...>
 
 .. note:: You can optionally build the godot-angle-static libraries yourself with
           the following steps:
 
           1. Clone the `godot-angle-static <https://github.com/godotengine/godot-angle-static>`_
              directory and navigate to it.
-          2. Run the following command::
+          2. Run the following command:
+
+          ::
 
               git submodule update --init
               ./update_angle.sh
@@ -329,7 +343,9 @@ Folder-based editors don't require any particular setup to start working with Go
 codebase. To edit projects with Visual Studio they need to be set up as a solution.
 
 You can create a Visual Studio solution via SCons by running SCons with
-the ``vsproj=yes`` parameter, like this::
+the ``vsproj=yes`` parameter, like this:
+
+::
 
    scons platform=windows vsproj=yes
 
@@ -350,7 +366,7 @@ The package names may differ based on your distribution, here are some known one
 +----------------+--------------------------------------------------------------+
 | **Arch Linux** | ::                                                           |
 |                |                                                              |
-|                |     pacman -Sy mingw-w64                                     |
+|                |     pacman -S mingw-w64                                      |
 +----------------+--------------------------------------------------------------+
 | **Debian** /   | ::                                                           |
 | **Ubuntu**     |                                                              |
@@ -372,7 +388,9 @@ The package names may differ based on your distribution, here are some known one
 +----------------+--------------------------------------------------------------+
 
 Before attempting the compilation, SCons will check for
-the following binaries in your ``PATH`` environment variable::
+the following binaries in your ``PATH`` environment variable:
+
+::
 
     # for MinGW-w64
     i686-w64-mingw32-gcc
@@ -385,7 +403,9 @@ the following binaries in your ``PATH`` environment variable::
 
 If the binaries are not located in the ``PATH`` (e.g. ``/usr/bin``),
 you can define the following environment variable to give a hint to
-the build system::
+the build system:
+
+::
 
     export MINGW_PREFIX="/path/to/mingw"
 
@@ -395,7 +415,9 @@ Where ``/path/to/mingw`` is the path containing the ``bin`` directory where
 
 To make sure you are doing things correctly, executing the following in
 the shell should result in a working compiler (the version output may
-differ based on your system)::
+differ based on your system):
+
+::
 
     ${MINGW_PREFIX}/bin/x86_64-w64-mingw32-gcc --version
     # x86_64-w64-mingw32-gcc (GCC) 13.2.0
@@ -413,15 +435,18 @@ Cross-compiling from some Ubuntu versions may lead to
 `this bug <https://github.com/godotengine/godot/issues/9258>`_,
 due to a default configuration lacking support for POSIX threading.
 
-You can change that configuration following those instructions,
-for 64-bit::
+You can change that configuration following those instructions, for 64-bit:
+
+::
 
     sudo update-alternatives --config x86_64-w64-mingw32-gcc
     <choose x86_64-w64-mingw32-gcc-posix from the list>
     sudo update-alternatives --config x86_64-w64-mingw32-g++
     <choose x86_64-w64-mingw32-g++-posix from the list>
 
-And for 32-bit::
+And for 32-bit:
+
+::
 
     sudo update-alternatives --config i686-w64-mingw32-gcc
     <choose i686-w64-mingw32-gcc-posix from the list>
@@ -451,7 +476,9 @@ following location, replacing ``<version>`` with the version identifier
 
     %APPDATA%\Godot\export_templates\<version>\
 
-With the following names::
+With the following names:
+
+::
 
     windows_debug_x86_32_console.exe
     windows_debug_x86_32.exe
@@ -468,11 +495,10 @@ With the following names::
 
 However, if you are using custom modules or custom engine code, you
 may instead want to configure your binaries as custom export templates
-here:
+in the project export menu. You must have **Advanced Options** enabled
+to set this.
 
 .. image:: img/wintemplates.webp
-
-Select matching architecture in the export config.
 
 You don't need to copy them in this case, just reference the resulting
 files in the ``bin\`` directory of your Godot source folder, so the next

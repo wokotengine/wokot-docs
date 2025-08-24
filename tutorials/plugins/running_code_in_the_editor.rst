@@ -105,20 +105,38 @@ Here is how a ``_process()`` function might look for you:
         // Code to execute both in editor and in game.
     }
 
+.. _doc_running_code_in_the_editor_important_information:
+
 Important information
 ---------------------
 
-Any other GDScript that your tool script uses must *also* be a tool. Any
-GDScript without ``@tool`` used by the editor will act like an empty file!
+The general rule is that **any other GDScript that your tool script uses must
+*also* be a tool**. The editor is not able to construct instances from GDScript
+files without ``@tool``, which means you cannot call methods or reference member
+variables from them otherwise. However, since static methods, constants and
+enums can be used without creating an instance, it is possible to call them or
+reference them from a ``@tool`` script onto other non-tool scripts. One exception to
+this are :ref:`static variables <doc_gdscript_basics_static_variables>`.
+If you try to read a static variable's value in a script that does not have
+``@tool``, it will always return ``null`` but won't print a warning or error
+when doing so. This restriction does not apply to static methods, which can be
+called regardless of whether the target script is in tool mode.
 
 Extending a ``@tool`` script does not automatically make the extending script
 a ``@tool``. Omitting ``@tool`` from the extending script will disable tool
-behavior from the super class. Therefore the extending script should also
+behavior from the super class. Therefore, the extending script should also
 specify the ``@tool`` annotation.
 
-Modifications in the editor are permanent. For example, in the next
-section when we remove the script, the node will keep its rotation. Be careful
-to avoid making unwanted modifications.
+Modifications in the editor are permanent, with no undo/redo possible. For
+example, in the next section when we remove the script, the node will keep its
+rotation. Be careful to avoid making unwanted modifications. Consider setting up
+:ref:`version control <doc_version_control_systems>` to avoid losing work in
+case you make a mistake.
+
+Using the debugger and breakpoints on tool scripts is not currently supported.
+Breakpoints placed in the script editor or using the ``breakpoint`` keyword are
+ignored. You can use print statements to display the contents of variables
+instead.
 
 Try ``@tool`` out
 -----------------
@@ -237,7 +255,7 @@ angle add a setter ``set(new_speed)`` which is executed with the input from the 
 
         public override void _Process(double delta)
         {
-            Rotation += Mathf.Pi * (float)delta * speed;
+            Rotation += Mathf.Pi * (float)delta * _speed;
         }
     }
 
@@ -246,8 +264,7 @@ angle add a setter ``set(new_speed)`` which is executed with the input from the 
     Code from other nodes doesn't run in the editor. Your access to other nodes
     is limited. You can access the tree and nodes, and their default properties,
     but you can't access user variables. If you want to do so, other nodes have
-    to run in the editor too. Autoload nodes cannot be accessed in the editor at
-    all.
+    to run in the editor too.
 
 Getting notified when resources change
 --------------------------------------
@@ -292,13 +309,13 @@ not be called.
                 OnResourceSet();
             }
         }
-    }
 
-    // This will only be called when you create, delete, or paste a resource.
-    // You will not get an update when tweaking properties of it.
-    private void OnResourceSet()
-    {
-        GD.Print("My resource was set!");
+        // This will only be called when you create, delete, or paste a resource.
+        // You will not get an update when tweaking properties of it.
+        private void OnResourceSet()
+        {
+            GD.Print("My resource was set!");
+        }
     }
 
 To get around this problem you first have to make your resource a tool and make it
@@ -353,7 +370,8 @@ You then want to connect the signal when a new resource is set:
         set(new_resource):
             resource = new_resource
             # Connect the changed signal as soon as a new resource is being added.
-            resource.changed.connect(_on_resource_changed)
+            if resource != null:
+                resource.changed.connect(_on_resource_changed)
 
     func _on_resource_changed():
         print("My resource just changed!")
@@ -375,14 +393,17 @@ You then want to connect the signal when a new resource is set:
             {
                 _resource = value;
                 // Connect the changed signal as soon as a new resource is being added.
-                _resource.Changed += OnResourceChanged;
+                if (_resource != null)
+                {
+                    _resource.Changed += OnResourceChanged;
+                }
             }
         }
-    }
 
-    private void OnResourceChanged()
-    {
-        GD.Print("My resource just changed!");
+        private void OnResourceChanged()
+        {
+            GD.Print("My resource just changed!");
+        }
     }
 
 Lastly, remember to disconnect the signal as the old resource being used and changed somewhere else
@@ -397,7 +418,8 @@ would cause unneeded updates.
             if resource != null:
                 resource.changed.disconnect(_on_resource_changed)
             resource = new_resource
-            resource.changed.connect(_on_resource_changed)
+            if resource != null:
+                resource.changed.connect(_on_resource_changed)
 
  .. code-tab:: csharp
 
@@ -413,7 +435,10 @@ would cause unneeded updates.
                 _resource.Changed -= OnResourceChanged;
             }
             _resource = value;
-            _resource.Changed += OnResourceChanged;
+            if (_resource != null)
+            {
+                _resource.Changed += OnResourceChanged;
+            }
         }
     }
 
@@ -508,6 +533,11 @@ script in the script editor. This keyboard shortcut is only effective when
 currently focused on the script editor.
 
 Scripts that extend EditorScript must be ``@tool`` scripts to function.
+
+.. note::
+
+    EditorScripts can only be run from the Godot script editor. If you are using
+    an external editor, open the script inside the Godot script editor to run it.
 
 .. danger::
 

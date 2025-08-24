@@ -8,18 +8,24 @@ Introduction to the buildsystem
 
 Godot is a primarily C++ project and it :ref:`uses the SCons build system. <doc_faq_why_scons>`
 We love SCons for how maintainable and easy to set up it makes our buildsystem. And thanks to
-that compiling Godot from source can be as simple as running::
+that compiling Godot from source can be as simple as running:
+
+::
 
     scons
 
 This produces an editor build for your current platform, operating system, and architecture.
 You can change what gets built by specifying a target, a platform, and/or an architecture.
-For example, to build an export template used for running exported games, you can run::
+For example, to build an export template used for running exported games, you can run:
+
+::
 
     scons target=template_release
 
 If you plan to debug or develop the engine, then you might want to enable the ``dev_build``
-option to enable dev-only debugging code::
+option to enable dev-only debugging code:
+
+::
 
     scons dev_build=yes
 
@@ -43,12 +49,16 @@ Using multi-threading
 
 The build process may take a while, depending on how powerful your system is. By default, Godot's
 SCons setup is configured to use all CPU threads but one (to keep the system responsive during
-compilation). If you want to adjust how many CPU threads SCons will use, use the ``-j <threads>``
+compilation). If the system has 4 CPU threads or fewer, it will use all threads by default.
+
+If you want to adjust how many CPU threads SCons will use, use the ``-j<threads>``
 parameter to specify how many threads will be used for the build.
 
-Example for using 4 threads::
+Example for using 12 threads:
 
-    scons -j4
+::
+
+    scons -j12
 
 Platform selection
 ------------------
@@ -62,7 +72,9 @@ SCons is invoked by just calling ``scons``. If no platform is specified,
 SCons will detect the target platform automatically based on the host platform.
 It will then start building for the target platform right away.
 
-To list the available target platforms, use ``scons platform=list``::
+To list the available target platforms, use ``scons platform=list``:
+
+.. code:: text
 
     scons platform=list
     scons: Reading SConscript files ...
@@ -90,7 +102,9 @@ Resulting binary
 ----------------
 
 The resulting binaries will be placed in the ``bin/`` subdirectory,
-generally with this naming convention::
+generally with this naming convention:
+
+::
 
     godot.<platform>.<target>[.dev][.double].<arch>[.<extra_suffix>][.<ext>]
 
@@ -125,20 +139,24 @@ build targets, and which will be explained below.
 Target
 ------
 
-Target controls if the editor is contained and debug flags are used.
-All builds are optimized. Each mode means:
+The ``target`` option controls if the editor is compiled and debug flags are used.
+Optimization levels (``optimize``) and whether each build contains debug symbols
+(``debug_symbols``) is controlled separately from the target. Each mode means:
 
--  ``target=editor``: Build with editor, optimized, with debugging code (defines: ``TOOLS_ENABLED``, ``DEBUG_ENABLED``, ``-O2``/``/O2``)
--  ``target=template_debug``: Build with C++ debugging symbols (defines: ``DEBUG_ENABLED``, ``-O2``/``/O2``)
--  ``target=template_release``: Build without symbols (defines: ``-O3``/``/O2``)
+-  ``target=editor``: Build an editor binary (defines ``TOOLS_ENABLED`` and ``DEBUG_ENABLED``)
+-  ``target=template_debug``: Build a debug export template (defines ``DEBUG_ENABLED``)
+-  ``target=template_release``: Build a release export template
 
 The editor is enabled by default in all PC targets (Linux, Windows, macOS),
 disabled for everything else. Disabling the editor produces a binary that can
 run projects but does not include the editor or the Project Manager.
 
+The list of :ref:`command line arguments <doc_command_line_tutorial>`
+available varies depending on the build type.
+
 ::
 
-    scons platform=<platform> target=editor/template_debug/template_release
+    scons platform=<platform> target=editor|template_debug|template_release
 
 .. _doc_introduction_to_the_buildsystem_development_and_production_aliases:
 
@@ -193,6 +211,8 @@ binary name.
     you can enable at compile-time to better debug certain engine issues.
     See :ref:`doc_using_sanitizers` for more information.
 
+.. _doc_introduction_to_the_buildsystem_debugging_symbols:
+
 Debugging symbols
 -----------------
 
@@ -233,6 +253,8 @@ Several compiler optimization levels can be chosen from:
   optimizations available.
 - ``optimize=size`` *(default when targeting the Web platform)*: Favors small
   binaries at the cost of slower execution speed.
+- ``optimize=size_extra``: Favors even smaller binaries, at the cost of even
+  slower execution speed compared to ``optimize=size``.
 - ``optimize=debug``: Only enables optimizations that do not impact debugging in
   any way. This results in faster binaries than ``optimize=none``, but slower
   binaries than ``optimize=speed_trace``.

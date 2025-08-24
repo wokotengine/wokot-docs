@@ -102,7 +102,7 @@ High-level networking in Godot is managed by the :ref:`SceneTree <class_SceneTre
 Each node has a ``multiplayer`` property, which is a reference to the ``MultiplayerAPI`` instance configured for it
 by the scene tree. Initially, every node is configured with the same default ``MultiplayerAPI`` object.
 
-It is possible to create a new ``MultiplayerAPI`` object and assign it to a ``NodePath`` in the the scene tree,
+It is possible to create a new ``MultiplayerAPI`` object and assign it to a ``NodePath`` in the scene tree,
 which will override ``multiplayer`` for the node at that path and all of its descendants.
 This allows sibling nodes to be configured with different peers, which makes it possible to run a server
 and a client simultaneously in one instance of Godot.
@@ -153,7 +153,7 @@ To terminate networking:
 .. tabs::
  .. code-tab:: gdscript GDScript
 
-    multiplayer.multiplayer_peer = null
+    multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
 
  .. code-tab:: csharp
 
@@ -204,6 +204,8 @@ To check whether the peer is server or client:
  .. code-tab:: csharp
 
     Multiplayer.IsServer();
+
+.. _doc_high_level_multiplayer_rpcs:
 
 Remote procedure calls
 ----------------------
@@ -414,7 +416,7 @@ have loaded the game scene.
 
 
     func remove_multiplayer_peer():
-        multiplayer.multiplayer_peer = null
+        multiplayer.multiplayer_peer = OfflineMultiplayerPeer.new()
         players.clear()
 
 
@@ -460,11 +462,11 @@ have loaded the game scene.
 
 
     func _on_connected_fail():
-        multiplayer.multiplayer_peer = null
+        remove_multiplayer_peer()
 
 
     func _on_server_disconnected():
-        multiplayer.multiplayer_peer = null
+        remove_multiplayer_peer()
         players.clear()
         server_disconnected.emit()
 

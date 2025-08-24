@@ -48,6 +48,13 @@ You can use the buttons in the top-right corner to:
 - **Break**. This button pauses the game's execution.
 - **Continue**. This button resumes the game after a breakpoint or pause.
 
+.. note::
+
+    Using the debugger and breakpoints on :ref:`tool scripts <doc_running_code_in_the_editor>`
+    is not currently supported. Breakpoints placed in the script editor or using
+    the ``breakpoint`` keyword are ignored. You can use print statements to
+    display the contents of variables instead.
+
 Errors
 ------
 
@@ -197,6 +204,11 @@ parallel on the GPU. This generally means that disabling only one of the
 features involved won't improve performance as much as anticipated, as the other
 task still needs to be performed sequentially.
 
+.. note::
+
+    The Visual Profiler is not supported when using the Compatibility renderer
+    on macOS, due to platform limitations.
+
 Network Profiler
 ----------------
 
@@ -215,7 +227,7 @@ the total bandwidth usage at any given moment.
 Monitors
 --------
 
-The monitors are graphs of several aspects of the game while its running such as
+The monitors are graphs of several aspects of the game while it's running such as
 FPS, memory usage, how many nodes are in a scene and more. All monitors keep
 track of stats automatically, so even if one monitor isn't open while the game
 is running, you can open it later and see how the values changed.

@@ -22,7 +22,9 @@ An expression can be:
 Basic usage
 -----------
 
-To evaluate a mathematical expression, use::
+To evaluate a mathematical expression, use:
+
+::
 
     var expression = Expression.new()
     expression.parse("20 + 10*2 - 5/2.0")
@@ -62,7 +64,9 @@ applies. Use parentheses to override the order of operations if needed.
 All the Variant types supported in Godot can be used: integers, floating-point
 numbers, strings, arrays, dictionaries, colors, vectors, …
 
-Arrays and dictionaries can be indexed like in GDScript::
+Arrays and dictionaries can be indexed like in GDScript:
+
+::
 
     # Returns 1.
     [1, 2][0]
@@ -83,7 +87,9 @@ Passing variables to an expression
 
 You can pass variables to an expression. These variables will then
 become available in the expression's "context" and will be substituted when used
-in the expression::
+in the expression:
+
+::
 
     var expression = Expression.new()
     # Define the variable names first in the second parameter of `parse()`.
@@ -105,7 +111,9 @@ expression has no base instance associated to it.
 
 When calling :ref:`Expression.execute() <class_Expression_method_execute>`,
 you can set the value of the ``base_instance`` parameter to a specific object
-instance such as ``self``, another script instance or even a singleton::
+instance such as ``self``, another script instance or even a singleton:
+
+::
 
     func double(number):
         return number * 2
@@ -141,7 +149,9 @@ Associating a base instance allows doing the following:
 Example script
 --------------
 
-The script below demonstrates what the Expression class is capable of::
+The script below demonstrates what the Expression class is capable of:
+
+::
 
     const DAYS_IN_YEAR = 365
     var script_member_variable = 1000
@@ -191,7 +201,9 @@ The script below demonstrates what the Expression class is capable of::
         # The method's return value is also the expression's return value.
         return 0
 
-The output from the script will be::
+The output from the script will be:
+
+::
 
     false
     true

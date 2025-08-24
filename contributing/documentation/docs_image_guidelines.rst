@@ -25,7 +25,7 @@ On macOS, pressing :kbd:`Shift + Command + 3` does the same.
 To take a picture of the entire screen press :kbd:`Shift + Command + 4`.
 All screenshots taken will be saved to the desktop.
 
-Each Linux desktop environment has it's own screenshot tool. For example,
+Each Linux desktop environment has its own screenshot tool. For example,
 on KDE Plasma the program Spectacle is used for taking screenshots. If your
 distribution doesn't come with one by default try searching its package
 repository, or Flathub if that's supported.
@@ -35,6 +35,8 @@ resolution is adding detail that doesn't make the documentation better and
 dramatically increases file size. If you're taking screenshots on a higher
 resolution screen the screenshot should be scaled down. There are instructions
 on how to do this later on this page.
+
+.. _doc_docs_image_guidelines_format_conversion:
 
 Format conversion
 ~~~~~~~~~~~~~~~~~
@@ -58,6 +60,8 @@ it may have the ability to open an image then save it as a WebP file.
     Since WebP supports animations and the documentation can display videos,
     GIFs should be avoided. Their compression is inefficient and they only support
     a 256-color palette with 1-bit transparency.
+
+.. _doc_docs_image_guidelines_cropping:
 
 Cropping
 ~~~~~~~~
@@ -94,6 +98,8 @@ If you make a mistake and overcrop don't worry, cropping is non-destructive in
 Krita and can be adjusted. Click on the image with your cropping tool still selected
 and the controls will return.
 
+.. _doc_docs_image_guidelines_scaling_down:
+
 Scaling down an image
 ~~~~~~~~~~~~~~~~~~~~~
 
@@ -118,6 +124,8 @@ If the image is over 300KB in size try compressing it losslessly using `Squoosh 
 If it's still over 300KB change to lossy compression and slowly increase the compression until it's under
 300KB. If this results in noticeable compression artifacts using less compression is fine, even if the file
 size is bigger.
+
+.. _doc_docs_image_guidelines_outlines:
 
 Outlines, arrows and text
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -152,13 +160,17 @@ All images are stored in folders named ``img`` next to the page they are used in
 
 To add your image, add it to the ``img`` folder that's in the same folder as the
 ``.rst`` file for the page (create it if it doesn't exist). In the ``.rst`` page,
-images should be included with the following code snippet::
+images should be included with the following code snippet:
+
+::
 
     .. image:: img/documentation_image.webp
 
 Where ``documentation_image.webp`` would be changed to the name of the image you
 created. Name your images in a way that makes their meaning clear, possibly with
 a prefix that makes their relationship to a documentation page explicit.
+
+.. _doc_docs_image_guidelines_videos:
 
 Videos
 ------
@@ -235,7 +247,9 @@ All videos are stored in folders named ``video`` next to the page they are used 
 
 To add your video, add it to the ``video`` folder that's in the same folder as the
 ``.rst`` file for the page (create it if it doesn't exist). In the ``.rst`` page,
-videos should be included with the following code snippet::
+videos should be included with the following code snippet:
+
+::
 
     .. video:: video/csg_tools.webm
        :alt: Put a text description of the video here

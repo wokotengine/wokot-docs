@@ -1,5 +1,3 @@
-.. _doc_c_sharp:
-
 C# basics
 =========
 
@@ -62,7 +60,7 @@ Configuring an external editor
 
 C# support in Godot's built-in script editor is minimal. Consider using an
 external IDE or editor, such as  `Visual Studio Code <https://code.visualstudio.com/>`__
-or MonoDevelop. These provide autocompletion, debugging, and other
+or `Visual Studio <https://visualstudio.microsoft.com/>`__. These provide autocompletion, debugging, and other
 useful features for C#. To select an external editor in Godot,
 click on **Editor → Editor Settings** and scroll down to
 **Dotnet**. Under **Dotnet**, click on **Editor**, and select your

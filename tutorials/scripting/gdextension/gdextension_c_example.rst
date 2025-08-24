@@ -133,8 +133,7 @@ Create the file ``init.h`` in the ``src`` folder, with the following contents:
 
 .. code-block:: c
 
-    #ifndef INIT_H
-    #define INIT_H
+    #pragma once
 
     #include "defs.h"
 
@@ -143,8 +142,6 @@ Create the file ``init.h`` in the ``src`` folder, with the following contents:
     void initialize_gdexample_module(void *p_userdata, GDExtensionInitializationLevel p_level);
     void deinitialize_gdexample_module(void *p_userdata, GDExtensionInitializationLevel p_level);
     GDExtensionBool GDE_EXPORT gdexample_library_init(GDExtensionInterfaceGetProcAddress p_get_proc_address, GDExtensionClassLibraryPtr p_library, GDExtensionInitialization *r_initialization);
-
-    #endif // INIT_H
 
 The functions declared here have the signatures expected by the GDExtension API.
 
@@ -158,8 +155,7 @@ Create the ``defs.h`` file in the ``src`` folder with the following contents:
 
 .. code-block:: c
 
-    #ifndef DEFS_H
-    #define DEFS_H
+    #pragma once
 
     #include <stdbool.h>
     #include <stddef.h>
@@ -174,8 +170,6 @@ Create the ``defs.h`` file in the ``src`` folder with the following contents:
     #define GDE_EXPORT
     #endif
     #endif // ! GDE_EXPORT
-
-    #endif // DEFS_H
 
 We also include some standard headers to make things easier. Now we only have to
 include ``defs.h`` and those will come as a bonus.
@@ -224,8 +218,7 @@ contents:
 
 .. code-block:: c
 
-    #ifndef GDEXAMPLE_H
-    #define GDEXAMPLE_H
+    #pragma once
 
     #include "gdextension_interface.h"
 
@@ -246,8 +239,6 @@ contents:
 
     // Bindings.
     void gdexample_class_bind_methods();
-
-    #endif // GDEXAMPLE_H
 
 Noteworthy here is the ``object`` field, which holds a pointer to
 the Godot object, and the ``gdexample_class_bind_methods()`` function, which will
@@ -299,8 +290,7 @@ We'll start by creating an ``api.h`` file in the ``src`` folder:
 
 .. code-block:: c
 
-    #ifndef API_H
-    #define API_H
+    #pragma once
 
     /*
     This file works as a collection of helpers to call the GDExtension API
@@ -332,10 +322,6 @@ We'll start by creating an ``api.h`` file in the ``src`` folder:
     } api;
 
     void load_api(GDExtensionInterfaceGetProcAddress p_get_proc_address);
-
-
-
-    #endif // API_H
 
 This file will include many other helpers as we fill our extension with
 something useful. For now it only has a pointer to a function that creates a
@@ -760,7 +746,7 @@ the destructor.
 
     ...
 
-In the ``gdexample.cpp`` file, we will initialize these values in the constructor
+In the ``gdexample.c`` file, we will initialize these values in the constructor
 and add the implementations for those new functions, which are quite trivial:
 
 .. code-block:: c
@@ -1816,7 +1802,7 @@ To complete this tutorial, let's see how you can register a custom signal and
 emit it when appropriate. As you might have guessed, we'll need a few more
 function pointers from the API and more helper functions.
 
-In the ``api.h`` file we're adding two things. One is a an API function to
+In the ``api.h`` file we're adding two things. One is an API function to
 register a signal, the other is a helper function to wrap the signal binding.
 
 .. code-block:: c
@@ -2162,5 +2148,5 @@ quite straightforward and not very verbose.
 
 If you want to create actual extensions, it is preferred to use the C++ bindings
 instead, as it takes away all of the boilerplate from your code. Check the
-:ref:`GDExtension C++ example <doc_gdextension_cpp_example>` to see how you can
+:ref:`godot-cpp documentation <doc_godot_cpp>` to see how you can
 do this.

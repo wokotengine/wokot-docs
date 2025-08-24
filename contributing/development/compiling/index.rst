@@ -1,13 +1,17 @@
 :allow_comments: False
 
+.. _doc_compiling_index:
+
 Building from source
 ====================
 
 .. highlight:: shell
 
-Godot prides itself on being very easy to build, by C++ projects' standards.
+Godot prides itself on being very easy to build, by C++ project standards.
 :ref:`Godot uses the SCons build system <doc_faq_why_scons>`, and after the initial
-setup compiling the engine for your current platform should be as easy as running::
+setup compiling the engine for your current platform should be as easy as running:
+
+::
 
     scons
 
@@ -48,8 +52,9 @@ will try their best to cover all possible situations.
    compiling_for_macos
    compiling_for_android
    compiling_for_ios
-   cross-compiling_for_ios_on_linux
+   compiling_for_visionos
    compiling_for_web
+   cross-compiling_for_ios_on_linux
 
 .. rubric:: Other compilation targets and options
    :heading-level: 2

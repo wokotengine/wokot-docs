@@ -290,14 +290,19 @@ Both of these fog types can have their curve tweaked, making their transition mo
 
 Two properties can be tweaked to make the fog effect more interesting:
 
-The first is **Sun Amount**, which makes use of the Sun Color property of the fog.
-When looking towards a directional light (usually a sun), the color of the fog
-will be changed, simulating the sunlight passing through the fog.
+The first is **Sun Scatter**, which makes use of the DirectionalLight3D's color
+and energy in the current scene. When looking towards the directional light
+(usually a sun), the fog will be tinted according to the light's color to
+simulate the sunlight passing through the fog.
 
-The second is **Transmit Enabled** which simulates more realistic light transmittance.
-In practice, it makes light stand out more across the fog.
+The second is **Aerial Perspective**, which tints the fog color according to the
+sky color to better blend the sky with the background. Higher values will result
+in more tinting, with ``1.0`` fully replacing the regular fog color with aerial
+perspective. This can be used in large open world levels to provide a better
+sense of depth, or to avoid color discontinuities between the sky and fog colors.
 
-.. image:: img/environment_fog_transmission.webp
+If both **Sun Scatter** and **Aerial Perspective** are greater than ``0.0``, sun
+scattering is applied on top of aerial perspective.
 
 .. note::
 
@@ -318,39 +323,46 @@ being affected by the lights that traverse the fog.
 Tonemap
 ~~~~~~~
 
-Tonemap selects the tonemapping curve that will be applied to the scene, from a
-list of standard curves used in the film and game industries. Tonemapping operators
-other than Linear are used to make light and dark areas more homogeneous,
-while also avoiding clipping of bright highlights.
+Tonemap selects the tonemapping algorithm that will be applied to the scene, from a
+list of standard algorithms used in the film and game industries. Tonemapping modes
+other than **Linear** are used to make light and dark areas more homogeneous,
+while also avoiding clipping of bright highlights. Each algorithm has a different
+performance characteristic that should be considered when choosing your tonemapper.
 
 The tone mapping options are:
 
-- **Mode:** The tone mapping mode to use.
+- **Mode:** The tonemapping mode to use.
 
-  - **Linear:** The default tonemapping mode. This is the fastest and simplest
-    tonemapping operator, but it causes bright lighting to look blown out, with
-    noticeable clipping in the output colors.
-  - **Reinhardt:** Performs a variation on rendered pixels' colors by this
-    formula: ``color = color / (1 + color)``. This avoids clipping bright
-    highlights, but the resulting image can look a bit dull.
-  - **Filmic:** This avoids clipping bright highlights, with a resulting image
-    that usually looks more vivid than Reinhardt.
-  - **ACES:** Academy Color Encoding System tonemapper.
-    ACES is slightly more expensive than other options, but it handles
-    bright lighting in a more realistic fashion by desaturating it as it becomes brighter.
-    ACES typically has a more contrasted output compared to Reinhardt and Filmic.
-    ACES is the recommended option when aiming for photorealistic visuals.
-    This tonemapping mode was called "ACES Fitted" in Godot 3.x.
+  - **Linear:** Does not modify color data, resulting in a linear tonemapping
+    curve which unnaturally clips bright values, causing bright lighting to
+    look blown out. The simplest and fastest tonemapper.
+  - **Reinhard:** A simple tonemapping curve that rolls off bright values to
+    prevent clipping. This results in an image that can appear dull and low
+    contrast. Slower than Linear. When **White** is left at the default
+    value of ``1.0``, Reinhard produces an identical image to Linear.
+  - **Filmic:** Uses a film-like tonemapping curve to prevent clipping of
+    bright values and provide better contrast than Reinhard. Slightly slower
+    than Reinhard.
+  - **ACES:** Uses a high-contrast film-like tonemapping curve and desaturates
+    bright values for a more realistic appearance. Slightly slower than Filmic.
+  - **AgX:** Uses a film-like tonemapping curve and desaturates bright values
+    for a more realistic appearance. Better than other tonemappers at
+    maintaining the hue of colors as they become brighter. The slowest
+    tonemapping option. **White** is fixed at a value of ``16.29``,
+    which makes AgX unsuitable for use with the Mobile rendering method.
 
-- **Exposure:** Tone mapping exposure which simulates amount of light received
-  over time (default: ``1.0``). Higher values result in an overall brighter appearance.
-  If the scene appears too dark as a result of a tonemapping operator or whitepoint
-  change, try increasing this value slightly.
+- **Exposure:** Adjusts the brightness of values before they are provided to
+  the tonemapper. Higher **Exposure** values result in a brighter image.
+  Values provided to the tonemapper will also be multiplied by ``2.0``
+  and ``1.8`` for **Filmic** and **ACES** respectively to produce a similar
+  apparent brightness as Linear.
 
-- **White:** Tone mapping whitepoint, which simulates where in the scale white is
-  located (default: ``1.0``). For photorealistic lighting, recommended values are
-  between ``6.0`` and ``8.0``. Higher values result in less blown out highlights,
-  but make the scene appear slightly darker as a whole.
+- **White:** The white reference value for tonemapping, which indicates where
+  bright white is located in the scale of values provided to the tonemapper.
+  For photorealistic lighting, recommended values are between ``6.0`` and
+  ``8.0``. Higher values result in less blown out highlights, but may make the
+  scene appear lower contrast. **White** is not available when using
+  **Linear** or **AgX**.
 
 Mid- and post-processing effects
 --------------------------------
@@ -639,6 +651,17 @@ There are 2 main use cases for a glow map texture:
 
 .. image:: img/environment_glow_map.webp
 
+By default, glow uses a bicubic scaling filter on desktop platforms and a
+bilinear scaling filter on mobile platforms. The bicubic scaling filter results
+in higher quality with a less blocky appearance, but it has a performance cost
+on the GPU which can be significant on integrated graphics.
+The scale mode can be controlled using the
+**Rendering > Environment > Glow > Upscale Mode** project setting.
+This setting is only effective when using the Forward+ or Mobile renderers,
+as Compatibility uses a different glow implementation.
+
+.. image:: img/environment_and_post_processing_glow_scale_mode.webp
+
 .. _doc_environment_and_post_processing_using_glow_in_2d:
 
 Using glow in 2D
@@ -686,6 +709,11 @@ There are 2 ways to use glow in 2D:
     If 2D HDR is disabled, ``source_color`` will keep working correctly in
     ``canvas_item`` shaders, so it's recommend to use it when relevant either
     way.
+
+    Using linear color space also means that alpha blending will change. Sprites
+    with low opacity values generally become more visible, and font rendering will
+    look bolder due to the low-opacity pixels from the font antialiasing becoming
+    more visible. This also affects the editor's own rendering.
 
 .. _doc_environment_and_post_processing_using_glow_to_blur_the_screen:
 

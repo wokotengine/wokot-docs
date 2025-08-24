@@ -17,7 +17,7 @@ and binding these to the actual inputs and outputs on your XR devices.
 As the XR action map is currently part of the OpenXR module, OpenXR needs to be enabled
 in your project settings to expose it:
 
-.. image:: img/openxr_settings.webp
+.. image:: img/openxr_enabled.webp
 
 You will then find the XR Action Map interface in the bottom of the screen:
 
@@ -150,7 +150,7 @@ The columns in our table are as follows:
   * - 3
     - 0
     - This is the priority of the action set.
-      If multiple active action sets have actions bound to the same controllers inputs or
+      If multiple active action sets have actions bound to the same controller's inputs or
       outputs, the action set with the highest priority value will determine the action
       that is updated.
 
@@ -480,6 +480,8 @@ to use bindings from one of the more popular systems as a fallback first.
   If you are able to test your game using a Meta Rift or Quest and add this profile
   there is a high probability your game will work with other headsets.
 
+.. _doc_binding_modifiers:
+
 Binding Modifiers
 -----------------
 
@@ -570,7 +572,7 @@ These settings are used as follows:
   * ``On Haptic`` lets us define a haptic output that is automatically activated
     when an action becomes pressed.
   * ``Off Haptic`` lets us define a haptic output that is automatically activated
-    when a action is released.
+    when an action is released.
 
 
 Binding modifiers on individual bindings

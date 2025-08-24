@@ -23,7 +23,9 @@ A cubemap is made of 6 textures organized in layers. They are typically used for
 
 This resource is typically used as a uniform in custom shaders. Few core Godot methods make use of **Cubemap** resources.
 
-To create such a texture file yourself, reimport your image files using the Godot Editor import presets. The expected image order is X+, X-, Y+, Y-, Z+, Z- (in Godot's coordinate system, so Y+ is "up" and Z- is "forward"). You can use one of the following templates as a base:
+To create such a texture file yourself, reimport your image files using the Godot Editor import presets. To create a Cubemap from code, use :ref:`ImageTextureLayered.create_from_images()<class_ImageTextureLayered_method_create_from_images>` on an instance of the Cubemap class.
+
+The expected image order is X+, X-, Y+, Y-, Z+, Z- (in Godot's coordinate system, so Y+ is "up" and Z- is "forward"). You can use one of the following templates as a base:
 
 - `2×3 cubemap template (default layout option) <https://raw.githubusercontent.com/godotengine/godot-docs/master/tutorials/assets_pipeline/img/cubemap_template_2x3.webp>`__\ 
 
@@ -38,10 +40,10 @@ To create such a texture file yourself, reimport your image files using the Godo
 .. code:: text
 
     shader_type sky;
-    
+
     uniform samplerCube source_panorama : filter_linear, source_color, hint_default_black;
     uniform float exposure : hint_range(0, 128) = 1.0;
-    
+
     void sky() {
         // If importing a cubemap from another engine, you may need to flip one of the `EYEDIR` components below
         // by replacing it with `-EYEDIR`.
@@ -83,6 +85,7 @@ Method Descriptions
 Creates a placeholder version of this resource (:ref:`PlaceholderCubemap<class_PlaceholderCubemap>`).
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`

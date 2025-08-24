@@ -186,11 +186,11 @@ indentation level to distinguish continuation lines:
         "Job": "Mechanic",
     }
 
-    enum Tiles {
-        TILE_BRICK,
-        TILE_FLOOR,
-        TILE_SPIKE,
-        TILE_TELEPORT,
+    enum Tile {
+        BRICK,
+        FLOOR,
+        SPIKE,
+        TELEPORT,
     }
 
 **Bad**:
@@ -211,11 +211,11 @@ indentation level to distinguish continuation lines:
             "Job": "Mechanic",
     }
 
-    enum Tiles {
-            TILE_BRICK,
-            TILE_FLOOR,
-            TILE_SPIKE,
-            TILE_TELEPORT,
+    enum Tile {
+            BRICK,
+            FLOOR,
+            SPIKE,
+            TELEPORT,
     }
 
 Trailing comma
@@ -478,6 +478,27 @@ comments from disabled code.
     :kbd:`Ctrl + K`. This feature adds/removes a single ``#`` sign before any
     code on the selected lines.
 
+Prefer writing comments on their own line as opposed to inline comments
+(comments written on the same line as code). Inline comments are best used for
+short comments, typically a few words at most:
+
+**Good**:
+
+.. rst-class:: code-example-good
+
+::
+
+    # This is a long comment that would make the line below too long if written inline.
+    print("Example") # Short comment.
+
+**Bad**:
+
+.. rst-class:: code-example-bad
+
+::
+
+    print("Example") # This is a long comment that would make this line too long if written inline.
+
 Whitespace
 ~~~~~~~~~~
 
@@ -648,7 +669,9 @@ File names
 ~~~~~~~~~~
 
 Use snake_case for file names. For named classes, convert the PascalCase class
-name to snake_case::
+name to snake_case:
+
+::
 
     # This file should be saved as `weapon.gd`.
     class_name Weapon
@@ -717,7 +740,7 @@ underscore (\_) to separate words:
 
     const MAX_SPEED = 200
 
-Use PascalCase for enum *names* and CONSTANT\_CASE for their members, as they
+Use PascalCase for enum *names* and keep them singular, as they represent a type. Use CONSTANT\_CASE for their members, as they
 are constants:
 
 ::
@@ -780,7 +803,7 @@ We suggest to organize GDScript code this way:
     13. remaining static methods
     14. overridden built-in virtual methods:
         1. _init()
-        2. _enter_tree() 
+        2. _enter_tree()
         3. _ready()
         4. _process()
         5. _physics_process()
@@ -792,7 +815,7 @@ We suggest to organize GDScript code this way:
 And put the class methods and variables in the following order depending on their access modifiers:
 
 ::
-   
+
     1. public
     2. private
 
@@ -808,7 +831,6 @@ This code order follows four rules of thumb:
 4. The object's construction and initialization functions, ``_init`` and
    ``_ready``, come before functions that modify the object at runtime.
 
-
 Class declaration
 ~~~~~~~~~~~~~~~~~
 
@@ -817,7 +839,9 @@ first line of the script.
 
 Follow with the optional ``@icon`` then the ``class_name`` if necessary. You can turn a
 GDScript file into a global type in your project using ``class_name``. For more
-information, see :ref:`doc_gdscript`.
+information, see :ref:`doc_gdscript_basics_class_name`. If the class is meant
+to be an :ref:`abstract class <doc_gdscript_basics_abstract_class>`,
+add ``@abstract`` *before* the ``class_name`` keyword.
 
 Then, add the ``extends`` keyword if the class extends a built-in type.
 
@@ -828,12 +852,24 @@ and how other developers should use it, for example.
 
 ::
 
+    @abstract
     class_name MyNode
     extends Node
     ## A brief description of the class's role and functionality.
     ##
     ## The description of the script, what it can do,
     ## and any further detail.
+
+For inner classes, use single-line declarations:
+
+::
+
+    ## A brief description of the class's role and functionality.
+    ##
+    ## The description of the script, what it can do,
+    ## and any further detail.
+    @abstract class MyNode extends Node:
+        pass
 
 Signals and properties
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -851,7 +887,7 @@ variables, in that order.
 
     signal player_spawned(position)
 
-    enum Jobs {
+    enum Job {
         KNIGHT,
         WIZARD,
         ROGUE,
@@ -861,7 +897,7 @@ variables, in that order.
 
     const MAX_LIVES = 3
 
-    @export var job: Jobs = Jobs.KNIGHT
+    @export var job: Job = Job.KNIGHT
     @export var max_health = 50
     @export var attack = 5
 
@@ -971,7 +1007,7 @@ To declare the return type of a function, use ``-> <type>``:
 Inferred types
 ~~~~~~~~~~~~~~
 
-In most cases you can let the compiler infer the type, using ``:=``.
+In most cases, you can let the compiler infer the type using ``:=``.
 Prefer ``:=`` when the type is written on the same line as the assignment,
 otherwise prefer writing the type explicitly.
 
@@ -981,8 +1017,11 @@ otherwise prefer writing the type explicitly.
 
 ::
 
-    var health: int = 0 # The type can be int or float, and thus should be stated explicitly.
-    var direction := Vector3(1, 2, 3) # The type is clearly inferred as Vector3.
+    # The type can be int or float, and thus should be stated explicitly.
+    var health: int = 0
+
+    # The type is clearly inferred as Vector3.
+    var direction := Vector3(1, 2, 3)
 
 Include the type hint when the type is ambiguous, and
 omit the type hint when it's redundant.
@@ -993,8 +1032,11 @@ omit the type hint when it's redundant.
 
 ::
 
-    var health := 0 # Typed as int, but it could be that float was intended.
-    var direction: Vector3 = Vector3(1, 2, 3) # The type hint has redundant information.
+    # Typed as int, but it could be that float was intended.
+    var health := 0
+
+    # The type hint has redundant information.
+    var direction: Vector3 = Vector3(1, 2, 3)
 
     # What type is this? It's not immediately clear to the reader, so it's bad.
     var value := complex_function()
@@ -1013,6 +1055,16 @@ should set the type explicitly.
 
     @onready var health_bar: ProgressBar = get_node("UI/LifeBar")
 
+**Bad**:
+
+.. rst-class:: code-example-bad
+
+::
+
+    # The compiler can't infer the exact type and will use Node
+    # instead of ProgressBar.
+    @onready var health_bar := get_node("UI/LifeBar")
+
 Alternatively, you can use the ``as`` keyword to cast the return type, and
 that type will be used to infer the type of the var.
 
@@ -1023,14 +1075,9 @@ that type will be used to infer the type of the var.
     @onready var health_bar := get_node("UI/LifeBar") as ProgressBar
     # health_bar will be typed as ProgressBar
 
-This option is also considered more :ref:`type-safe<doc_gdscript_static_typing_safe_lines>` than the first.
 
-**Bad**:
+.. note::
 
-.. rst-class:: code-example-bad
-
-::
-
-    # The compiler can't infer the exact type and will use Node
-    # instead of ProgressBar.
-    @onready var health_bar := get_node("UI/LifeBar")
+    This option is considered more :ref:`type-safe<doc_gdscript_static_typing_safe_lines>` than type hints,
+    but also less null-safe as it silently casts the variable to ``null`` in case of a type mismatch at runtime,
+    without an error/warning.

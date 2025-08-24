@@ -102,7 +102,7 @@ Most GLSL ES 3.0 datatypes are supported:
 Comments
 ~~~~~~~~
 
-The shading language supports the same comment syntax as used in C# and C++, 
+The shading language supports the same comment syntax as used in C# and C++,
 using ``//`` for single-line comments and ``/* */`` for multi-line comments:
 
 .. code-block:: glsl
@@ -551,8 +551,10 @@ Godot Shading language supports the most common types of flow control:
 
 .. code-block:: glsl
 
-    // `if` and `else`.
+    // `if`, `else if` and `else`.
     if (cond) {
+
+    } else if (other_cond) {
 
     } else {
 
@@ -910,7 +912,7 @@ You can access ``int`` values as a readable dropdown widget using the ``hint_enu
 You can assign explicit values to the ``hint_enum`` uniform using colon syntax similar to GDScript:
 
 .. code-block::
- 
+
     uniform int character_speed: hint_enum("Slow:30", "Average:60", "Very Fast:200") = 60;
 
 The value will be stored as an integer, corresponding to the index of the selected
@@ -1056,7 +1058,7 @@ Per-instance uniforms
 
 .. note::
 
-    Per-instance uniforms are only available in ``spatial`` (3D) shaders.
+    Per-instance uniforms are available in both ``canvas_item`` (2D) and ``spatial`` (3D) shaders.
 
 Sometimes, you want to modify a parameter on each node using the material. As an
 example, in a forest full of trees, when you want each tree to have a slightly
@@ -1255,7 +1257,7 @@ Built-in variables
 A large number of built-in variables are available, like ``UV``, ``COLOR`` and
 ``VERTEX``. What variables are available depends on the type of shader
 (``spatial``, ``canvas_item``, ``particle``, etc) and the
-function used (``vertex``, ``fragment``, ``light``, ``start``, ``process,
+function used (``vertex``, ``fragment``, ``light``, ``start``, ``process``,
 ``sky``, or ``fog``). For a list of the built-in variables that are available,
 please see the corresponding pages:
 

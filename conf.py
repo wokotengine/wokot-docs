@@ -29,29 +29,6 @@ sphinx_tabs_nowarn = True
 # Disable collapsing tabs for codeblocks.
 sphinx_tabs_disable_tab_closing = True
 
-# Custom 4O4 page HTML template.
-# https://github.com/readthedocs/sphinx-notfound-page
-notfound_context = {
-    "title": "Page not found",
-    "body": """
-        <h1>Page not found</h1>
-        <p>
-            Sorry, we couldn't find that page. It may have been renamed or removed
-            in the version of the documentation you're currently browsing.
-        </p>
-        <p>
-            If you're currently browsing the
-            <em>latest</em> version of the documentation, try browsing the
-            <a href="/en/stable/"><em>stable</em> version of the documentation</a>.
-        </p>
-        <p>
-            Alternatively, use the
-            <a href="#" onclick="$('#rtd-search-form [name=\\'q\\']').focus()">Search docs</a>
-            box on the left or <a href="/">go to the homepage</a>.
-        </p>
-    """,
-}
-
 # on_rtd is whether we are on readthedocs.org, this line of code grabbed from docs.readthedocs.org
 on_rtd = os.environ.get("READTHEDOCS", None) == "True"
 
@@ -195,7 +172,7 @@ html_context = {
     # Set this to `True` when in the `latest` branch to clearly indicate to the reader
     # that they are not reading the `stable` documentation.
     "godot_is_latest": True,
-    "godot_version": "4.4",
+    "godot_version": "4.5",
     # Enables a banner that displays the up-to-date status of each article.
     "godot_show_article_status": True,
     # Display user-contributed notes at the bottom of pages that don't have `:allow_comments: False` at the top.
@@ -253,6 +230,23 @@ latex_documents = [
 linkcheck_anchors = False
 
 linkcheck_timeout = 10
+
+# -- Custom Sphinx roles for UI -------------------------------------------
+
+rst_prolog = """
+.. role:: button
+   :class: role-button role-ui
+
+.. role:: menu
+    :class: role-menu role-ui
+
+.. role:: inspector
+    :class: role-ui
+
+.. role:: ui
+    :class: role-ui
+
+"""
 
 # -- I18n settings --------------------------------------------------------
 

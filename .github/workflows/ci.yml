@@ -14,10 +14,14 @@ jobs:
     timeout-minutes: 120
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Style checks via pre-commit
         uses: pre-commit/action@v3.0.1
+
+      - name: Custom RST checks (check-rst.sh)
+        run: |
+          bash ./_tools/check-rst.sh
 
       - name: Get Python version
         id: pythonv

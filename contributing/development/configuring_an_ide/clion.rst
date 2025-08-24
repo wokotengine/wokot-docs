@@ -3,8 +3,8 @@
 CLion
 =====
 
-`CLion <https://www.jetbrains.com/clion/>`_ is a commercial
-`JetBrains <https://www.jetbrains.com/>`_ IDE for C++.
+`CLion <https://www.jetbrains.com/clion/>`_ is a
+`JetBrains <https://www.jetbrains.com/>`_ IDE for C++ that's free for individual, non-commercial development.
 
 Importing the project
 ---------------------
@@ -15,7 +15,26 @@ CLion can import a project's `compilation database file <https://clang.llvm.org/
 
     scons compiledb=yes
 
-Then, open the Godot root directory with CLion. CLion will import the compilation database, index the codebase, and provide autocompletion and other advanced code navigation and refactoring functionality.
+Then, open the Godot root directory with CLion and wait for the project to be fully
+indexed. If code completion, parameter information, or refactoring are not enabled,
+you will need to load the project with CMake. To do this, find the ``CMakeLists.txt``
+file in the ``platform\android\java\nativeSrcsConfigs`` directory, right click and
+select :button:`Load CMake Project`. Once the project reloads, a ``godot`` build configuration
+will be added. This configuration can be safely deleted as the CMake file will not
+build the project and only exists for loading the project in JetBrains IDEs.
+
+   .. note:: Windows Users:
+
+      For ``compile_commands.json`` to load correctly in CLion, you must first have the Visual Studio toolchain configured for CLion.
+
+      - Navigate to **Preferences > Build, Execution, Deployment > Toolchains**
+      - Click the **+** button and select  ``Visual Studio``
+      - CLion will attempt to detect your Visual Studio installation. If it is unsuccessful, use the file icon to the right of ``Toolset:`` to select the directory with your Visual Studio installation.
+
+      You may exit and reload CLion and it will reload ``compile_commands.json``
+  
+.. figure:: img/clion_visual_studio_toolchain.webp
+   :align: center
 
 Compiling and debugging the project
 -----------------------------------

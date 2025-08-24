@@ -455,7 +455,7 @@ following as "Thing 1", "Thing 2", "Another Thing". The value will be stored as 
     }
 
     [Export]
-    public MyEnum MyEnum { get; set; }
+    public MyEnum MyEnumCurrent { get; set; }
 
 Integer and string members can also be limited to a specific list of values using the
 ``[Export]`` annotation with the ``PropertyHint.Enum`` hint.
@@ -579,12 +579,6 @@ Exporting Godot dictionaries
 
 Using the generic ``Godot.Collections.Dictionary<TKey, TValue>`` allows specifying
 the types of the key and value elements of the dictionary.
-
-.. note::
-
-    Typed dictionaries are currently unsupported in the Godot editor, so
-    the Inspector will not restrict the types that can be assigned, potentially
-    resulting in runtime exceptions.
 
 .. code-block:: csharp
 

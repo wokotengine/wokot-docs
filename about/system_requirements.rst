@@ -23,25 +23,26 @@ Desktop or laptop PC - Minimum
 .. which can run up to macOS 10.13.
 
 +----------------------+-----------------------------------------------------------------------------------------+
-| **CPU**              | - **Windows:** x86_32 CPU with SSE2 instructions, x86_64 CPU, ARMv8 CPU                 |
+| **CPU**              | - **Windows:** x86_32 CPU with SSE2 support, x86_64 CPU with SSE4.2 support, ARMv8 CPU  |
 |                      |                                                                                         |
-|                      |   - *Example: Intel Core 2 Duo E8200, AMD Athlon XE BE-2300, Snapdragon X Elite*        |
+|                      |   - *Example: Intel Core 2 Duo E8200, AMD FX-4100, Snapdragon X Elite*                  |
 |                      |                                                                                         |
 |                      | - **macOS:** x86_64 or ARM CPU (Apple Silicon)                                          |
 |                      |                                                                                         |
 |                      |   - *Example: Intel Core 2 Duo SU9400, Apple M1*                                        |
 |                      |                                                                                         |
-|                      | - **Linux:** x86_32 CPU with SSE2 instructions, x86_64 CPU, ARMv7 or ARMv8 CPU          |
+|                      | - **Linux:** x86_32 CPU with SSE2 support, x86_64 CPU with SSE4.2 support, ARMv7 or     |
+|                      |   ARMv8 CPU                                                                             |
 |                      |                                                                                         |
-|                      |   - *Example: Intel Core 2 Duo E8200, AMD Athlon XE BE-2300, Raspberry Pi 4*            |
+|                      |   - *Example: Intel Core 2 Duo E8200, AMD FX-4100, Raspberry Pi 4*                      |
 +----------------------+-----------------------------------------------------------------------------------------+
 | **GPU**              | - **Forward+ renderer:** Integrated graphics with full Vulkan 1.0 support               |
 |                      |                                                                                         |
-|                      |   - *Example: Intel HD Graphics 5500 (Broadwell), AMD Radeon R5 Graphics (Kaveri)*      |
+|                      |   - *Example: Intel HD Graphics 510 (Skylake), AMD Radeon R5 Graphics (Kaveri)*         |
 |                      |                                                                                         |
 |                      | - **Mobile renderer:** Integrated graphics with full Vulkan 1.0 support                 |
 |                      |                                                                                         |
-|                      |   - *Example: Intel HD Graphics 5500 (Broadwell), AMD Radeon R5 Graphics (Kaveri)*      |
+|                      |   - *Example: Intel HD Graphics 510 (Skylake), AMD Radeon R5 Graphics (Kaveri)*         |
 |                      |                                                                                         |
 |                      | - **Compatibility renderer:** Integrated graphics with full OpenGL 3.3 support          |
 |                      |                                                                                         |
@@ -54,22 +55,22 @@ Desktop or laptop PC - Minimum
 |                      | Exporting projects requires downloading export templates separately                     |
 |                      | (1.3 GB after installation).                                                            |
 +----------------------+-----------------------------------------------------------------------------------------+
-| **Operating system** | - **Native editor:** Windows 7, macOS 10.13 (Compatibility) or                          |
-|                      |   macOS 10.15 (Forward+/Mobile), Linux distribution released after 2016                 |
-|                      | - **Web editor:** Firefox 79, Chrome 68, Edge 79, Safari 15.2, Opera 64                 |
+| **Operating system** | - **Native editor:** Windows 10, macOS 10.13 (Compatibility) or                         |
+|                      |   macOS 10.15 (Forward+/Mobile), Linux distribution released after 2018                 |
+|                      | - **Web editor:** Recent versions of mainstream browsers: Firefox and derivatives       |
+|                      |   (including ESR), Chrome and Chromium derivatives, Safari and WebKit derivatives.      |
 +----------------------+-----------------------------------------------------------------------------------------+
 
 .. note::
 
-    Windows 7/8/8.1 are supported on a best-effort basis. These versions are not
-    regularly tested and some features may be missing (such as colored
-    :ref:`print_rich <class_@GlobalScope_method_print_rich>` console output).
-    Support for Windows 7/8/8.1 may be removed in a
-    :ref:`future Godot 4.x release <doc_release_policy>`.
+    If your x86_64 CPU does not support SSE4.2, you can still run the 32-bit Godot
+    executable which only has a SSE2 requirement (all x86_64 CPUs support SSE2).
 
-    Vulkan drivers for these Windows versions are known to have issues with
-    memory leaks. As a result, it's recommended to stick to the Compatibility
-    renderer when running Godot on a Windows version older than 10.
+    While supported on Linux, we have no official minimum requirements for running on
+    rv64 (RISC-V), ppc64 & ppc32 (PowerPC), and loongarch64. In addition you must
+    compile the editor for that platform (as well as export templates) yourself,
+    no official downloads are currently provided. RISC-V compiling instructions can
+    be found on the :ref:`doc_compiling_for_linuxbsd` page.
 
 Mobile device (smartphone/tablet) - Minimum
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -101,8 +102,8 @@ Mobile device (smartphone/tablet) - Minimum
 |                      | (1.3 GB after installation)                                                             |
 +----------------------+-----------------------------------------------------------------------------------------+
 | **Operating system** | - **Native editor:** Android 6.0 (Compatibility) or Android 9.0 (Forward+/Mobile)       |
-|                      | - **Web editor:** Firefox 79, Chrome 88, Edge 79, Safari 15.2, Opera 64,                |
-|                      |   Samsung Internet 15                                                                   |
+|                      | - **Web editor:** Recent versions of mainstream browsers: Firefox and derivatives       |
+|                      |   (including ESR), Chrome and Chromium derivatives, Safari and WebKit derivatives.      |
 +----------------------+-----------------------------------------------------------------------------------------+
 
 These are the **recommended** specifications to get a smooth experience with the
@@ -112,7 +113,7 @@ Desktop or laptop PC - Recommended
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 +----------------------+---------------------------------------------------------------------------------------------+
-| **CPU**              | - **Windows:** x86_64 CPU with SSE4.2 instructions, with 4 physical cores or more, ARMv8 CPU|
+| **CPU**              | - **Windows:** x86_64 CPU with SSE4.2 support, with 4 physical cores or more, ARMv8 CPU     |
 |                      |                                                                                             |
 |                      |   - *Example: Intel Core i5-6600K, AMD Ryzen 5 1600, Snapdragon X Elite*                    |
 |                      |                                                                                             |
@@ -120,7 +121,7 @@ Desktop or laptop PC - Recommended
 |                      |                                                                                             |
 |                      |   - *Example: Intel Core i5-8500, Apple M1*                                                 |
 |                      |                                                                                             |
-|                      | - **Linux:** x86_32 CPU with SSE2 instructions, x86_64 CPU, ARMv7 or ARMv8 CPU              |
+|                      | - **Linux:** x86_64 CPU with SSE4.2 support, ARMv7 or ARMv8 CPU                             |
 |                      |                                                                                             |
 |                      |   - *Example: Intel Core i5-6600K, AMD Ryzen 5 1600, Raspberry Pi 5 with overclocking*      |
 +----------------------+---------------------------------------------------------------------------------------------+
@@ -207,27 +208,29 @@ Desktop or laptop PC - Minimum
 .. which can run up to macOS 10.13.
 
 +----------------------+-----------------------------------------------------------------------------------------+
-| **CPU**              | - **Windows:** x86_32 CPU with SSE2 instructions, any x86_64 CPU, ARMv8 CPU             |
+| **CPU**              | - **Windows:** x86_32 CPU with SSE2 support, x86_64 CPU with SSE4.2 support,            |
+|                      |   ARMv8 CPU                                                                             |
 |                      |                                                                                         |
-|                      |   - *Example: Intel Core 2 Duo E8200, AMD Athlon XE BE-2300, Snapdragon X Elite*        |
+|                      |   - *Example: Intel Core 2 Duo E8200, AMD FX-4100, Snapdragon X Elite*                  |
 |                      |                                                                                         |
 |                      | - **macOS:** x86_64 or ARM CPU (Apple Silicon)                                          |
 |                      |                                                                                         |
 |                      |   - *Example: Intel Core 2 Duo SU9400, Apple M1*                                        |
 |                      |                                                                                         |
-|                      | - **Linux:** x86_32 CPU with SSE2 instructions, x86_64 CPU, ARMv7 or ARMv8 CPU          |
+|                      | - **Linux:** x86_32 CPU with SSE2 support, x86_64 CPU with SSE4.2 support,              |
+|                      |   ARMv7 or ARMv8 CPU                                                                    |
 |                      |                                                                                         |
-|                      |   - *Example: Intel Core 2 Duo E8200, AMD Athlon XE BE-2300, Raspberry Pi 4*            |
+|                      |   - *Example: Intel Core 2 Duo E8200, AMD FX-4100, Raspberry Pi 4*                      |
 +----------------------+-----------------------------------------------------------------------------------------+
 | **GPU**              | - **Forward+ renderer:** Integrated graphics with full Vulkan 1.0 support,              |
 |                      |   Metal 3 support (macOS) or Direct3D 12 (12_0 feature level) support (Windows)         |
 |                      |                                                                                         |
-|                      |   - *Example: Intel HD Graphics 5500 (Broadwell), AMD Radeon R5 Graphics (Kaveri)*      |
+|                      |   - *Example: Intel HD Graphics 510 (Skylake), AMD Radeon R5 Graphics (Kaveri)*         |
 |                      |                                                                                         |
 |                      | - **Mobile renderer:** Integrated graphics with full Vulkan 1.0 support,                |
 |                      |   Metal 3 support (macOS) or Direct3D 12 (12_0 feature level) support (Windows)         |
 |                      |                                                                                         |
-|                      |   - *Example: Intel HD Graphics 5500 (Broadwell), AMD Radeon R5 Graphics (Kaveri)*      |
+|                      |   - *Example: Intel HD Graphics 510 (Skylake), AMD Radeon R5 Graphics (Kaveri)*         |
 |                      |                                                                                         |
 |                      | - **Compatibility renderer:** Integrated graphics with full OpenGL 3.3 support          |
 |                      |   or Direct3D 11 support (Windows).                                                     |
@@ -239,24 +242,12 @@ Desktop or laptop PC - Minimum
 +----------------------+-----------------------------------------------------------------------------------------+
 | **Storage**          | 150 MB (used for the executable, project files and cache)                               |
 +----------------------+-----------------------------------------------------------------------------------------+
-| **Operating system** | - **For native exports:** Windows 7 (Compatibility and Forward+/Mobile, Vulkan),        |
-|                      |   Windows 10 (Forward+/Mobile, Direct3D 12), macOS 10.13 (Compatibility), macOS 10.15   |
+| **Operating system** | - **For native exports:** Windows 10, macOS 10.13 (Compatibility), macOS 10.15          |
 |                      |   (Forward+/Mobile, Vulkan), macOS 13.0 (Forward+/Mobile, Metal), Linux distribution    |
-|                      |   released after 2016                                                                   |
-|                      | - **For web exports:** Firefox 79, Chrome 68, Edge 79, Safari 15.2, Opera 64            |
+|                      |   released after 2018                                                                   |
+|                      | - **Web editor:** Recent versions of mainstream browsers: Firefox and derivatives       |
+|                      |   (including ESR), Chrome and Chromium derivatives, Safari and WebKit derivatives.      |
 +----------------------+-----------------------------------------------------------------------------------------+
-
-.. note::
-
-    Windows 7/8/8.1 are supported on a best-effort basis. These versions are not
-    regularly tested and some features may be missing (such as colored
-    :ref:`print_rich <class_@GlobalScope_method_print_rich>` console output).
-    Support for Windows 7/8/8.1 may be removed in a
-    :ref:`future Godot 4.x release <doc_release_policy>`.
-
-    Vulkan drivers for these Windows versions are known to have issues with
-    memory leaks. As a result, it's recommended to stick to the Compatibility
-    renderer when running Godot on a Windows version older than 10.
 
 Mobile device (smartphone/tablet) - Minimum
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -293,8 +284,8 @@ Mobile device (smartphone/tablet) - Minimum
 +----------------------+-----------------------------------------------------------------------------------------+
 | **Operating system** | - **For native exports:** Android 6.0 (Compatibility), Android 9.0 (Forward+/Mobile),   |
 |                      |   iOS 12.0 (Forward+/Mobile, Vulkan), iOS 16.0 (Forward+/Mobile, Metal)                 |
-|                      | - **For web exports:** Firefox 79, Chrome 88, Edge 79, Safari 15.2, Opera 64,           |
-|                      |   Samsung Internet 15                                                                   |
+|                      | - **Web editor:** Recent versions of mainstream browsers: Firefox and derivatives       |
+|                      |   (including ESR), Chrome and Chromium derivatives, Safari and WebKit derivatives.      |
 +----------------------+-----------------------------------------------------------------------------------------+
 
 These are the **recommended** specifications to get a smooth experience with a
@@ -304,7 +295,7 @@ Desktop or laptop PC - Recommended
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 +----------------------+----------------------------------------------------------------------------------------------+
-| **CPU**              | - **Windows:** x86_64 CPU with SSE4.2 instructions, with 4 physical cores or more, ARMv8 CPU |
+| **CPU**              | - **Windows:** x86_64 CPU with SSE4.2 support, with 4 physical cores or more, ARMv8 CPU      |
 |                      |                                                                                              |
 |                      |   - *Example: Intel Core i5-6600K, AMD Ryzen 5 1600, Snapdragon X Elite*                     |
 |                      |                                                                                              |
@@ -312,7 +303,8 @@ Desktop or laptop PC - Recommended
 |                      |                                                                                              |
 |                      |   - *Example: Intel Core i5-8500, Apple M1*                                                  |
 |                      |                                                                                              |
-|                      | - **Linux:** x86_32 CPU with SSE2 instructions, x86_64 CPU, ARMv7 or ARMv8 CPU               |
+|                      | - **Linux:** x86_64 CPU with SSE4.2 support, with 4 physical cores or more,                  |
+|                      |   ARMv7 or ARMv8 CPU                                                                         |
 |                      |                                                                                              |
 |                      |   - *Example: Intel Core i5-6600K, AMD Ryzen 5 1600, Raspberry Pi 5 with overclocking*       |
 +----------------------+----------------------------------------------------------------------------------------------+

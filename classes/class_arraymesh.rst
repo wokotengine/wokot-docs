@@ -32,13 +32,13 @@ The most basic example is the creation of a single triangle:
     vertices.push_back(Vector3(0, 1, 0))
     vertices.push_back(Vector3(1, 0, 0))
     vertices.push_back(Vector3(0, 0, 1))
-    
+
     # Initialize the ArrayMesh.
     var arr_mesh = ArrayMesh.new()
     var arrays = []
     arrays.resize(Mesh.ARRAY_MAX)
     arrays[Mesh.ARRAY_VERTEX] = vertices
-    
+
     # Create the Mesh.
     arr_mesh.add_surface_from_arrays(Mesh.PRIMITIVE_TRIANGLES, arrays)
     var m = MeshInstance3D.new()
@@ -52,13 +52,13 @@ The most basic example is the creation of a single triangle:
         new Vector3(1, 0, 0),
         new Vector3(0, 0, 1),
     ];
-    
+
     // Initialize the ArrayMesh.
     var arrMesh = new ArrayMesh();
     Godot.Collections.Array arrays = [];
     arrays.Resize((int)Mesh.ArrayType.Max);
     arrays[(int)Mesh.ArrayType.Vertex] = vertices;
-    
+
     // Create the Mesh.
     arrMesh.AddSurfaceFromArrays(Mesh.PrimitiveType.Triangles, arrays);
     var m = new MeshInstance3D();
@@ -165,7 +165,7 @@ Property Descriptions
 - |void| **set_blend_shape_mode**\ (\ value\: :ref:`BlendShapeMode<enum_Mesh_BlendShapeMode>`\ )
 - :ref:`BlendShapeMode<enum_Mesh_BlendShapeMode>` **get_blend_shape_mode**\ (\ )
 
-Sets the blend shape mode to one of :ref:`BlendShapeMode<enum_Mesh_BlendShapeMode>`.
+The blend shape mode.
 
 .. rst-class:: classref-item-separator
 
@@ -218,7 +218,7 @@ Method Descriptions
 
 |void| **add_blend_shape**\ (\ name\: :ref:`StringName<class_StringName>`\ ) :ref:`🔗<class_ArrayMesh_method_add_blend_shape>`
 
-Adds name for a blend shape that will be added with :ref:`add_surface_from_arrays<class_ArrayMesh_method_add_surface_from_arrays>`. Must be called before surface is added.
+Adds name for a blend shape that will be added with :ref:`add_surface_from_arrays()<class_ArrayMesh_method_add_surface_from_arrays>`. Must be called before surface is added.
 
 .. rst-class:: classref-item-separator
 
@@ -230,7 +230,7 @@ Adds name for a blend shape that will be added with :ref:`add_surface_from_array
 
 |void| **add_surface_from_arrays**\ (\ primitive\: :ref:`PrimitiveType<enum_Mesh_PrimitiveType>`, arrays\: :ref:`Array<class_Array>`, blend_shapes\: :ref:`Array<class_Array>`\[:ref:`Array<class_Array>`\] = [], lods\: :ref:`Dictionary<class_Dictionary>` = {}, flags\: |bitfield|\[:ref:`ArrayFormat<enum_Mesh_ArrayFormat>`\] = 0\ ) :ref:`🔗<class_ArrayMesh_method_add_surface_from_arrays>`
 
-Creates a new surface. :ref:`Mesh.get_surface_count<class_Mesh_method_get_surface_count>` will become the ``surf_idx`` for this new surface.
+Creates a new surface. :ref:`Mesh.get_surface_count()<class_Mesh_method_get_surface_count>` will become the ``surf_idx`` for this new surface.
 
 Surfaces are created to be rendered using a ``primitive``, which may be any of the values defined in :ref:`PrimitiveType<enum_Mesh_PrimitiveType>`.
 
@@ -350,7 +350,7 @@ Returns the index of the first surface with this name held within this **ArrayMe
 
 :ref:`int<class_int>` **surface_get_array_index_len**\ (\ surf_idx\: :ref:`int<class_int>`\ ) |const| :ref:`🔗<class_ArrayMesh_method_surface_get_array_index_len>`
 
-Returns the length in indices of the index array in the requested surface (see :ref:`add_surface_from_arrays<class_ArrayMesh_method_add_surface_from_arrays>`).
+Returns the length in indices of the index array in the requested surface (see :ref:`add_surface_from_arrays()<class_ArrayMesh_method_add_surface_from_arrays>`).
 
 .. rst-class:: classref-item-separator
 
@@ -362,7 +362,7 @@ Returns the length in indices of the index array in the requested surface (see :
 
 :ref:`int<class_int>` **surface_get_array_len**\ (\ surf_idx\: :ref:`int<class_int>`\ ) |const| :ref:`🔗<class_ArrayMesh_method_surface_get_array_len>`
 
-Returns the length in vertices of the vertex array in the requested surface (see :ref:`add_surface_from_arrays<class_ArrayMesh_method_add_surface_from_arrays>`).
+Returns the length in vertices of the vertex array in the requested surface (see :ref:`add_surface_from_arrays()<class_ArrayMesh_method_add_surface_from_arrays>`).
 
 .. rst-class:: classref-item-separator
 
@@ -374,7 +374,7 @@ Returns the length in vertices of the vertex array in the requested surface (see
 
 |bitfield|\[:ref:`ArrayFormat<enum_Mesh_ArrayFormat>`\] **surface_get_format**\ (\ surf_idx\: :ref:`int<class_int>`\ ) |const| :ref:`🔗<class_ArrayMesh_method_surface_get_format>`
 
-Returns the format mask of the requested surface (see :ref:`add_surface_from_arrays<class_ArrayMesh_method_add_surface_from_arrays>`).
+Returns the format mask of the requested surface (see :ref:`add_surface_from_arrays()<class_ArrayMesh_method_add_surface_from_arrays>`).
 
 .. rst-class:: classref-item-separator
 
@@ -398,7 +398,7 @@ Gets the name assigned to this surface.
 
 :ref:`PrimitiveType<enum_Mesh_PrimitiveType>` **surface_get_primitive_type**\ (\ surf_idx\: :ref:`int<class_int>`\ ) |const| :ref:`🔗<class_ArrayMesh_method_surface_get_primitive_type>`
 
-Returns the primitive type of the requested surface (see :ref:`add_surface_from_arrays<class_ArrayMesh_method_add_surface_from_arrays>`).
+Returns the primitive type of the requested surface (see :ref:`add_surface_from_arrays()<class_ArrayMesh_method_add_surface_from_arrays>`).
 
 .. rst-class:: classref-item-separator
 
@@ -467,6 +467,7 @@ Sets a name for a given surface.
 	There is currently no description for this method. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`

@@ -143,11 +143,11 @@ Signals
 
 **finished**\ (\ ) :ref:`🔗<class_GPUParticles3D_signal_finished>`
 
-Emitted when all active particles have finished processing. To immediately restart the emission cycle, call :ref:`restart<class_GPUParticles3D_method_restart>`.
+Emitted when all active particles have finished processing. To immediately restart the emission cycle, call :ref:`restart()<class_GPUParticles3D_method_restart>`.
 
 This signal is never emitted when :ref:`one_shot<class_GPUParticles3D_property_one_shot>` is disabled, as particles will be emitted and processed continuously.
 
-\ **Note:** For :ref:`one_shot<class_GPUParticles3D_property_one_shot>` emitters, due to the particles being computed on the GPU, there may be a short period after receiving the signal during which setting :ref:`emitting<class_GPUParticles3D_property_emitting>` to ``true`` will not restart the emission cycle. This delay is avoided by instead calling :ref:`restart<class_GPUParticles3D_method_restart>`.
+\ **Note:** For :ref:`one_shot<class_GPUParticles3D_property_one_shot>` emitters, due to the particles being computed on the GPU, there may be a short period after receiving the signal during which setting :ref:`emitting<class_GPUParticles3D_property_emitting>` to ``true`` will not restart the emission cycle. This delay is avoided by instead calling :ref:`restart()<class_GPUParticles3D_method_restart>`.
 
 .. rst-class:: classref-section-separator
 
@@ -398,7 +398,7 @@ The base diameter for particle collision in meters. If particles appear to sink 
 - |void| **set_draw_order**\ (\ value\: :ref:`DrawOrder<enum_GPUParticles3D_DrawOrder>`\ )
 - :ref:`DrawOrder<enum_GPUParticles3D_DrawOrder>` **get_draw_order**\ (\ )
 
-Particle draw order. Uses :ref:`DrawOrder<enum_GPUParticles3D_DrawOrder>` values.
+Particle draw order.
 
 \ **Note:** :ref:`DRAW_ORDER_INDEX<class_GPUParticles3D_constant_DRAW_ORDER_INDEX>` is the only option that supports motion vectors for effects like TAA. It is suggested to use this draw order if the particles are opaque to fix ghosting artifacts.
 
@@ -525,7 +525,7 @@ If ``true``, particles are being emitted. :ref:`emitting<class_GPUParticles3D_pr
 
 \ **Note:** For :ref:`one_shot<class_GPUParticles3D_property_one_shot>` emitters, due to the particles being computed on the GPU, there may be a short period after receiving the :ref:`finished<class_GPUParticles3D_signal_finished>` signal during which setting this to ``true`` will not restart the emission cycle.
 
-\ **Tip:** If your :ref:`one_shot<class_GPUParticles3D_property_one_shot>` emitter needs to immediately restart emitting particles once :ref:`finished<class_GPUParticles3D_signal_finished>` signal is received, consider calling :ref:`restart<class_GPUParticles3D_method_restart>` instead of setting :ref:`emitting<class_GPUParticles3D_property_emitting>`.
+\ **Tip:** If your :ref:`one_shot<class_GPUParticles3D_property_one_shot>` emitter needs to immediately restart emitting particles once :ref:`finished<class_GPUParticles3D_signal_finished>` signal is received, consider calling :ref:`restart()<class_GPUParticles3D_method_restart>` instead of setting :ref:`emitting<class_GPUParticles3D_property_emitting>`.
 
 .. rst-class:: classref-item-separator
 
@@ -909,7 +909,7 @@ Emits a single particle. Whether ``xform``, ``velocity``, ``color`` and ``custom
 
 The default ParticleProcessMaterial will overwrite ``color`` and use the contents of ``custom`` as ``(rotation, age, animation, lifetime)``.
 
-\ **Note:** :ref:`emit_particle<class_GPUParticles3D_method_emit_particle>` is only supported on the Forward+ and Mobile rendering methods, not Compatibility.
+\ **Note:** :ref:`emit_particle()<class_GPUParticles3D_method_emit_particle>` is only supported on the Forward+ and Mobile rendering methods, not Compatibility.
 
 .. rst-class:: classref-item-separator
 
@@ -935,7 +935,7 @@ Returns the :ref:`Mesh<class_Mesh>` that is drawn at index ``pass``.
 
 Requests the particles to process for extra process time during a single frame.
 
-Useful for particle playback, if used in combination with :ref:`use_fixed_seed<class_GPUParticles3D_property_use_fixed_seed>` or by calling :ref:`restart<class_GPUParticles3D_method_restart>` with parameter ``keep_seed`` set to ``true``.
+Useful for particle playback, if used in combination with :ref:`use_fixed_seed<class_GPUParticles3D_property_use_fixed_seed>` or by calling :ref:`restart()<class_GPUParticles3D_method_restart>` with parameter ``keep_seed`` set to ``true``.
 
 .. rst-class:: classref-item-separator
 
@@ -966,6 +966,7 @@ If ``keep_seed`` is ``true``, the current random seed will be preserved. Useful 
 Sets the :ref:`Mesh<class_Mesh>` that is drawn at index ``pass``.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`

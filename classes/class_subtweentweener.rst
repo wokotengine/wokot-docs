@@ -19,9 +19,9 @@ Runs a :ref:`Tween<class_Tween>` nested within another :ref:`Tween<class_Tween>`
 Description
 -----------
 
-**SubtweenTweener** is used to execute a :ref:`Tween<class_Tween>` as one step in a sequence defined by another :ref:`Tween<class_Tween>`. See :ref:`Tween.tween_subtween<class_Tween_method_tween_subtween>` for more usage information.
+**SubtweenTweener** is used to execute a :ref:`Tween<class_Tween>` as one step in a sequence defined by another :ref:`Tween<class_Tween>`. See :ref:`Tween.tween_subtween()<class_Tween_method_tween_subtween>` for more usage information.
 
-\ **Note:** :ref:`Tween.tween_subtween<class_Tween_method_tween_subtween>` is the only correct way to create **SubtweenTweener**. Any **SubtweenTweener** created manually will not function correctly.
+\ **Note:** :ref:`Tween.tween_subtween()<class_Tween_method_tween_subtween>` is the only correct way to create **SubtweenTweener**. Any **SubtweenTweener** created manually will not function correctly.
 
 .. rst-class:: classref-reftable-group
 
@@ -53,6 +53,7 @@ Method Descriptions
 Sets the time in seconds after which the **SubtweenTweener** will start running the subtween. By default there's no delay.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`

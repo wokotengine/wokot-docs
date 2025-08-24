@@ -41,7 +41,7 @@ in the user's browser.
     Since Godot 4.3, Godot supports exporting your game on a single thread, which
     solves this issue. While it has some drawbacks on its own (it cannot use threads, and is
     not as performant as the multi-threaded export), it doesn't require as much overhead to install.
-    It is also more compatible overall with stores like `itch.io <https://itch.io/>` or Web publishers like
+    It is also more compatible overall with stores like `itch.io <https://itch.io/>`__ or Web publishers like
     `Poki <https://poki.com/>`__ or `CrazyGames <https://crazygames.com/>`__. The single-threaded export
     works very well on macOS and iOS too, where it always had compatibility issues with multiple threads
     exports.
@@ -136,7 +136,7 @@ If a runnable web export template is available, a button appears between the
 *Stop scene* and *Play edited Scene* buttons in the editor to quickly open the
 game in the default browser for testing.
 
-If your project uses GDExtension **Extension Support** needs to be enabled.
+If your project uses GDExtension, **Extension Support** needs to be enabled.
 
 If you plan to use :ref:`VRAM compression <doc_importing_images>` make sure that
 **VRAM Texture Compression** is enabled for the targeted platforms (enabling
@@ -149,6 +149,13 @@ the default HTML page. See :ref:`doc_customizing_html5_shell`.
 **Head Include** is appended into the ``<head>`` element of the generated
 HTML page. This allows to, for example, load webfonts and third-party
 JavaScript APIs, include CSS, or run JavaScript code.
+
+The window size will automatically match the browser window size by default.
+If you want to use a fixed size instead regardless of the browser window size,
+change **Canvas Resize Policy** to **None**. This allows controlling the window
+size with custom JavaScript code in the HTML shell. You can also set it to
+**Project** to make it behave closer to a native export, according to the
+:ref:`project settings <doc_multiple_resolutions>`.
 
 .. important:: Each project must generate their own HTML file. On export,
                several text placeholders are replaced in the generated HTML
@@ -271,7 +278,7 @@ Some browsers restrict autoplay for audio on websites. The easiest way around th
 player to click, tap or press a key/button to enable audio, for instance when displaying a splash screen at the start of your game.
 
 .. seealso:: Google offers additional information about their `Web Audio autoplay
-             policies <https://sites.google.com/a/chromium.org/dev/audio-video/autoplay>`__.
+             policies <https://www.chromium.org/audio-video/autoplay/>`__.
 
              Apple's Safari team also posted additional information about their `Auto-Play Policy Changes for macOS
              <https://webkit.org/blog/7734/auto-play-policy-changes-for-macos/>`__.
@@ -397,7 +404,7 @@ supported on your web server for further file size savings.
 **Hosts that provide on-the-fly compression:** GitHub Pages (gzip)
 
 **Hosts that don't provide on-the-fly compression:** itch.io, GitLab Pages
-(`supports manual gzip precompression <https://webd97.de/post/gitlab-pages-compression/>`__)
+(`supports manual gzip precompression <https://docs.gitlab.com/user/project/pages/introduction/#serving-compressed-assets>`__)
 
 .. tip::
 
@@ -445,3 +452,9 @@ the export menu.
      - Environment variable
    * - Encryption / Encryption Key
      - ``GODOT_SCRIPT_ENCRYPTION_KEY``
+
+Export options
+--------------
+
+You can find a full list of export options available in the
+:ref:`class_EditorExportPlatformWeb` class reference.

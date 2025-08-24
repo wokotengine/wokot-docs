@@ -158,7 +158,7 @@ Method Descriptions
 
 :ref:`AudioStreamOggVorbis<class_AudioStreamOggVorbis>` **load_from_buffer**\ (\ stream_data\: :ref:`PackedByteArray<class_PackedByteArray>`\ ) |static| :ref:`🔗<class_ResourceImporterOggVorbis_method_load_from_buffer>`
 
-**Deprecated:** Use :ref:`AudioStreamOggVorbis.load_from_buffer<class_AudioStreamOggVorbis_method_load_from_buffer>` instead.
+**Deprecated:** Use :ref:`AudioStreamOggVorbis.load_from_buffer()<class_AudioStreamOggVorbis_method_load_from_buffer>` instead.
 
 Creates a new :ref:`AudioStreamOggVorbis<class_AudioStreamOggVorbis>` instance from the given buffer. The buffer must contain Ogg Vorbis data.
 
@@ -172,11 +172,12 @@ Creates a new :ref:`AudioStreamOggVorbis<class_AudioStreamOggVorbis>` instance f
 
 :ref:`AudioStreamOggVorbis<class_AudioStreamOggVorbis>` **load_from_file**\ (\ path\: :ref:`String<class_String>`\ ) |static| :ref:`🔗<class_ResourceImporterOggVorbis_method_load_from_file>`
 
-**Deprecated:** Use :ref:`AudioStreamOggVorbis.load_from_file<class_AudioStreamOggVorbis_method_load_from_file>` instead.
+**Deprecated:** Use :ref:`AudioStreamOggVorbis.load_from_file()<class_AudioStreamOggVorbis_method_load_from_file>` instead.
 
 Creates a new :ref:`AudioStreamOggVorbis<class_AudioStreamOggVorbis>` instance from the given file path. The file must be in Ogg Vorbis format.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`

@@ -45,7 +45,7 @@ language specifically for Godot and the needs of game developers. It has a
 lightweight and straightforward syntax and provides the tightest integration
 with Godot.
 
-.. image:: img/scripting_gdscript.png
+.. image:: img/scripting_gdscript.webp
 
 For C#, you will need an external code editor like
 `VSCode <https://code.visualstudio.com/>`_ or Visual Studio. While C# support is
@@ -133,7 +133,7 @@ officially supported .NET option.
     Android and iOS platform support is available as of Godot 4.2, but is
     experimental and :ref:`some limitations apply <doc_c_sharp_platforms>`.
 
-.. seealso:: To learn more about C#, head to the :ref:`C# basics <doc_c_sharp>` page.
+.. seealso:: To learn more about C#, head to the :ref:`doc_c_sharp` section.
 
 C++ via GDExtension
 ~~~~~~~~~~~~~~~~~~~

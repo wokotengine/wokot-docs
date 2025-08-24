@@ -3,7 +3,7 @@
 C# API differences to GDScript
 ==============================
 
-This is a (incomplete) list of API differences between C# and GDScript.
+This is an (incomplete) list of API differences between C# and GDScript.
 
 General differences
 -------------------
@@ -380,6 +380,8 @@ String
 Use ``System.String`` (``string``). Most of Godot's String methods have an
 equivalent in ``System.String`` or are provided by the ``StringExtensions``
 class as extension methods.
+
+Note that C# strings use UTF-16 encoding, while Godot Strings use UTF-32 encoding.
 
 Example:
 

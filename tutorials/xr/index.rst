@@ -29,9 +29,11 @@ Advanced topics
    openxr_settings
    xr_action_map
    xr_room_scale
+   xr_full_screen_effects
    openxr_composition_layers
    openxr_hand_tracking
    openxr_body_tracking
+   openxr_render_models
 
 Godot XR Tools
 --------------

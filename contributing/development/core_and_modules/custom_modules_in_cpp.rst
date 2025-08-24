@@ -47,8 +47,7 @@ Inside we will create a summator class:
 .. code-block:: cpp
     :caption: godot/modules/summator/summator.h
 
-    #ifndef SUMMATOR_H
-    #define SUMMATOR_H
+    #pragma once
 
     #include "core/object/ref_counted.h"
 
@@ -67,8 +66,6 @@ Inside we will create a summator class:
 
         Summator();
     };
-
-    #endif // SUMMATOR_H
 
 And then the cpp file.
 
@@ -225,10 +222,6 @@ this:
 You can then zip it and share the module with everyone else. When
 building for every platform (instructions in the previous sections),
 your module will be included.
-
-.. note:: There is a parameter limit of 5 in C++ modules for things such
-          as subclasses. This can be raised to 13 by including the header
-          file ``core/method_bind_ext.gen.inc``.
 
 Using the module
 ----------------
@@ -538,11 +531,15 @@ main ``doc/classes`` directory.
 .. tip::
 
     You can use Git to check if you have missed some of your classes by checking the
-    untracked files with ``git status``. For example::
+    untracked files with ``git status``. For example:
+
+    ::
 
         git status
 
-    Example output::
+    Example output:
+
+    ::
 
         Untracked files:
             (use "git add <file>..." to include in what will be committed)
@@ -564,9 +561,9 @@ to an another folder, and just copy over the files that you need.
 
 Run command:
 
-   ::
+::
 
-      bin/<godot_binary> --doctool .
+    bin/<godot_binary> --doctool .
 
 Now if you go to the ``godot/modules/summator/doc_classes`` folder, you will see
 that it contains a ``Summator.xml`` file, or any other classes, that you referenced
@@ -621,8 +618,7 @@ The procedure is the following:
 .. code-block:: cpp
     :caption: godot/modules/summator/tests/test_summator.h
 
-    #ifndef TEST_SUMMATOR_H
-    #define TEST_SUMMATOR_H
+    #pragma once
 
     #include "tests/test_macros.h"
 
@@ -648,8 +644,6 @@ The procedure is the following:
     }
 
     } // namespace TestSummator
-
-    #endif // TEST_SUMMATOR_H
 
 4. Compile the engine with ``scons tests=yes``, and run the tests with the
    following command:

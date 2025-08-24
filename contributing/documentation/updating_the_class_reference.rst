@@ -72,8 +72,8 @@ If you decide to document a class, but don't know what a particular method does,
 worry. Leave it for now, and list the methods you skipped when you open a pull request
 with your changes. Another writer will take care of it.
 
-You can still look at the methods' implementation in Godot's source code on GitHub.
-If you have doubts, feel free to ask on the `Q&A website <https://ask.godotengine.org/>`_
+You can still look at the method's implementation in Godot's source code on GitHub.
+If you have doubts, feel free to ask on the `Godot Forum <https://forum.godotengine.org/>`_
 and `Godot Contributors Chat <https://chat.godotengine.org/>`_.
 
 .. warning::

@@ -73,8 +73,8 @@ To set up:
 
 ::
 
-  pip install pre-commit
-  pre-commit install
+    pip install pre-commit
+    pre-commit install
 
 
 You can also run the hook manually with ``pre-commit run``.
@@ -203,18 +203,13 @@ Example:
     /* SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.                 */
     /**************************************************************************/
 
-    #ifndef MY_NEW_FILE_H
-    #define MY_NEW_FILE_H
+    #pragma once
 
     #include "core/hash_map.h"
     #include "core/list.h"
     #include "scene/gui/control.h"
 
     #include <png.h>
-
-    ...
-
-    #endif // MY_NEW_FILE_H
 
 .. code-block:: cpp
     :caption: my_new_file.cpp
@@ -335,7 +330,7 @@ Editor integration
 
 Many IDEs or code editors have beautifier plugins that can be configured to run
 ruff automatically, for example, each time you save a file. For details, you can
-check `Ruff Integrations <https://docs.astral.sh/ruff/integrations/>`__.
+check `Ruff Editor Integrations <https://docs.astral.sh/ruff/editors/>`__.
 
 Comment style guide
 -------------------

@@ -6,7 +6,7 @@ GDScript format strings
 Godot offers multiple ways to dynamically change the contents of strings:
 
 - Format strings: ``var string = "I have %s cats." % "3"``
-- The ``String.format()`` method: ``var string = "I have {} cats.".format([3])``
+- The ``String.format()`` method: ``var string = "I have {0} cats.".format([3])``
 - String concatenation: ``var string = "I have " + str(3) + " cats."``
 
 This page explains how to use format strings, and briefly explains the ``format()``
@@ -86,8 +86,8 @@ specifier. Apart from ``s``, these require certain types of parameters.
 | ``s`` | **Simple** conversion to String by the same method as implicit      |
 |       | String conversion.                                                  |
 +-------+---------------------------------------------------------------------+
-| ``c`` | A single **Unicode character**. Expects an unsigned 8-bit integer   |
-|       | (0-255) for a code point or a single-character string.              |
+| ``c`` | A single **Unicode character**. Accepts a Unicode code point        |
+|       | (integer) or a single-character string. Supports values beyond 255. |
 +-------+---------------------------------------------------------------------+
 | ``d`` | A **decimal integer**. Expects an integer or a real number          |
 |       | (will be floored).                                                  |

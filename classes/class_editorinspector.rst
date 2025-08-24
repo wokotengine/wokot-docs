@@ -19,9 +19,9 @@ A control used to edit properties of an object.
 Description
 -----------
 
-This is the control that implements property editing in the editor's Settings dialogs, the Inspector dock, etc. To get the **EditorInspector** used in the editor's Inspector dock, use :ref:`EditorInterface.get_inspector<class_EditorInterface_method_get_inspector>`.
+This is the control that implements property editing in the editor's Settings dialogs, the Inspector dock, etc. To get the **EditorInspector** used in the editor's Inspector dock, use :ref:`EditorInterface.get_inspector()<class_EditorInterface_method_get_inspector>`.
 
-\ **EditorInspector** will show properties in the same order as the array returned by :ref:`Object.get_property_list<class_Object_method_get_property_list>`.
+\ **EditorInspector** will show properties in the same order as the array returned by :ref:`Object.get_property_list()<class_Object_method_get_property_list>`.
 
 If a property's name is path-like (i.e. if it contains forward slashes), **EditorInspector** will create nested sections for "directories" along the path. For example, if a property is named ``highlighting/gdscript/node_path_color``, it will be shown as "Node Path Color" inside the "GDScript" section nested inside the "Highlighting" section.
 
@@ -43,6 +43,8 @@ Properties
    | :ref:`bool<class_bool>`                            | draw_focus_border      | ``true`` (overrides :ref:`ScrollContainer<class_ScrollContainer_property_draw_focus_border>`)   |
    +----------------------------------------------------+------------------------+-------------------------------------------------------------------------------------------------+
    | :ref:`FocusMode<enum_Control_FocusMode>`           | focus_mode             | ``2`` (overrides :ref:`Control<class_Control_property_focus_mode>`)                             |
+   +----------------------------------------------------+------------------------+-------------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>`                            | follow_focus           | ``true`` (overrides :ref:`ScrollContainer<class_ScrollContainer_property_follow_focus>`)        |
    +----------------------------------------------------+------------------------+-------------------------------------------------------------------------------------------------+
    | :ref:`ScrollMode<enum_ScrollContainer_ScrollMode>` | horizontal_scroll_mode | ``0`` (overrides :ref:`ScrollContainer<class_ScrollContainer_property_horizontal_scroll_mode>`) |
    +----------------------------------------------------+------------------------+-------------------------------------------------------------------------------------------------+
@@ -236,6 +238,7 @@ Gets the path of the currently selected property.
 Creates a property editor that can be used by plugin UI to edit the specified property of an ``object``.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`

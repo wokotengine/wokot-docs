@@ -272,7 +272,7 @@ enum **Parameter**: :ref:`🔗<enum_CPUParticles2D_Parameter>`
 
 :ref:`Parameter<enum_CPUParticles2D_Parameter>` **PARAM_INITIAL_LINEAR_VELOCITY** = ``0``
 
-Use with :ref:`set_param_min<class_CPUParticles2D_method_set_param_min>`, :ref:`set_param_max<class_CPUParticles2D_method_set_param_max>`, and :ref:`set_param_curve<class_CPUParticles2D_method_set_param_curve>` to set initial velocity properties.
+Use with :ref:`set_param_min()<class_CPUParticles2D_method_set_param_min>`, :ref:`set_param_max()<class_CPUParticles2D_method_set_param_max>`, and :ref:`set_param_curve()<class_CPUParticles2D_method_set_param_curve>` to set initial velocity properties.
 
 .. _class_CPUParticles2D_constant_PARAM_ANGULAR_VELOCITY:
 
@@ -280,7 +280,7 @@ Use with :ref:`set_param_min<class_CPUParticles2D_method_set_param_min>`, :ref:`
 
 :ref:`Parameter<enum_CPUParticles2D_Parameter>` **PARAM_ANGULAR_VELOCITY** = ``1``
 
-Use with :ref:`set_param_min<class_CPUParticles2D_method_set_param_min>`, :ref:`set_param_max<class_CPUParticles2D_method_set_param_max>`, and :ref:`set_param_curve<class_CPUParticles2D_method_set_param_curve>` to set angular velocity properties.
+Use with :ref:`set_param_min()<class_CPUParticles2D_method_set_param_min>`, :ref:`set_param_max()<class_CPUParticles2D_method_set_param_max>`, and :ref:`set_param_curve()<class_CPUParticles2D_method_set_param_curve>` to set angular velocity properties.
 
 .. _class_CPUParticles2D_constant_PARAM_ORBIT_VELOCITY:
 
@@ -288,7 +288,7 @@ Use with :ref:`set_param_min<class_CPUParticles2D_method_set_param_min>`, :ref:`
 
 :ref:`Parameter<enum_CPUParticles2D_Parameter>` **PARAM_ORBIT_VELOCITY** = ``2``
 
-Use with :ref:`set_param_min<class_CPUParticles2D_method_set_param_min>`, :ref:`set_param_max<class_CPUParticles2D_method_set_param_max>`, and :ref:`set_param_curve<class_CPUParticles2D_method_set_param_curve>` to set orbital velocity properties.
+Use with :ref:`set_param_min()<class_CPUParticles2D_method_set_param_min>`, :ref:`set_param_max()<class_CPUParticles2D_method_set_param_max>`, and :ref:`set_param_curve()<class_CPUParticles2D_method_set_param_curve>` to set orbital velocity properties.
 
 .. _class_CPUParticles2D_constant_PARAM_LINEAR_ACCEL:
 
@@ -296,7 +296,7 @@ Use with :ref:`set_param_min<class_CPUParticles2D_method_set_param_min>`, :ref:`
 
 :ref:`Parameter<enum_CPUParticles2D_Parameter>` **PARAM_LINEAR_ACCEL** = ``3``
 
-Use with :ref:`set_param_min<class_CPUParticles2D_method_set_param_min>`, :ref:`set_param_max<class_CPUParticles2D_method_set_param_max>`, and :ref:`set_param_curve<class_CPUParticles2D_method_set_param_curve>` to set linear acceleration properties.
+Use with :ref:`set_param_min()<class_CPUParticles2D_method_set_param_min>`, :ref:`set_param_max()<class_CPUParticles2D_method_set_param_max>`, and :ref:`set_param_curve()<class_CPUParticles2D_method_set_param_curve>` to set linear acceleration properties.
 
 .. _class_CPUParticles2D_constant_PARAM_RADIAL_ACCEL:
 
@@ -304,7 +304,7 @@ Use with :ref:`set_param_min<class_CPUParticles2D_method_set_param_min>`, :ref:`
 
 :ref:`Parameter<enum_CPUParticles2D_Parameter>` **PARAM_RADIAL_ACCEL** = ``4``
 
-Use with :ref:`set_param_min<class_CPUParticles2D_method_set_param_min>`, :ref:`set_param_max<class_CPUParticles2D_method_set_param_max>`, and :ref:`set_param_curve<class_CPUParticles2D_method_set_param_curve>` to set radial acceleration properties.
+Use with :ref:`set_param_min()<class_CPUParticles2D_method_set_param_min>`, :ref:`set_param_max()<class_CPUParticles2D_method_set_param_max>`, and :ref:`set_param_curve()<class_CPUParticles2D_method_set_param_curve>` to set radial acceleration properties.
 
 .. _class_CPUParticles2D_constant_PARAM_TANGENTIAL_ACCEL:
 
@@ -312,7 +312,7 @@ Use with :ref:`set_param_min<class_CPUParticles2D_method_set_param_min>`, :ref:`
 
 :ref:`Parameter<enum_CPUParticles2D_Parameter>` **PARAM_TANGENTIAL_ACCEL** = ``5``
 
-Use with :ref:`set_param_min<class_CPUParticles2D_method_set_param_min>`, :ref:`set_param_max<class_CPUParticles2D_method_set_param_max>`, and :ref:`set_param_curve<class_CPUParticles2D_method_set_param_curve>` to set tangential acceleration properties.
+Use with :ref:`set_param_min()<class_CPUParticles2D_method_set_param_min>`, :ref:`set_param_max()<class_CPUParticles2D_method_set_param_max>`, and :ref:`set_param_curve()<class_CPUParticles2D_method_set_param_curve>` to set tangential acceleration properties.
 
 .. _class_CPUParticles2D_constant_PARAM_DAMPING:
 
@@ -320,7 +320,7 @@ Use with :ref:`set_param_min<class_CPUParticles2D_method_set_param_min>`, :ref:`
 
 :ref:`Parameter<enum_CPUParticles2D_Parameter>` **PARAM_DAMPING** = ``6``
 
-Use with :ref:`set_param_min<class_CPUParticles2D_method_set_param_min>`, :ref:`set_param_max<class_CPUParticles2D_method_set_param_max>`, and :ref:`set_param_curve<class_CPUParticles2D_method_set_param_curve>` to set damping properties.
+Use with :ref:`set_param_min()<class_CPUParticles2D_method_set_param_min>`, :ref:`set_param_max()<class_CPUParticles2D_method_set_param_max>`, and :ref:`set_param_curve()<class_CPUParticles2D_method_set_param_curve>` to set damping properties.
 
 .. _class_CPUParticles2D_constant_PARAM_ANGLE:
 
@@ -328,7 +328,7 @@ Use with :ref:`set_param_min<class_CPUParticles2D_method_set_param_min>`, :ref:`
 
 :ref:`Parameter<enum_CPUParticles2D_Parameter>` **PARAM_ANGLE** = ``7``
 
-Use with :ref:`set_param_min<class_CPUParticles2D_method_set_param_min>`, :ref:`set_param_max<class_CPUParticles2D_method_set_param_max>`, and :ref:`set_param_curve<class_CPUParticles2D_method_set_param_curve>` to set angle properties.
+Use with :ref:`set_param_min()<class_CPUParticles2D_method_set_param_min>`, :ref:`set_param_max()<class_CPUParticles2D_method_set_param_max>`, and :ref:`set_param_curve()<class_CPUParticles2D_method_set_param_curve>` to set angle properties.
 
 .. _class_CPUParticles2D_constant_PARAM_SCALE:
 
@@ -336,7 +336,7 @@ Use with :ref:`set_param_min<class_CPUParticles2D_method_set_param_min>`, :ref:`
 
 :ref:`Parameter<enum_CPUParticles2D_Parameter>` **PARAM_SCALE** = ``8``
 
-Use with :ref:`set_param_min<class_CPUParticles2D_method_set_param_min>`, :ref:`set_param_max<class_CPUParticles2D_method_set_param_max>`, and :ref:`set_param_curve<class_CPUParticles2D_method_set_param_curve>` to set scale properties.
+Use with :ref:`set_param_min()<class_CPUParticles2D_method_set_param_min>`, :ref:`set_param_max()<class_CPUParticles2D_method_set_param_max>`, and :ref:`set_param_curve()<class_CPUParticles2D_method_set_param_curve>` to set scale properties.
 
 .. _class_CPUParticles2D_constant_PARAM_HUE_VARIATION:
 
@@ -344,7 +344,7 @@ Use with :ref:`set_param_min<class_CPUParticles2D_method_set_param_min>`, :ref:`
 
 :ref:`Parameter<enum_CPUParticles2D_Parameter>` **PARAM_HUE_VARIATION** = ``9``
 
-Use with :ref:`set_param_min<class_CPUParticles2D_method_set_param_min>`, :ref:`set_param_max<class_CPUParticles2D_method_set_param_max>`, and :ref:`set_param_curve<class_CPUParticles2D_method_set_param_curve>` to set hue variation properties.
+Use with :ref:`set_param_min()<class_CPUParticles2D_method_set_param_min>`, :ref:`set_param_max()<class_CPUParticles2D_method_set_param_max>`, and :ref:`set_param_curve()<class_CPUParticles2D_method_set_param_curve>` to set hue variation properties.
 
 .. _class_CPUParticles2D_constant_PARAM_ANIM_SPEED:
 
@@ -352,7 +352,7 @@ Use with :ref:`set_param_min<class_CPUParticles2D_method_set_param_min>`, :ref:`
 
 :ref:`Parameter<enum_CPUParticles2D_Parameter>` **PARAM_ANIM_SPEED** = ``10``
 
-Use with :ref:`set_param_min<class_CPUParticles2D_method_set_param_min>`, :ref:`set_param_max<class_CPUParticles2D_method_set_param_max>`, and :ref:`set_param_curve<class_CPUParticles2D_method_set_param_curve>` to set animation speed properties.
+Use with :ref:`set_param_min()<class_CPUParticles2D_method_set_param_min>`, :ref:`set_param_max()<class_CPUParticles2D_method_set_param_max>`, and :ref:`set_param_curve()<class_CPUParticles2D_method_set_param_curve>` to set animation speed properties.
 
 .. _class_CPUParticles2D_constant_PARAM_ANIM_OFFSET:
 
@@ -360,7 +360,7 @@ Use with :ref:`set_param_min<class_CPUParticles2D_method_set_param_min>`, :ref:`
 
 :ref:`Parameter<enum_CPUParticles2D_Parameter>` **PARAM_ANIM_OFFSET** = ``11``
 
-Use with :ref:`set_param_min<class_CPUParticles2D_method_set_param_min>`, :ref:`set_param_max<class_CPUParticles2D_method_set_param_max>`, and :ref:`set_param_curve<class_CPUParticles2D_method_set_param_curve>` to set animation offset properties.
+Use with :ref:`set_param_min()<class_CPUParticles2D_method_set_param_min>`, :ref:`set_param_max()<class_CPUParticles2D_method_set_param_max>`, and :ref:`set_param_curve()<class_CPUParticles2D_method_set_param_curve>` to set animation offset properties.
 
 .. _class_CPUParticles2D_constant_PARAM_MAX:
 
@@ -386,7 +386,7 @@ enum **ParticleFlags**: :ref:`🔗<enum_CPUParticles2D_ParticleFlags>`
 
 :ref:`ParticleFlags<enum_CPUParticles2D_ParticleFlags>` **PARTICLE_FLAG_ALIGN_Y_TO_VELOCITY** = ``0``
 
-Use with :ref:`set_particle_flag<class_CPUParticles2D_method_set_particle_flag>` to set :ref:`particle_flag_align_y<class_CPUParticles2D_property_particle_flag_align_y>`.
+Use with :ref:`set_particle_flag()<class_CPUParticles2D_method_set_particle_flag>` to set :ref:`particle_flag_align_y<class_CPUParticles2D_property_particle_flag_align_y>`.
 
 .. _class_CPUParticles2D_constant_PARTICLE_FLAG_ROTATE_Y:
 
@@ -840,7 +840,7 @@ Unit vector specifying the particles' emission direction.
 - |void| **set_draw_order**\ (\ value\: :ref:`DrawOrder<enum_CPUParticles2D_DrawOrder>`\ )
 - :ref:`DrawOrder<enum_CPUParticles2D_DrawOrder>` **get_draw_order**\ (\ )
 
-Particle draw order. Uses :ref:`DrawOrder<enum_CPUParticles2D_DrawOrder>` values.
+Particle draw order.
 
 .. rst-class:: classref-item-separator
 
@@ -931,7 +931,7 @@ The rectangle's extents if :ref:`emission_shape<class_CPUParticles2D_property_em
 - |void| **set_emission_shape**\ (\ value\: :ref:`EmissionShape<enum_CPUParticles2D_EmissionShape>`\ )
 - :ref:`EmissionShape<enum_CPUParticles2D_EmissionShape>` **get_emission_shape**\ (\ )
 
-Particles will be emitted inside this region. See :ref:`EmissionShape<enum_CPUParticles2D_EmissionShape>` for possible values.
+Particles will be emitted inside this region.
 
 .. rst-class:: classref-item-separator
 
@@ -1697,7 +1697,7 @@ Returns the minimum value range for the given parameter.
 
 :ref:`bool<class_bool>` **get_particle_flag**\ (\ particle_flag\: :ref:`ParticleFlags<enum_CPUParticles2D_ParticleFlags>`\ ) |const| :ref:`🔗<class_CPUParticles2D_method_get_particle_flag>`
 
-Returns the enabled state of the given particle flag (see :ref:`ParticleFlags<enum_CPUParticles2D_ParticleFlags>` for options).
+Returns the enabled state of the given particle flag.
 
 .. rst-class:: classref-item-separator
 
@@ -1711,7 +1711,7 @@ Returns the enabled state of the given particle flag (see :ref:`ParticleFlags<en
 
 Requests the particles to process for extra process time during a single frame.
 
-Useful for particle playback, if used in combination with :ref:`use_fixed_seed<class_CPUParticles2D_property_use_fixed_seed>` or by calling :ref:`restart<class_CPUParticles2D_method_restart>` with parameter ``keep_seed`` set to ``true``.
+Useful for particle playback, if used in combination with :ref:`use_fixed_seed<class_CPUParticles2D_property_use_fixed_seed>` or by calling :ref:`restart()<class_CPUParticles2D_method_restart>` with parameter ``keep_seed`` set to ``true``.
 
 .. rst-class:: classref-item-separator
 
@@ -1773,9 +1773,10 @@ Sets the minimum value for the given parameter.
 
 |void| **set_particle_flag**\ (\ particle_flag\: :ref:`ParticleFlags<enum_CPUParticles2D_ParticleFlags>`, enable\: :ref:`bool<class_bool>`\ ) :ref:`🔗<class_CPUParticles2D_method_set_particle_flag>`
 
-Enables or disables the given flag (see :ref:`ParticleFlags<enum_CPUParticles2D_ParticleFlags>` for options).
+Enables or disables the given particle flag.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`

@@ -366,13 +366,23 @@ the data and print the results to our console.
     GD.Print("Input: ", string.Join(", ", input));
     GD.Print("Output: ", string.Join(", ", output));
 
+Freeing memory
+------------------
+
+The ``buffer``, ``pipeline``, and ``uniform_set`` variables we've been using are
+each an :ref:`class_RID`. Because RenderingDevice is meant to be a lower-level
+API, RIDs aren't freed automatically. This means that once you're done using
+``buffer`` or any other RID, you are responsible for freeing its memory
+manually using the RenderingDevice's
+:ref:`free_rid()<class_RenderingDevice_method_free_rid>` method.
+
 With that, you have everything you need to get started working with compute
 shaders.
 
 .. seealso::
 
    The demo projects repository contains a
-   `Compute Shader Heightmap demo <https://github.com/godotengine/godot-demo-projects/tree/master/misc/compute_shader_heightmap>`__
+   `Compute Shader Heightmap demo <https://github.com/godotengine/godot-demo-projects/tree/master/compute/heightmap>`__
    This project performs heightmap image generation on the CPU and
    GPU separately, which lets you compare how a similar algorithm can be
    implemented in two different ways (with the GPU implementation being faster

@@ -27,8 +27,12 @@ Here is a quick example, closing your game if the escape key is hit:
     public override void _UnhandledInput(InputEvent @event)
     {
         if (@event is InputEventKey eventKey)
+        {
             if (eventKey.Pressed && eventKey.Keycode == Key.Escape)
+            {
                 GetTree().Quit();
+            }
+        }
     }
 
 However, it is cleaner and more flexible to use the provided :ref:`InputMap <class_InputMap>` feature,
@@ -72,7 +76,7 @@ received input, in order:
 1. If the Viewport is embedding Windows, the Viewport tries to interpret the event in its
    capability as a Window-Manager (e.g. for resizing or moving Windows).
 2. Next if an embedded Window is focused, the event is sent to that Window and processed in
-   the Windows Viewport and afterwards treated as handled. If no embedded Window is focused,
+   the Window's Viewport and afterwards treated as handled. If no embedded Window is focused,
    the event is sent to the nodes of the current viewport in the following order.
 3. First of all, the standard :ref:`Node._input() <class_Node_private_method__input>` function
    will be called in any node that overrides it (and hasn't disabled input processing with :ref:`Node.set_process_input() <class_Node_method_set_process_input>`).
@@ -217,7 +221,7 @@ Actions can be created from the Project Settings menu in the **Input Map**
 tab and assigned input events.
 
 Any event has the methods :ref:`InputEvent.is_action() <class_InputEvent_method_is_action>`,
-:ref:`InputEvent.is_pressed() <class_InputEvent_method_is_pressed>` and :ref:`InputEvent <class_InputEvent>`.
+:ref:`InputEvent.is_pressed() <class_InputEvent_method_is_pressed>` and :ref:`InputEvent.is_echo() <class_InputEvent_method_is_echo>`.
 
 Alternatively, it may be desired to supply the game back with an action
 from the game code (a good example of this is detecting gestures).

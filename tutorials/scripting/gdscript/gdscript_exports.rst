@@ -5,8 +5,9 @@ GDScript exported properties
 
 In Godot, class members can be exported. This means their value gets saved along
 with the resource (such as the :ref:`scene <class_PackedScene>`) they're
-attached to. They will also be available for editing in the property editor.
-Exporting is done by using the ``@export`` annotation.
+attached to, and get transferred over when using :ref:`RPCs <doc_high_level_multiplayer_rpcs>`.
+They will also be available for editing in the property editor. Exporting is done by using
+the ``@export`` annotation.
 
 ::
 
@@ -51,6 +52,10 @@ Resources and nodes can be exported.
 
     @export var resource: Resource
     @export var node: Node
+
+Even if a script is not executed in the editor, exported properties
+can still be edited. However, getters and setters will only be used
+if the script is in :ref:`doc_gdscript_tool_mode`.
 
 Grouping exports
 ----------------
@@ -296,10 +301,6 @@ Therefore, if you specify an extension of Resource such as:
 The drop-down menu will be limited to AnimationNode and all
 its derived classes.
 
-It must be noted that even if the script is not being run while in the
-editor, the exported properties are still editable. This can be used
-in conjunction with a :ref:`script in "tool" mode <doc_gdscript_tool_mode>`.
-
 .. _doc_gdscript_exports_exporting_bit_flags:
 
 Exporting bit flags
@@ -309,7 +310,9 @@ See :ref:`@export_flags <class_@GDScript_annotation_@export_flags>`.
 
 Integers used as bit flags can store multiple ``true``/``false`` (boolean)
 values in one property. By using the ``@export_flags`` annotation, they
-can be set from the editor::
+can be set from the editor:
+
+::
 
     # Set any of the given flags from the editor.
     @export_flags("Fire", "Water", "Earth", "Wind") var spell_elements = 0
@@ -319,18 +322,24 @@ has value 1, ``Water`` has value 2, ``Earth`` has value 4 and ``Wind``
 corresponds to value 8. Usually, constants should be defined accordingly (e.g.
 ``const ELEMENT_WIND = 8`` and so on).
 
-You can add explicit values using a colon::
+You can add explicit values using a colon:
+
+::
 
     @export_flags("Self:4", "Allies:8", "Foes:16") var spell_targets = 0
 
 Only power of 2 values are valid as bit flags options. The lowest allowed value
 is 1, as 0 means that nothing is selected. You can also add options that are a
-combination of other flags::
+combination of other flags:
+
+::
 
     @export_flags("Self:4", "Allies:8", "Self and Allies:12", "Foes:16")
     var spell_targets = 0
 
-Export annotations are also provided for the physics, render, and navigation layers defined in the project settings::
+Export annotations are also provided for the physics, render, and navigation layers defined in the project settings:
+
+::
 
     @export_flags_2d_physics var layers_2d_physics
     @export_flags_2d_render var layers_2d_render
@@ -366,7 +375,9 @@ of the selected option (i.e. ``0``, ``1``,  or ``2``).
 
     @export_enum("Warrior", "Magician", "Thief") var character_class: int
 
-You can add explicit values using a colon::
+You can add explicit values using a colon:
+
+::
 
     @export_enum("Slow:30", "Average:60", "Very Fast:200") var character_speed: int
 
@@ -376,7 +387,9 @@ If the type is String, the value will be stored as a string.
 
     @export_enum("Rebecca", "Mary", "Leah") var character_name: String
 
-If you want to set an initial value, you must specify it explicitly::
+If you want to set an initial value, you must specify it explicitly:
+
+::
 
     @export_enum("Rebecca", "Mary", "Leah") var character_name: String = "Rebecca"
 
@@ -470,12 +483,12 @@ annotations, you can use ``@export_custom`` instead. This allows defining any
 property hint, hint string and usage flags, with a syntax similar to the one
 used by the editor for built-in nodes.
 
-For example, this exposes the ``altitude`` property with no range limits but a
+For example, this exposes the ``altitude`` property with no range limits but an
 ``m`` (meter) suffix defined:
 
 ::
 
-    @export_custom(PROPERTY_HINT_NONE, "altitude:m") var altitude: Vector3
+    @export_custom(PROPERTY_HINT_NONE, "suffix:m") var altitude: float
 
 The above is normally not feasible with the standard ``@export_range`` syntax,
 since it requires defining a range.
@@ -494,7 +507,21 @@ for a list of parameters and their allowed values.
 If you need to create a clickable inspector button, you can use ``@export_tool_button``.
 This exports a ``Callable`` property as a clickable button. When the button is pressed, the callable is called.
 
-Export a button with label ``"Hello"`` and icon ``"Callable"``. When you press it, it will print ``"Hello world!"``.
+You can specify a custom icon name, which must match one of the icon
+file names from the
+`editor/icons <https://github.com/godotengine/godot/tree/master/editor/icons>`__
+folder of the Godot source repository (case-sensitive).
+You can also browse the editor icons using the
+`Godot editor icons <https://godot-editor-icons.github.io/>`__ website.
+
+For example, if you wish to use ``Node2D.svg`` from that folder, you must
+specify ``"Node2D"`` as the second parameter of ``@export_tool_button``. It is
+not currently possible to use custom icons from the project folder; only
+built-in editor icons can be used.
+
+This exports a button with label ``"Hello"`` and icon ``"Callable"`` (which is the
+default if no icon is specified). When you press it, it will print ``"Hello
+world!"``.
 
 ::
 

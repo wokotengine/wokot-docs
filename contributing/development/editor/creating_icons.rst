@@ -38,10 +38,15 @@ Color conversion for light editor themes
 
 If the user has configured their editor to use a light theme, Godot will
 convert the icon's colors based on a
-`set of predefined color mappings <https://github.com/godotengine/godot/blob/4.0.2-stable/editor/editor_themes.cpp#L60-L160>`__.
+`set of predefined color mappings <https://github.com/godotengine/godot/blob/master/editor/themes/editor_color_map.cpp>`__.
 This is to ensure the icon always displays with a sufficient contrast rate.
 Try to restrict your icon's color palette to colors found in the list above.
 Otherwise, your icon may become difficult to read on a light background.
+
+.. note::
+	To enable color conversion for light editor themes:
+		1. :ui:`Import > Import As > Texture2D`
+		2. Set ``editor/convert_colors_with_editor_theme`` to ``true``
 
 Icon optimization
 ~~~~~~~~~~~~~~~~~

@@ -21,7 +21,7 @@ Godot supports the following 3D *scene file formats*:
 - FBX, supported via the `ufbx <https://github.com/ufbx/ufbx>`__ library. The
   previous import workflow used `FBX2glTF <https://github.com/godotengine/FBX2glTF>`__
   integration. This requires installing an external program that links against the
-  proprietary FBX SDK, so we recommend using the default ubfx method or other formats
+  proprietary FBX SDK, so we recommend using the default ufbx method or other formats
   listed above (if suitable for your workflow).
 
 Copy the scene file together with the textures and mesh data (if separate) to
@@ -71,8 +71,8 @@ a Godot scene file, which is what gets used when you run/export your game.
 .. warning::
 
     If your model contains blend shapes (also known as "shape keys" and "morph
-    targets"), your glTF export setting **Export Deformation Bones Only** needs
-    to be configured to **Enabled** under the Animation export configurations.
+    targets"), your glTF export setting **Data > Armature > Export Deformation
+    Bones Only** needs to be configured to **Enabled**.
 
     Exporting non-deforming bones anyway will lead to incorrect shading.
 
