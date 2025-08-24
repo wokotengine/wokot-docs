@@ -14,38 +14,53 @@ VisualShaderNodeVec4Constant
 
 A 4D vector constant to be used within the visual shader graph.
 
+.. rst-class:: classref-introduction-group
+
 Description
 -----------
 
 A constant 4D vector, which can be used as an input node.
 
+.. rst-class:: classref-reftable-group
+
 Properties
 ----------
 
-+-------------------------------------+-----------------------------------------------------------------------+----------------------------+
-| :ref:`Quaternion<class_Quaternion>` | :ref:`constant<class_VisualShaderNodeVec4Constant_property_constant>` | ``Quaternion(0, 0, 0, 1)`` |
-+-------------------------------------+-----------------------------------------------------------------------+----------------------------+
+.. table::
+   :widths: auto
+
+   +-------------------------------------+-----------------------------------------------------------------------+----------------------------+
+   | :ref:`Quaternion<class_Quaternion>` | :ref:`constant<class_VisualShaderNodeVec4Constant_property_constant>` | ``Quaternion(0, 0, 0, 1)`` |
+   +-------------------------------------+-----------------------------------------------------------------------+----------------------------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Property Descriptions
 ---------------------
 
 .. _class_VisualShaderNodeVec4Constant_property_constant:
 
-- :ref:`Quaternion<class_Quaternion>` **constant**
+.. rst-class:: classref-property
 
-+-----------+----------------------------+
-| *Default* | ``Quaternion(0, 0, 0, 1)`` |
-+-----------+----------------------------+
-| *Setter*  | set_constant(value)        |
-+-----------+----------------------------+
-| *Getter*  | get_constant()             |
-+-----------+----------------------------+
+:ref:`Quaternion<class_Quaternion>` **constant** = ``Quaternion(0, 0, 0, 1)`` :ref:`🔗<class_VisualShaderNodeVec4Constant_property_constant>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_constant**\ (\ value\: :ref:`Quaternion<class_Quaternion>`\ )
+- :ref:`Quaternion<class_Quaternion>` **get_constant**\ (\ )
 
 A 4D vector (represented as a :ref:`Quaternion<class_Quaternion>`) constant which represents the state of this node.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

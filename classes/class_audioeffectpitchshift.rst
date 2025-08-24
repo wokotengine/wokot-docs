@@ -16,110 +16,161 @@ Adds a pitch-shifting audio effect to an audio bus.
 
 Raises or lowers the pitch of original sound.
 
+.. rst-class:: classref-introduction-group
+
 Description
 -----------
 
 Allows modulation of pitch independently of tempo. All frequencies can be increased/decreased with minimal effect on transients.
+
+.. rst-class:: classref-introduction-group
 
 Tutorials
 ---------
 
 - :doc:`Audio buses <../tutorials/audio/audio_buses>`
 
+.. rst-class:: classref-reftable-group
+
 Properties
 ----------
 
-+----------------------------------------------------+------------------------------------------------------------------------+---------+
-| :ref:`FFTSize<enum_AudioEffectPitchShift_FFTSize>` | :ref:`fft_size<class_AudioEffectPitchShift_property_fft_size>`         | ``3``   |
-+----------------------------------------------------+------------------------------------------------------------------------+---------+
-| :ref:`int<class_int>`                              | :ref:`oversampling<class_AudioEffectPitchShift_property_oversampling>` | ``4``   |
-+----------------------------------------------------+------------------------------------------------------------------------+---------+
-| :ref:`float<class_float>`                          | :ref:`pitch_scale<class_AudioEffectPitchShift_property_pitch_scale>`   | ``1.0`` |
-+----------------------------------------------------+------------------------------------------------------------------------+---------+
+.. table::
+   :widths: auto
+
+   +----------------------------------------------------+------------------------------------------------------------------------+---------+
+   | :ref:`FFTSize<enum_AudioEffectPitchShift_FFTSize>` | :ref:`fft_size<class_AudioEffectPitchShift_property_fft_size>`         | ``3``   |
+   +----------------------------------------------------+------------------------------------------------------------------------+---------+
+   | :ref:`int<class_int>`                              | :ref:`oversampling<class_AudioEffectPitchShift_property_oversampling>` | ``4``   |
+   +----------------------------------------------------+------------------------------------------------------------------------+---------+
+   | :ref:`float<class_float>`                          | :ref:`pitch_scale<class_AudioEffectPitchShift_property_pitch_scale>`   | ``1.0`` |
+   +----------------------------------------------------+------------------------------------------------------------------------+---------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Enumerations
 ------------
 
 .. _enum_AudioEffectPitchShift_FFTSize:
 
+.. rst-class:: classref-enumeration
+
+enum **FFTSize**: :ref:`🔗<enum_AudioEffectPitchShift_FFTSize>`
+
 .. _class_AudioEffectPitchShift_constant_FFT_SIZE_256:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`FFTSize<enum_AudioEffectPitchShift_FFTSize>` **FFT_SIZE_256** = ``0``
+
+Use a buffer of 256 samples for the Fast Fourier transform. Lowest latency, but least stable over time.
 
 .. _class_AudioEffectPitchShift_constant_FFT_SIZE_512:
 
+.. rst-class:: classref-enumeration-constant
+
+:ref:`FFTSize<enum_AudioEffectPitchShift_FFTSize>` **FFT_SIZE_512** = ``1``
+
+Use a buffer of 512 samples for the Fast Fourier transform. Low latency, but less stable over time.
+
 .. _class_AudioEffectPitchShift_constant_FFT_SIZE_1024:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`FFTSize<enum_AudioEffectPitchShift_FFTSize>` **FFT_SIZE_1024** = ``2``
+
+Use a buffer of 1024 samples for the Fast Fourier transform. This is a compromise between latency and stability over time.
 
 .. _class_AudioEffectPitchShift_constant_FFT_SIZE_2048:
 
+.. rst-class:: classref-enumeration-constant
+
+:ref:`FFTSize<enum_AudioEffectPitchShift_FFTSize>` **FFT_SIZE_2048** = ``3``
+
+Use a buffer of 2048 samples for the Fast Fourier transform. High latency, but stable over time.
+
 .. _class_AudioEffectPitchShift_constant_FFT_SIZE_4096:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`FFTSize<enum_AudioEffectPitchShift_FFTSize>` **FFT_SIZE_4096** = ``4``
+
+Use a buffer of 4096 samples for the Fast Fourier transform. Highest latency, but most stable over time.
 
 .. _class_AudioEffectPitchShift_constant_FFT_SIZE_MAX:
 
-enum **FFTSize**:
+.. rst-class:: classref-enumeration-constant
 
-- **FFT_SIZE_256** = **0** --- Use a buffer of 256 samples for the Fast Fourier transform. Lowest latency, but least stable over time.
+:ref:`FFTSize<enum_AudioEffectPitchShift_FFTSize>` **FFT_SIZE_MAX** = ``5``
 
-- **FFT_SIZE_512** = **1** --- Use a buffer of 512 samples for the Fast Fourier transform. Low latency, but less stable over time.
+Represents the size of the :ref:`FFTSize<enum_AudioEffectPitchShift_FFTSize>` enum.
 
-- **FFT_SIZE_1024** = **2** --- Use a buffer of 1024 samples for the Fast Fourier transform. This is a compromise between latency and stability over time.
+.. rst-class:: classref-section-separator
 
-- **FFT_SIZE_2048** = **3** --- Use a buffer of 2048 samples for the Fast Fourier transform. High latency, but stable over time.
+----
 
-- **FFT_SIZE_4096** = **4** --- Use a buffer of 4096 samples for the Fast Fourier transform. Highest latency, but most stable over time.
-
-- **FFT_SIZE_MAX** = **5** --- Represents the size of the :ref:`FFTSize<enum_AudioEffectPitchShift_FFTSize>` enum.
+.. rst-class:: classref-descriptions-group
 
 Property Descriptions
 ---------------------
 
 .. _class_AudioEffectPitchShift_property_fft_size:
 
-- :ref:`FFTSize<enum_AudioEffectPitchShift_FFTSize>` **fft_size**
+.. rst-class:: classref-property
 
-+-----------+---------------------+
-| *Default* | ``3``               |
-+-----------+---------------------+
-| *Setter*  | set_fft_size(value) |
-+-----------+---------------------+
-| *Getter*  | get_fft_size()      |
-+-----------+---------------------+
+:ref:`FFTSize<enum_AudioEffectPitchShift_FFTSize>` **fft_size** = ``3`` :ref:`🔗<class_AudioEffectPitchShift_property_fft_size>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_fft_size**\ (\ value\: :ref:`FFTSize<enum_AudioEffectPitchShift_FFTSize>`\ )
+- :ref:`FFTSize<enum_AudioEffectPitchShift_FFTSize>` **get_fft_size**\ (\ )
 
 The size of the `Fast Fourier transform <https://en.wikipedia.org/wiki/Fast_Fourier_transform>`__ buffer. Higher values smooth out the effect over time, but have greater latency. The effects of this higher latency are especially noticeable on sounds that have sudden amplitude changes.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_AudioEffectPitchShift_property_oversampling:
 
-- :ref:`int<class_int>` **oversampling**
+.. rst-class:: classref-property
 
-+-----------+-------------------------+
-| *Default* | ``4``                   |
-+-----------+-------------------------+
-| *Setter*  | set_oversampling(value) |
-+-----------+-------------------------+
-| *Getter*  | get_oversampling()      |
-+-----------+-------------------------+
+:ref:`int<class_int>` **oversampling** = ``4`` :ref:`🔗<class_AudioEffectPitchShift_property_oversampling>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_oversampling**\ (\ value\: :ref:`int<class_int>`\ )
+- :ref:`int<class_int>` **get_oversampling**\ (\ )
 
 The oversampling factor to use. Higher values result in better quality, but are more demanding on the CPU and may cause audio cracking if the CPU can't keep up.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_AudioEffectPitchShift_property_pitch_scale:
 
-- :ref:`float<class_float>` **pitch_scale**
+.. rst-class:: classref-property
 
-+-----------+------------------------+
-| *Default* | ``1.0``                |
-+-----------+------------------------+
-| *Setter*  | set_pitch_scale(value) |
-+-----------+------------------------+
-| *Getter*  | get_pitch_scale()      |
-+-----------+------------------------+
+:ref:`float<class_float>` **pitch_scale** = ``1.0`` :ref:`🔗<class_AudioEffectPitchShift_property_pitch_scale>`
 
-The pitch scale to use. ``1.0`` is the default pitch and plays sounds unaltered. :ref:`pitch_scale<class_AudioEffectPitchShift_property_pitch_scale>` can range from ``0.0`` (infinitely low pitch, inaudible) to ``16`` (16 times higher than the initial pitch).
+.. rst-class:: classref-property-setget
+
+- |void| **set_pitch_scale**\ (\ value\: :ref:`float<class_float>`\ )
+- :ref:`float<class_float>` **get_pitch_scale**\ (\ )
+
+The pitch scale to use. ``1.0`` is the default pitch and plays sounds unaffected. :ref:`pitch_scale<class_AudioEffectPitchShift_property_pitch_scale>` can range from ``0.0`` (infinitely low pitch, inaudible) to ``16`` (16 times higher than the initial pitch).
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

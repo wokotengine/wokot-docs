@@ -14,56 +14,76 @@ EditorCommandPalette
 
 Godot editor's command palette.
 
+.. rst-class:: classref-introduction-group
+
 Description
 -----------
 
 Object that holds all the available Commands and their shortcuts text. These Commands can be accessed through **Editor > Command Palette** menu.
 
-Command key names use slash delimiters to distinguish sections Example: ``"example/command1"`` then ``example`` will be the section name.
+Command key names use slash delimiters to distinguish sections, for example: ``"example/command1"`` then ``example`` will be the section name.
 
 
 .. tabs::
 
  .. code-tab:: gdscript
 
-    var command_palette = get_editor_interface().get_command_palette()
+    var command_palette = EditorInterface.get_command_palette()
     # external_command is a function that will be called with the command is executed.
     var command_callable = Callable(self, "external_command").bind(arguments)
     command_palette.add_command("command", "test/command",command_callable)
 
  .. code-tab:: csharp
 
-    EditorCommandPalette commandPalette = GetEditorInterface().GetCommandPalette();
+    EditorCommandPalette commandPalette = EditorInterface.Singleton.GetCommandPalette();
     // ExternalCommand is a function that will be called with the command is executed.
-    Callable commandCallable = new Callable(this, nameof(ExternalCommand));
+    Callable commandCallable = new Callable(this, MethodName.ExternalCommand);
     commandPalette.AddCommand("command", "test/command", commandCallable)
 
 
 
-\ **Note:** This class shouldn't be instantiated directly. Instead, access the singleton using :ref:`EditorInterface.get_command_palette<class_EditorInterface_method_get_command_palette>`.
+\ **Note:** This class shouldn't be instantiated directly. Instead, access the singleton using :ref:`EditorInterface.get_command_palette()<class_EditorInterface_method_get_command_palette>`.
+
+.. rst-class:: classref-reftable-group
 
 Properties
 ----------
 
-+-------------------------+-------------------+------------------------------------------------------------------------------------------+
-| :ref:`bool<class_bool>` | dialog_hide_on_ok | ``false`` (overrides :ref:`AcceptDialog<class_AcceptDialog_property_dialog_hide_on_ok>`) |
-+-------------------------+-------------------+------------------------------------------------------------------------------------------+
+.. table::
+   :widths: auto
+
+   +-------------------------+-------------------+------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>` | dialog_hide_on_ok | ``false`` (overrides :ref:`AcceptDialog<class_AcceptDialog_property_dialog_hide_on_ok>`) |
+   +-------------------------+-------------------+------------------------------------------------------------------------------------------+
+
+.. rst-class:: classref-reftable-group
 
 Methods
 -------
 
-+------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| void | :ref:`add_command<class_EditorCommandPalette_method_add_command>` **(** :ref:`String<class_String>` command_name, :ref:`String<class_String>` key_name, :ref:`Callable<class_Callable>` binded_callable, :ref:`String<class_String>` shortcut_text="None" **)** |
-+------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| void | :ref:`remove_command<class_EditorCommandPalette_method_remove_command>` **(** :ref:`String<class_String>` key_name **)**                                                                                                                                        |
-+------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+.. table::
+   :widths: auto
+
+   +--------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void| | :ref:`add_command<class_EditorCommandPalette_method_add_command>`\ (\ command_name\: :ref:`String<class_String>`, key_name\: :ref:`String<class_String>`, binded_callable\: :ref:`Callable<class_Callable>`, shortcut_text\: :ref:`String<class_String>` = "None"\ ) |
+   +--------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void| | :ref:`remove_command<class_EditorCommandPalette_method_remove_command>`\ (\ key_name\: :ref:`String<class_String>`\ )                                                                                                                                                |
+   +--------+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Method Descriptions
 -------------------
 
 .. _class_EditorCommandPalette_method_add_command:
 
-- void **add_command** **(** :ref:`String<class_String>` command_name, :ref:`String<class_String>` key_name, :ref:`Callable<class_Callable>` binded_callable, :ref:`String<class_String>` shortcut_text="None" **)**
+.. rst-class:: classref-method
+
+|void| **add_command**\ (\ command_name\: :ref:`String<class_String>`, key_name\: :ref:`String<class_String>`, binded_callable\: :ref:`Callable<class_Callable>`, shortcut_text\: :ref:`String<class_String>` = "None"\ ) :ref:`🔗<class_EditorCommandPalette_method_add_command>`
 
 Adds a custom command to EditorCommandPalette.
 
@@ -75,19 +95,26 @@ Adds a custom command to EditorCommandPalette.
 
 - ``shortcut_text``: :ref:`String<class_String>` (Shortcut text of the **Command** if available.)
 
+.. rst-class:: classref-item-separator
+
 ----
 
 .. _class_EditorCommandPalette_method_remove_command:
 
-- void **remove_command** **(** :ref:`String<class_String>` key_name **)**
+.. rst-class:: classref-method
+
+|void| **remove_command**\ (\ key_name\: :ref:`String<class_String>`\ ) :ref:`🔗<class_EditorCommandPalette_method_remove_command>`
 
 Removes the custom command from EditorCommandPalette.
 
 - ``key_name``: :ref:`String<class_String>` (Name of the key for a particular **Command**.)
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

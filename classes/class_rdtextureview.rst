@@ -12,97 +12,131 @@ RDTextureView
 
 **Inherits:** :ref:`RefCounted<class_RefCounted>` **<** :ref:`Object<class_Object>`
 
+Texture view (used by :ref:`RenderingDevice<class_RenderingDevice>`).
 
+.. rst-class:: classref-introduction-group
+
+Description
+-----------
+
+This object is used by :ref:`RenderingDevice<class_RenderingDevice>`.
+
+.. rst-class:: classref-reftable-group
 
 Properties
 ----------
 
-+------------------------------------------------------------+----------------------------------------------------------------------+---------+
-| :ref:`DataFormat<enum_RenderingDevice_DataFormat>`         | :ref:`format_override<class_RDTextureView_property_format_override>` | ``218`` |
-+------------------------------------------------------------+----------------------------------------------------------------------+---------+
-| :ref:`TextureSwizzle<enum_RenderingDevice_TextureSwizzle>` | :ref:`swizzle_a<class_RDTextureView_property_swizzle_a>`             | ``6``   |
-+------------------------------------------------------------+----------------------------------------------------------------------+---------+
-| :ref:`TextureSwizzle<enum_RenderingDevice_TextureSwizzle>` | :ref:`swizzle_b<class_RDTextureView_property_swizzle_b>`             | ``5``   |
-+------------------------------------------------------------+----------------------------------------------------------------------+---------+
-| :ref:`TextureSwizzle<enum_RenderingDevice_TextureSwizzle>` | :ref:`swizzle_g<class_RDTextureView_property_swizzle_g>`             | ``4``   |
-+------------------------------------------------------------+----------------------------------------------------------------------+---------+
-| :ref:`TextureSwizzle<enum_RenderingDevice_TextureSwizzle>` | :ref:`swizzle_r<class_RDTextureView_property_swizzle_r>`             | ``3``   |
-+------------------------------------------------------------+----------------------------------------------------------------------+---------+
+.. table::
+   :widths: auto
+
+   +------------------------------------------------------------+----------------------------------------------------------------------+---------+
+   | :ref:`DataFormat<enum_RenderingDevice_DataFormat>`         | :ref:`format_override<class_RDTextureView_property_format_override>` | ``232`` |
+   +------------------------------------------------------------+----------------------------------------------------------------------+---------+
+   | :ref:`TextureSwizzle<enum_RenderingDevice_TextureSwizzle>` | :ref:`swizzle_a<class_RDTextureView_property_swizzle_a>`             | ``6``   |
+   +------------------------------------------------------------+----------------------------------------------------------------------+---------+
+   | :ref:`TextureSwizzle<enum_RenderingDevice_TextureSwizzle>` | :ref:`swizzle_b<class_RDTextureView_property_swizzle_b>`             | ``5``   |
+   +------------------------------------------------------------+----------------------------------------------------------------------+---------+
+   | :ref:`TextureSwizzle<enum_RenderingDevice_TextureSwizzle>` | :ref:`swizzle_g<class_RDTextureView_property_swizzle_g>`             | ``4``   |
+   +------------------------------------------------------------+----------------------------------------------------------------------+---------+
+   | :ref:`TextureSwizzle<enum_RenderingDevice_TextureSwizzle>` | :ref:`swizzle_r<class_RDTextureView_property_swizzle_r>`             | ``3``   |
+   +------------------------------------------------------------+----------------------------------------------------------------------+---------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Property Descriptions
 ---------------------
 
 .. _class_RDTextureView_property_format_override:
 
-- :ref:`DataFormat<enum_RenderingDevice_DataFormat>` **format_override**
+.. rst-class:: classref-property
 
-+-----------+----------------------------+
-| *Default* | ``218``                    |
-+-----------+----------------------------+
-| *Setter*  | set_format_override(value) |
-+-----------+----------------------------+
-| *Getter*  | get_format_override()      |
-+-----------+----------------------------+
+:ref:`DataFormat<enum_RenderingDevice_DataFormat>` **format_override** = ``232`` :ref:`🔗<class_RDTextureView_property_format_override>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_format_override**\ (\ value\: :ref:`DataFormat<enum_RenderingDevice_DataFormat>`\ )
+- :ref:`DataFormat<enum_RenderingDevice_DataFormat>` **get_format_override**\ (\ )
+
+Optional override for the data format to return sampled values in. The corresponding :ref:`RDTextureFormat<class_RDTextureFormat>` must have had this added as a shareable format. The default value of :ref:`RenderingDevice.DATA_FORMAT_MAX<class_RenderingDevice_constant_DATA_FORMAT_MAX>` does not override the format.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_RDTextureView_property_swizzle_a:
 
-- :ref:`TextureSwizzle<enum_RenderingDevice_TextureSwizzle>` **swizzle_a**
+.. rst-class:: classref-property
 
-+-----------+----------------------+
-| *Default* | ``6``                |
-+-----------+----------------------+
-| *Setter*  | set_swizzle_a(value) |
-+-----------+----------------------+
-| *Getter*  | get_swizzle_a()      |
-+-----------+----------------------+
+:ref:`TextureSwizzle<enum_RenderingDevice_TextureSwizzle>` **swizzle_a** = ``6`` :ref:`🔗<class_RDTextureView_property_swizzle_a>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_swizzle_a**\ (\ value\: :ref:`TextureSwizzle<enum_RenderingDevice_TextureSwizzle>`\ )
+- :ref:`TextureSwizzle<enum_RenderingDevice_TextureSwizzle>` **get_swizzle_a**\ (\ )
+
+The channel to sample when sampling the alpha channel.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_RDTextureView_property_swizzle_b:
 
-- :ref:`TextureSwizzle<enum_RenderingDevice_TextureSwizzle>` **swizzle_b**
+.. rst-class:: classref-property
 
-+-----------+----------------------+
-| *Default* | ``5``                |
-+-----------+----------------------+
-| *Setter*  | set_swizzle_b(value) |
-+-----------+----------------------+
-| *Getter*  | get_swizzle_b()      |
-+-----------+----------------------+
+:ref:`TextureSwizzle<enum_RenderingDevice_TextureSwizzle>` **swizzle_b** = ``5`` :ref:`🔗<class_RDTextureView_property_swizzle_b>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_swizzle_b**\ (\ value\: :ref:`TextureSwizzle<enum_RenderingDevice_TextureSwizzle>`\ )
+- :ref:`TextureSwizzle<enum_RenderingDevice_TextureSwizzle>` **get_swizzle_b**\ (\ )
+
+The channel to sample when sampling the blue color channel.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_RDTextureView_property_swizzle_g:
 
-- :ref:`TextureSwizzle<enum_RenderingDevice_TextureSwizzle>` **swizzle_g**
+.. rst-class:: classref-property
 
-+-----------+----------------------+
-| *Default* | ``4``                |
-+-----------+----------------------+
-| *Setter*  | set_swizzle_g(value) |
-+-----------+----------------------+
-| *Getter*  | get_swizzle_g()      |
-+-----------+----------------------+
+:ref:`TextureSwizzle<enum_RenderingDevice_TextureSwizzle>` **swizzle_g** = ``4`` :ref:`🔗<class_RDTextureView_property_swizzle_g>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_swizzle_g**\ (\ value\: :ref:`TextureSwizzle<enum_RenderingDevice_TextureSwizzle>`\ )
+- :ref:`TextureSwizzle<enum_RenderingDevice_TextureSwizzle>` **get_swizzle_g**\ (\ )
+
+The channel to sample when sampling the green color channel.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_RDTextureView_property_swizzle_r:
 
-- :ref:`TextureSwizzle<enum_RenderingDevice_TextureSwizzle>` **swizzle_r**
+.. rst-class:: classref-property
 
-+-----------+----------------------+
-| *Default* | ``3``                |
-+-----------+----------------------+
-| *Setter*  | set_swizzle_r(value) |
-+-----------+----------------------+
-| *Getter*  | get_swizzle_r()      |
-+-----------+----------------------+
+:ref:`TextureSwizzle<enum_RenderingDevice_TextureSwizzle>` **swizzle_r** = ``3`` :ref:`🔗<class_RDTextureView_property_swizzle_r>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_swizzle_r**\ (\ value\: :ref:`TextureSwizzle<enum_RenderingDevice_TextureSwizzle>`\ )
+- :ref:`TextureSwizzle<enum_RenderingDevice_TextureSwizzle>` **get_swizzle_r**\ (\ )
+
+The channel to sample when sampling the red color channel.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

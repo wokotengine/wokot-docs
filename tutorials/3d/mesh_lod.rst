@@ -13,8 +13,13 @@ On this page, you'll learn:
 - How to measure mesh LOD's effectiveness in your project
   (and alternatives you can explore if it doesn't meet your expectations).
 
+.. seealso::
+
+    You can see how mesh LOD works in action using the
+    `Occlusion Culling and Mesh LOD demo project <https://github.com/godotengine/godot-demo-projects/tree/master/3d/occlusion_culling_mesh_lod>`__.
+
 Introduction
--------
+------------
 
 Historically, level of detail in 3D games involved manually authoring meshes
 with lower geometry density, then configuring the distance thresholds at which
@@ -84,6 +89,20 @@ click **Reimport**:
 
 This will require restarting the editor after clicking **Reimport**.
 
+.. note::
+
+   The mesh LOD generation process is not perfect, and may occasionally
+   introduce rendering issues (especially in skinned meshes). Mesh LOD
+   generation can also take a while on complex meshes.
+
+   If mesh LOD causes a specific mesh to look broken, you can disable LOD
+   generation for it in the Import dock. This will also speed up resource
+   importing. This can be done globally in the 3D scene's import options, or on
+   a per-mesh basis using the Advanced Import Settings dialog.
+
+   See :ref:`Importing 3D scenes <doc_importing_3d_scenes_using_the_import_dock>`
+   for more information.
+
 Comparing mesh LOD visuals and performance
 ------------------------------------------
 
@@ -116,12 +135,17 @@ Configuring mesh LOD performance and quality
 
 You can adjust how aggressive mesh LOD transitions should be in the root viewport
 by changing the **Rendering > Mesh LOD > LOD Change > Threshold Pixels** project
-setting. To change this value at run-time, set ``mesh_lod_threshold`` on the
+setting. To change this value at runtime, set ``mesh_lod_threshold`` on the
 root viewport as follows:
 
-::
+.. tabs::
+ .. code-tab:: gdscript
 
     get_tree().root.mesh_lod_threshold = 4.0
+
+ .. code-tab:: csharp
+
+    GetTree().Root.MeshLodThreshold = 4.0f;
 
 Each viewport has its own ``mesh_lod_threshold`` property, which can be set
 independently from other viewports.
@@ -129,14 +153,14 @@ independently from other viewports.
 The default mesh LOD threshold of 1 pixel is tuned to look *perceptually*
 lossless; it provides a significant performance gain with an unnoticeable loss
 in quality. Higher values will make LOD transitions happen sooner when the
-camera moves away, resulting in higher performance but lower quality.
+camera moves away, resulting in higher performance, but lower quality.
 
 If you need to perform per-object adjustments to mesh LOD, you can adjust how
 aggressive LOD transitions should be by adjusting the **LOD Bias** property on
-any node that inherits from GeometryInstance3D. Positive values will make LOD
-transitions happen sooner than usual (resulting in lower quality but higher
-performance). Negative values will make LOD transitions happen earlier than
-usual (resulting in higher quality but lower performance).
+any node that inherits from GeometryInstance3D. Values *above* ``1.0`` will make
+LOD transitions happen later than usual (resulting in higher quality, but lower
+performance). Values *below* ``1.0`` will make LOD transitions happen sooner than
+usual (resulting in lower quality, but higher performance).
 
 Additionally, ReflectionProbe nodes have their own **Mesh LOD Threshold** property
 that can be adjusted to improve rendering performance when the reflection probe

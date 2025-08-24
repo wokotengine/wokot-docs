@@ -12,14 +12,16 @@ RichTextEffect
 
 **Inherits:** :ref:`Resource<class_Resource>` **<** :ref:`RefCounted<class_RefCounted>` **<** :ref:`Object<class_Object>`
 
-A custom effect for use with :ref:`RichTextLabel<class_RichTextLabel>`.
+A custom effect for a :ref:`RichTextLabel<class_RichTextLabel>`.
+
+.. rst-class:: classref-introduction-group
 
 Description
 -----------
 
-A custom effect for use with :ref:`RichTextLabel<class_RichTextLabel>`.
+A custom effect for a :ref:`RichTextLabel<class_RichTextLabel>`, which can be loaded in the :ref:`RichTextLabel<class_RichTextLabel>` inspector or using :ref:`RichTextLabel.install_effect()<class_RichTextLabel_method_install_effect>`.
 
-\ **Note:** For a ``RichTextEffect`` to be usable, a BBCode tag must be defined as a member variable called ``bbcode`` in the script.
+\ **Note:** For a **RichTextEffect** to be usable, a BBCode tag must be defined as a member variable called ``bbcode`` in the script.
 
 
 .. tabs::
@@ -32,11 +34,13 @@ A custom effect for use with :ref:`RichTextLabel<class_RichTextLabel>`.
  .. code-tab:: csharp
 
     // The RichTextEffect will be usable like this: `[example]Some text[/example]`
-    public string bbcode = "example";
+    string bbcode = "example";
 
 
 
-\ **Note:** As soon as a :ref:`RichTextLabel<class_RichTextLabel>` contains at least one ``RichTextEffect``, it will continuously process the effect unless the project is paused. This may impact battery life negatively.
+\ **Note:** As soon as a :ref:`RichTextLabel<class_RichTextLabel>` contains at least one **RichTextEffect**, it will continuously process the effect unless the project is paused. This may impact battery life negatively.
+
+.. rst-class:: classref-introduction-group
 
 Tutorials
 ---------
@@ -45,25 +49,41 @@ Tutorials
 
 - `RichTextEffect test project (third-party) <https://github.com/Eoin-ONeill-Yokai/Godot-Rich-Text-Effect-Test-Project>`__
 
+.. rst-class:: classref-reftable-group
+
 Methods
 -------
 
-+-------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`bool<class_bool>` | :ref:`_process_custom_fx<class_RichTextEffect_method__process_custom_fx>` **(** :ref:`CharFXTransform<class_CharFXTransform>` char_fx **)** |virtual| |const| |
-+-------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------+
+.. table::
+   :widths: auto
+
+   +-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>` | :ref:`_process_custom_fx<class_RichTextEffect_private_method__process_custom_fx>`\ (\ char_fx\: :ref:`CharFXTransform<class_CharFXTransform>`\ ) |virtual| |const| |
+   +-------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Method Descriptions
 -------------------
 
-.. _class_RichTextEffect_method__process_custom_fx:
+.. _class_RichTextEffect_private_method__process_custom_fx:
 
-- :ref:`bool<class_bool>` **_process_custom_fx** **(** :ref:`CharFXTransform<class_CharFXTransform>` char_fx **)** |virtual| |const|
+.. rst-class:: classref-method
+
+:ref:`bool<class_bool>` **_process_custom_fx**\ (\ char_fx\: :ref:`CharFXTransform<class_CharFXTransform>`\ ) |virtual| |const| :ref:`🔗<class_RichTextEffect_private_method__process_custom_fx>`
 
 Override this method to modify properties in ``char_fx``. The method must return ``true`` if the character could be transformed successfully. If the method returns ``false``, it will skip transformation to avoid displaying broken text.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

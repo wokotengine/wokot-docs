@@ -28,12 +28,12 @@ available functions and properties when programming. While the manual covers
 general features, concepts, and how to use the editor, the reference is all
 about using Godot's scripting API (Application Programming Interface). You can
 access it both online and offline. We recommend browsing the reference offline,
-from within the Godot editor. To do so, go to Help -> Search or press
+from within the Godot editor. To do so, go to Help -> Search Help or press
 :kbd:`F1`.
 
-.. image:: img/manual_class_reference_search.png
+.. image:: img/manual_class_reference_search.webp
 
-To browse it online, head to the manual's :ref:`Class Reference <toc-class-ref>`
+To browse it online, head to the manual's :ref:`Class Reference <doc_class_reference>`
 section.
 
 A class reference's page tells you:
@@ -42,7 +42,7 @@ A class reference's page tells you:
    links to jump to parent classes and see the properties and methods a type
    inherits.
 
-   .. image:: img/manual_class_reference_inheritance.png
+   .. image:: img/manual_class_reference_inheritance.webp
 
 2. A summary of the class's role and use cases.
 
@@ -56,8 +56,8 @@ A class reference's page tells you:
           <https://github.com/godotengine/godot-docs/issues>`_ GitHub repository
           to report it.
 
-You can Ctrl-click any underlined text like the name of a class, property,
-method, signal, or constant to jump to it.
+You can hold :kbd:`Ctrl` (macOS :kbd:`Cmd`) and then mouseover text like the name of a class, property,
+method, signal, or constant to underline it, then :kbd:`Ctrl + Click` (macOS :kbd:`Cmd + Click`) it to jump to it.
 
 Learning to think like a programmer
 -----------------------------------
@@ -84,10 +84,10 @@ help to better understand how to achieve something, you can ask other users for
 help on one of the many `active
 communities <https://godotengine.org/community>`_.
 
-The best place to ask for questions and find already answered ones is the
-official `Questions & Answers <https://godotengine.org/qa/>`_ site. These
+The best place to ask questions and find already answered ones is the
+official `Godot Forum <https://forum.godotengine.org/>`_. These
 responses show up in search engine results and get saved, allowing other users
-to benefit from discussions on the platform. Once you asked a question there,
+to benefit from discussions on the platform. Once you have asked a question there,
 you can share its link on other social platforms. Before asking a question, be
 sure to look for existing answers that might solve your problem on this website
 or using your preferred search engine.
@@ -116,15 +116,16 @@ information:
    the code you write affects nodes in your scenes. As a result, you should
    think of those scenes as part of your source code.
 
-   .. image:: img/key_concepts_scene_tree.png
+   .. image:: img/key_concepts_scene_tree.webp
 
    Also, please don't take a picture with your phone, the low quality and screen
    reflections can make it hard to understand the image. Your operating system
    should have a built-in tool to take screenshots with the :kbd:`PrtSc` (Print
-   Screen) key.
+   Screen) key (macOS: use :kbd:`Cmd + Shift + 3` for a full screen shot,
+   `more information here <https://support.apple.com/guide/mac-help/take-a-screenshot-mh26782/mac>`_).
 
    Alternatively, you can use a program like `ShareX <https://getsharex.com/>`_
-   on Windows or `FlameShot <https://flameshot.org/>`_ on Linux.
+   on Windows, or `Flameshot <https://flameshot.org/>`_ on Windows/macOS/Linux.
 
 5. Sharing a video of your running game can also be really **useful to
    troubleshoot your game**. You can use programs like `OBS Studio
@@ -139,7 +140,7 @@ information:
    interface evolve rapidly.
 
 Following these guidelines will maximize your chances of getting the answer
-you're looking for. They will save time both to you and the persons helping you.
+you're looking for. They will save time both for you and the persons helping you.
 
 Community tutorials
 -------------------

@@ -14,36 +14,53 @@ VisualShaderNodeTexture3D
 
 Performs a 3D texture lookup within the visual shader graph.
 
+.. rst-class:: classref-introduction-group
+
 Description
 -----------
 
 Performs a lookup operation on the provided texture, with support for multiple texture sources to choose from.
 
+.. rst-class:: classref-reftable-group
+
 Properties
 ----------
 
-+-----------------------------------+------------------------------------------------------------------+
-| :ref:`Texture3D<class_Texture3D>` | :ref:`texture<class_VisualShaderNodeTexture3D_property_texture>` |
-+-----------------------------------+------------------------------------------------------------------+
+.. table::
+   :widths: auto
+
+   +-----------------------------------+------------------------------------------------------------------+
+   | :ref:`Texture3D<class_Texture3D>` | :ref:`texture<class_VisualShaderNodeTexture3D_property_texture>` |
+   +-----------------------------------+------------------------------------------------------------------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Property Descriptions
 ---------------------
 
 .. _class_VisualShaderNodeTexture3D_property_texture:
 
-- :ref:`Texture3D<class_Texture3D>` **texture**
+.. rst-class:: classref-property
 
-+----------+--------------------+
-| *Setter* | set_texture(value) |
-+----------+--------------------+
-| *Getter* | get_texture()      |
-+----------+--------------------+
+:ref:`Texture3D<class_Texture3D>` **texture** :ref:`🔗<class_VisualShaderNodeTexture3D_property_texture>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_texture**\ (\ value\: :ref:`Texture3D<class_Texture3D>`\ )
+- :ref:`Texture3D<class_Texture3D>` **get_texture**\ (\ )
 
 A source texture. Used if :ref:`VisualShaderNodeSample3D.source<class_VisualShaderNodeSample3D_property_source>` is set to :ref:`VisualShaderNodeSample3D.SOURCE_TEXTURE<class_VisualShaderNodeSample3D_constant_SOURCE_TEXTURE>`.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

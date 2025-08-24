@@ -14,41 +14,79 @@ AudioStreamPlaybackResampled
 
 **Inherited By:** :ref:`AudioStreamGeneratorPlayback<class_AudioStreamGeneratorPlayback>`, :ref:`AudioStreamPlaybackOggVorbis<class_AudioStreamPlaybackOggVorbis>`
 
+.. container:: contribute
 
+	There is currently no description for this class. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+
+.. rst-class:: classref-reftable-group
 
 Methods
 -------
 
-+---------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`float<class_float>` | :ref:`_get_stream_sampling_rate<class_AudioStreamPlaybackResampled_method__get_stream_sampling_rate>` **(** **)** |virtual| |const|                             |
-+---------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`int<class_int>`     | :ref:`_mix_resampled<class_AudioStreamPlaybackResampled_method__mix_resampled>` **(** AudioFrame* dst_buffer, :ref:`int<class_int>` frame_count **)** |virtual| |
-+---------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| void                      | :ref:`begin_resample<class_AudioStreamPlaybackResampled_method_begin_resample>` **(** **)**                                                                     |
-+---------------------------+-----------------------------------------------------------------------------------------------------------------------------------------------------------------+
+.. table::
+   :widths: auto
+
+   +---------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`float<class_float>` | :ref:`_get_stream_sampling_rate<class_AudioStreamPlaybackResampled_private_method__get_stream_sampling_rate>`\ (\ ) |virtual| |required| |const|                                      |
+   +---------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`int<class_int>`     | :ref:`_mix_resampled<class_AudioStreamPlaybackResampled_private_method__mix_resampled>`\ (\ dst_buffer\: ``AudioFrame*``, frame_count\: :ref:`int<class_int>`\ ) |virtual| |required| |
+   +---------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                    | :ref:`begin_resample<class_AudioStreamPlaybackResampled_method_begin_resample>`\ (\ )                                                                                                 |
+   +---------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Method Descriptions
 -------------------
 
-.. _class_AudioStreamPlaybackResampled_method__get_stream_sampling_rate:
+.. _class_AudioStreamPlaybackResampled_private_method__get_stream_sampling_rate:
 
-- :ref:`float<class_float>` **_get_stream_sampling_rate** **(** **)** |virtual| |const|
+.. rst-class:: classref-method
+
+:ref:`float<class_float>` **_get_stream_sampling_rate**\ (\ ) |virtual| |required| |const| :ref:`🔗<class_AudioStreamPlaybackResampled_private_method__get_stream_sampling_rate>`
+
+.. container:: contribute
+
+	There is currently no description for this method. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+
+.. rst-class:: classref-item-separator
 
 ----
 
-.. _class_AudioStreamPlaybackResampled_method__mix_resampled:
+.. _class_AudioStreamPlaybackResampled_private_method__mix_resampled:
 
-- :ref:`int<class_int>` **_mix_resampled** **(** AudioFrame* dst_buffer, :ref:`int<class_int>` frame_count **)** |virtual|
+.. rst-class:: classref-method
+
+:ref:`int<class_int>` **_mix_resampled**\ (\ dst_buffer\: ``AudioFrame*``, frame_count\: :ref:`int<class_int>`\ ) |virtual| |required| :ref:`🔗<class_AudioStreamPlaybackResampled_private_method__mix_resampled>`
+
+.. container:: contribute
+
+	There is currently no description for this method. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_AudioStreamPlaybackResampled_method_begin_resample:
 
-- void **begin_resample** **(** **)**
+.. rst-class:: classref-method
+
+|void| **begin_resample**\ (\ ) :ref:`🔗<class_AudioStreamPlaybackResampled_method_begin_resample>`
+
+.. container:: contribute
+
+	There is currently no description for this method. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

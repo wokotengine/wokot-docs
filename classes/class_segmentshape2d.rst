@@ -12,60 +12,74 @@ SegmentShape2D
 
 **Inherits:** :ref:`Shape2D<class_Shape2D>` **<** :ref:`Resource<class_Resource>` **<** :ref:`RefCounted<class_RefCounted>` **<** :ref:`Object<class_Object>`
 
-Segment shape resource for 2D physics.
+A 2D line segment shape used for physics collision.
+
+.. rst-class:: classref-introduction-group
 
 Description
 -----------
 
-2D segment shape to be added as a *direct* child of a :ref:`PhysicsBody2D<class_PhysicsBody2D>` or :ref:`Area2D<class_Area2D>` using a :ref:`CollisionShape2D<class_CollisionShape2D>` node. Consists of two points, ``a`` and ``b``.
+A 2D line segment shape, intended for use in physics. Usually used to provide a shape for a :ref:`CollisionShape2D<class_CollisionShape2D>`.
 
-\ **Performance:** Being a primitive collision shape, ``SegmentShape2D`` is fast to check collisions against (though not as fast as :ref:`CircleShape2D<class_CircleShape2D>`).
+.. rst-class:: classref-reftable-group
 
 Properties
 ----------
 
-+-------------------------------+-------------------------------------------+--------------------+
-| :ref:`Vector2<class_Vector2>` | :ref:`a<class_SegmentShape2D_property_a>` | ``Vector2(0, 0)``  |
-+-------------------------------+-------------------------------------------+--------------------+
-| :ref:`Vector2<class_Vector2>` | :ref:`b<class_SegmentShape2D_property_b>` | ``Vector2(0, 10)`` |
-+-------------------------------+-------------------------------------------+--------------------+
+.. table::
+   :widths: auto
+
+   +-------------------------------+-------------------------------------------+--------------------+
+   | :ref:`Vector2<class_Vector2>` | :ref:`a<class_SegmentShape2D_property_a>` | ``Vector2(0, 0)``  |
+   +-------------------------------+-------------------------------------------+--------------------+
+   | :ref:`Vector2<class_Vector2>` | :ref:`b<class_SegmentShape2D_property_b>` | ``Vector2(0, 10)`` |
+   +-------------------------------+-------------------------------------------+--------------------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Property Descriptions
 ---------------------
 
 .. _class_SegmentShape2D_property_a:
 
-- :ref:`Vector2<class_Vector2>` **a**
+.. rst-class:: classref-property
 
-+-----------+-------------------+
-| *Default* | ``Vector2(0, 0)`` |
-+-----------+-------------------+
-| *Setter*  | set_a(value)      |
-+-----------+-------------------+
-| *Getter*  | get_a()           |
-+-----------+-------------------+
+:ref:`Vector2<class_Vector2>` **a** = ``Vector2(0, 0)`` :ref:`🔗<class_SegmentShape2D_property_a>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_a**\ (\ value\: :ref:`Vector2<class_Vector2>`\ )
+- :ref:`Vector2<class_Vector2>` **get_a**\ (\ )
 
 The segment's first point position.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_SegmentShape2D_property_b:
 
-- :ref:`Vector2<class_Vector2>` **b**
+.. rst-class:: classref-property
 
-+-----------+--------------------+
-| *Default* | ``Vector2(0, 10)`` |
-+-----------+--------------------+
-| *Setter*  | set_b(value)       |
-+-----------+--------------------+
-| *Getter*  | get_b()            |
-+-----------+--------------------+
+:ref:`Vector2<class_Vector2>` **b** = ``Vector2(0, 10)`` :ref:`🔗<class_SegmentShape2D_property_b>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_b**\ (\ value\: :ref:`Vector2<class_Vector2>`\ )
+- :ref:`Vector2<class_Vector2>` **get_b**\ (\ )
 
 The segment's second point position.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

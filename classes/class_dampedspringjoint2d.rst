@@ -12,94 +12,112 @@ DampedSpringJoint2D
 
 **Inherits:** :ref:`Joint2D<class_Joint2D>` **<** :ref:`Node2D<class_Node2D>` **<** :ref:`CanvasItem<class_CanvasItem>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-Damped spring constraint for 2D physics.
+A physics joint that connects two 2D physics bodies with a spring-like force.
+
+.. rst-class:: classref-introduction-group
 
 Description
 -----------
 
-Damped spring constraint for 2D physics. This resembles a spring joint that always wants to go back to a given length.
+A physics joint that connects two 2D physics bodies with a spring-like force. This behaves like a spring that always wants to stretch to a given length.
+
+.. rst-class:: classref-reftable-group
 
 Properties
 ----------
 
-+---------------------------+--------------------------------------------------------------------+----------+
-| :ref:`float<class_float>` | :ref:`damping<class_DampedSpringJoint2D_property_damping>`         | ``1.0``  |
-+---------------------------+--------------------------------------------------------------------+----------+
-| :ref:`float<class_float>` | :ref:`length<class_DampedSpringJoint2D_property_length>`           | ``50.0`` |
-+---------------------------+--------------------------------------------------------------------+----------+
-| :ref:`float<class_float>` | :ref:`rest_length<class_DampedSpringJoint2D_property_rest_length>` | ``0.0``  |
-+---------------------------+--------------------------------------------------------------------+----------+
-| :ref:`float<class_float>` | :ref:`stiffness<class_DampedSpringJoint2D_property_stiffness>`     | ``20.0`` |
-+---------------------------+--------------------------------------------------------------------+----------+
+.. table::
+   :widths: auto
+
+   +---------------------------+--------------------------------------------------------------------+----------+
+   | :ref:`float<class_float>` | :ref:`damping<class_DampedSpringJoint2D_property_damping>`         | ``1.0``  |
+   +---------------------------+--------------------------------------------------------------------+----------+
+   | :ref:`float<class_float>` | :ref:`length<class_DampedSpringJoint2D_property_length>`           | ``50.0`` |
+   +---------------------------+--------------------------------------------------------------------+----------+
+   | :ref:`float<class_float>` | :ref:`rest_length<class_DampedSpringJoint2D_property_rest_length>` | ``0.0``  |
+   +---------------------------+--------------------------------------------------------------------+----------+
+   | :ref:`float<class_float>` | :ref:`stiffness<class_DampedSpringJoint2D_property_stiffness>`     | ``20.0`` |
+   +---------------------------+--------------------------------------------------------------------+----------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Property Descriptions
 ---------------------
 
 .. _class_DampedSpringJoint2D_property_damping:
 
-- :ref:`float<class_float>` **damping**
+.. rst-class:: classref-property
 
-+-----------+--------------------+
-| *Default* | ``1.0``            |
-+-----------+--------------------+
-| *Setter*  | set_damping(value) |
-+-----------+--------------------+
-| *Getter*  | get_damping()      |
-+-----------+--------------------+
+:ref:`float<class_float>` **damping** = ``1.0`` :ref:`🔗<class_DampedSpringJoint2D_property_damping>`
 
-The spring joint's damping ratio. A value between ``0`` and ``1``. When the two bodies move into different directions the system tries to align them to the spring axis again. A high ``damping`` value forces the attached bodies to align faster.
+.. rst-class:: classref-property-setget
+
+- |void| **set_damping**\ (\ value\: :ref:`float<class_float>`\ )
+- :ref:`float<class_float>` **get_damping**\ (\ )
+
+The spring joint's damping ratio. A value between ``0`` and ``1``. When the two bodies move into different directions the system tries to align them to the spring axis again. A high :ref:`damping<class_DampedSpringJoint2D_property_damping>` value forces the attached bodies to align faster.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_DampedSpringJoint2D_property_length:
 
-- :ref:`float<class_float>` **length**
+.. rst-class:: classref-property
 
-+-----------+-------------------+
-| *Default* | ``50.0``          |
-+-----------+-------------------+
-| *Setter*  | set_length(value) |
-+-----------+-------------------+
-| *Getter*  | get_length()      |
-+-----------+-------------------+
+:ref:`float<class_float>` **length** = ``50.0`` :ref:`🔗<class_DampedSpringJoint2D_property_length>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_length**\ (\ value\: :ref:`float<class_float>`\ )
+- :ref:`float<class_float>` **get_length**\ (\ )
 
 The spring joint's maximum length. The two attached bodies cannot stretch it past this value.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_DampedSpringJoint2D_property_rest_length:
 
-- :ref:`float<class_float>` **rest_length**
+.. rst-class:: classref-property
 
-+-----------+------------------------+
-| *Default* | ``0.0``                |
-+-----------+------------------------+
-| *Setter*  | set_rest_length(value) |
-+-----------+------------------------+
-| *Getter*  | get_rest_length()      |
-+-----------+------------------------+
+:ref:`float<class_float>` **rest_length** = ``0.0`` :ref:`🔗<class_DampedSpringJoint2D_property_rest_length>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_rest_length**\ (\ value\: :ref:`float<class_float>`\ )
+- :ref:`float<class_float>` **get_rest_length**\ (\ )
 
 When the bodies attached to the spring joint move they stretch or squash it. The joint always tries to resize towards this length.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_DampedSpringJoint2D_property_stiffness:
 
-- :ref:`float<class_float>` **stiffness**
+.. rst-class:: classref-property
 
-+-----------+----------------------+
-| *Default* | ``20.0``             |
-+-----------+----------------------+
-| *Setter*  | set_stiffness(value) |
-+-----------+----------------------+
-| *Getter*  | get_stiffness()      |
-+-----------+----------------------+
+:ref:`float<class_float>` **stiffness** = ``20.0`` :ref:`🔗<class_DampedSpringJoint2D_property_stiffness>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_stiffness**\ (\ value\: :ref:`float<class_float>`\ )
+- :ref:`float<class_float>` **get_stiffness**\ (\ )
 
 The higher the value, the less the bodies attached to the joint will deform it. The joint applies an opposing force to the bodies, the product of the stiffness multiplied by the size difference from its resting length.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

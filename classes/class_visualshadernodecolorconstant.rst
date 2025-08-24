@@ -14,6 +14,8 @@ VisualShaderNodeColorConstant
 
 A :ref:`Color<class_Color>` constant to be used within the visual shader graph.
 
+.. rst-class:: classref-introduction-group
+
 Description
 -----------
 
@@ -21,33 +23,46 @@ Has two output ports representing RGB and alpha channels of :ref:`Color<class_Co
 
 Translated to ``vec3 rgb`` and ``float alpha`` in the shader language.
 
+.. rst-class:: classref-reftable-group
+
 Properties
 ----------
 
-+---------------------------+------------------------------------------------------------------------+-----------------------+
-| :ref:`Color<class_Color>` | :ref:`constant<class_VisualShaderNodeColorConstant_property_constant>` | ``Color(1, 1, 1, 1)`` |
-+---------------------------+------------------------------------------------------------------------+-----------------------+
+.. table::
+   :widths: auto
+
+   +---------------------------+------------------------------------------------------------------------+-----------------------+
+   | :ref:`Color<class_Color>` | :ref:`constant<class_VisualShaderNodeColorConstant_property_constant>` | ``Color(1, 1, 1, 1)`` |
+   +---------------------------+------------------------------------------------------------------------+-----------------------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Property Descriptions
 ---------------------
 
 .. _class_VisualShaderNodeColorConstant_property_constant:
 
-- :ref:`Color<class_Color>` **constant**
+.. rst-class:: classref-property
 
-+-----------+-----------------------+
-| *Default* | ``Color(1, 1, 1, 1)`` |
-+-----------+-----------------------+
-| *Setter*  | set_constant(value)   |
-+-----------+-----------------------+
-| *Getter*  | get_constant()        |
-+-----------+-----------------------+
+:ref:`Color<class_Color>` **constant** = ``Color(1, 1, 1, 1)`` :ref:`🔗<class_VisualShaderNodeColorConstant_property_constant>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_constant**\ (\ value\: :ref:`Color<class_Color>`\ )
+- :ref:`Color<class_Color>` **get_constant**\ (\ )
 
 A :ref:`Color<class_Color>` constant which represents a state of this node.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

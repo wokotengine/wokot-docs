@@ -1,10 +1,12 @@
+:article_outdated: True
+
 .. _doc_csg_tools:
 
 Prototyping levels with CSG
 ===========================
 
 CSG stands for **Constructive Solid Geometry**, and is a tool to combine basic
-shapes or custom meshes to create more complex shapes. In 3D modelling software,
+shapes or custom meshes to create more complex shapes. In 3D modeling software,
 CSG is mostly known as "Boolean Operators".
 
 Level prototyping is one of the main uses of CSG in Godot. This technique allows
@@ -13,15 +15,24 @@ Interior environments can be created by using inverted primitives.
 
 .. note:: The CSG nodes in Godot are mainly intended for prototyping. There is
           no built-in support for UV mapping or editing 3D polygons (though
-          extruded 2D polygons can be used with the CSGPolygon node).
+          extruded 2D polygons can be used with the CSGPolygon3D node).
 
           If you're looking for an easy to use level design tool for a project,
-          you may want to use `Qodot <https://github.com/Shfty/qodot-plugin>`__
-          instead. It lets you design levels using
-          `TrenchBroom <https://kristianduske.com/trenchbroom/>`__ and import
-          them in Godot.
+          you may want to use `FuncGodot <https://github.com/func-godot/func_godot_plugin>`__
+          or `Cyclops Level Builder <https://github.com/blackears/cyclopsLevelBuilder>`__
+          instead.
 
-.. image:: img/csg.gif
+.. video:: video/csg_tools.webm
+   :alt: CSG being used to subtract a torus shape from a box
+   :autoplay:
+   :loop:
+   :muted:
+   :align: default
+
+.. seealso::
+
+    You can check how to use CSG nodes to build various shapes (such as stairs or roads) using the
+    `Constructive Solid Geometry demo project <https://github.com/godotengine/godot-demo-projects/tree/master/3d/csg>`__.
 
 Introduction to CSG nodes
 -------------------------
@@ -29,13 +40,13 @@ Introduction to CSG nodes
 Like other features of Godot, CSG is supported in the form of nodes. These are
 the CSG nodes:
 
-- :ref:`CSGBox <class_CSGBox>`
-- :ref:`CSGCylinder <class_CSGCylinder>` (also supports cone)
-- :ref:`CSGSphere <class_CSGSphere>`
-- :ref:`CSGTorus <class_CSGTorus>`
-- :ref:`CSGPolygon <class_CSGPolygon>`
-- :ref:`CSGMesh <class_CSGMesh>`
-- :ref:`CSGCombiner <class_CSGcombiner>`
+- :ref:`CSGBox3D <class_CSGBox3D>`
+- :ref:`CSGCylinder3D <class_CSGCylinder3D>` (also supports cone)
+- :ref:`CSGSphere3D <class_CSGSphere3D>`
+- :ref:`CSGTorus3D <class_CSGTorus3D>`
+- :ref:`CSGPolygon3D <class_CSGPolygon3D>`
+- :ref:`CSGMesh3D <class_CSGMesh3D>`
+- :ref:`CSGCombiner3D <class_CSGCombiner3D>`
 
 .. image:: img/csg_nodes.png
 
@@ -59,7 +70,7 @@ Every CSG node supports 3 kinds of boolean operations:
 CSGPolygon
 ~~~~~~~~~~
 
-The :ref:`CSGPolygon <class_CSGPolygon>` node extrude along a Polygon drawn in
+The :ref:`CSGPolygon3D <class_CSGPolygon3D>` node extrude along a Polygon drawn in
 2D (in X, Y coordinates) in the following ways:
 
 - **Depth:** Extruded back a given amount.
@@ -71,29 +82,69 @@ The :ref:`CSGPolygon <class_CSGPolygon>` node extrude along a Polygon drawn in
 
 .. image:: img/csg_poly.png
 
-.. note:: The **Path** mode must be provided with a :ref:`Path <class_Path>`
+.. note:: The **Path** mode must be provided with a :ref:`Path3D <class_Path3D>`
           node to work. In the Path node, draw the path and the polygon in
-          CSGPolygon will extrude along the given path.
+          CSGPolygon3D will extrude along the given path.
 
 
 Custom meshes
 ~~~~~~~~~~~~~
 
-Any mesh can be used for :ref:`CSGMesh <class_CSGMesh>`; the mesh can be
-modelled in other software and imported into Godot. Multiple materials are
-supported. There are some restrictions for geometry:
+Custom meshes can be used for :ref:`CSGMesh3D <class_CSGMesh3D>` as long as the
+mesh is *manifold*. The mesh can be modeled in other software and imported into
+Godot. Multiple materials are supported. 
 
-- it must be closed,
-- it must not self-intersect,
-- it must not contain internal faces,
-- every edge must connect to only two other faces.
+For a mesh to be used as a CSG mesh, it is required to:
+
+- be closed
+- have each edge connect to only two faces
+- have volume
+
+And it is recommended to avoid:
+
+- negative volume
+- self-intersection
+- interior faces
+
+Godot uses the `manifold <https://github.com/elalish/manifold>`__ library to
+implement CSG meshes. The technical definition of "manifold" used by Godot is
+the following, adapted from that library's `definition of "manifold"
+<https://github.com/elalish/manifold/wiki/Manifold-Library#manifoldness-definition>`__:
+
+  Every edge of every triangle must contain the same two vertices (by index) as
+  exactly one other triangle edge, and the start and end vertices must switch
+  places between these two edges. The triangle vertices must appear in clockwise
+  order when viewed from the outside of the Godot Engine manifold mesh.
 
 .. image:: img/csg_custom_mesh.png
 
-CSGCombiner
-~~~~~~~~~~~
+Making an existing mesh manifold with Blender
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The :ref:`CSGCombiner <class_CSGCombiner>` node is an empty shape used for
+.. UPDATE: This relies on a specific Blender addon. If it becomes unsupported,
+.. we can remove this section.
+
+If you have an existing mesh that is not already manifold, you can make it
+manifold using Blender.
+
+In Blender, install and enable the
+`3D Print Toolbox <https://extensions.blender.org/add-ons/print3d-toolbox/>`_
+addon.
+
+Select the mesh you want to make manifold. Open the sidebar by clicking on the arrow:
+
+.. image:: img/csg_manifold_step_1.webp
+
+In the **3D Print** tab, under **Clean Up**, click the **Make Manifold** button:
+
+.. image:: img/csg_manifold_step_2.webp
+
+The mesh should now be manifold, and can be used as a custom mesh.
+
+CSGCombiner3D
+~~~~~~~~~~~~~
+
+The :ref:`CSGCombiner3D <class_CSGCombiner3D>` node is an empty shape used for
 organization. It will only combine children nodes.
 
 Processing order
@@ -126,7 +177,7 @@ Our level will contain these objects:
 - a desk,
 - a bookshelf.
 
-Create a scene with a Spatial node as root node.
+Create a scene with a Node3D node as root node.
 
 .. tip:: The default lighting of the environment doesn't provide clear shading
          at some angles. Change the display mode using **Display Overdraw** in
@@ -135,44 +186,44 @@ Create a scene with a Spatial node as root node.
 
 .. image:: img/csg_overdraw.png
 
-Create a CSGBox and name it ``room``, enable **Invert Faces** and change the
+Create a CSGBox3D and name it ``room``, enable **Invert Faces** and change the
 dimensions of your room.
 
 .. image:: img/csg_room.png
 
 .. image:: img/csg_room_invert.png
 
-Next, create a CSGCombiner and name it ``desk``.
+Next, create a CSGCombiner3D and name it ``desk``.
 
 A desk has one surface and 4 legs:
 
-- Create 1 CSGBox children node in **Union** mode for the surface
+- Create 1 CSGBox3D children node in **Union** mode for the surface
   and adjust the dimensions.
-- Create 4 CSGBox children nodes in **Union** mode for the legs
+- Create 4 CSGBox3D children nodes in **Union** mode for the legs
   and adjust the dimensions.
 
 Adjust their placement to resemble a desk.
 
 .. image:: img/csg_desk.png
 
-.. note:: CSG nodes inside a CSGCombiner will only process their operation
-          within the combiner. Therefore, CSGCombiners are used to organize
+.. note:: CSG nodes inside a CSGCombiner3D will only process their operation
+          within the combiner. Therefore, CSGCombiner3Ds are used to organize
           CSG nodes.
 
-Create a CSGCombiner and name it ``bed``.
+Create a CSGCombiner3D and name it ``bed``.
 
-Our bed consists of 3 parts: the bed, the mattress and a pillow. Create a CSGBox
-and adjust its dimension for the bed. Create another CSGBox and adjust its
+Our bed consists of 3 parts: the bed, the mattress and a pillow. Create a CSGBox3D
+and adjust its dimension for the bed. Create another CSGBox3D and adjust its
 dimension for the mattress.
 
 .. image:: img/csg_bed_mat.png
 
-We will create another CSGCombiner named ``pillow`` as the child of  ``bed``.
+We will create another CSGCombiner3D named ``pillow`` as the child of  ``bed``.
 The scene tree should look like this:
 
 .. image:: img/csg_bed_tree.png
 
-We will combine 3 CSGSphere nodes in **Union** mode to form a pillow. Scale the
+We will combine 3 CSGSphere3D nodes in **Union** mode to form a pillow. Scale the
 Y axis of the spheres and enable **Smooth Faces**.
 
 .. image:: img/csg_pillow_smooth.png
@@ -182,12 +233,12 @@ spheres will cut a hole into the mattress.
 
 .. image:: img/csg_pillow_hole.png
 
-Try to re-parent the ``pillow`` node to the root ``Spatial`` node; the hole will
+Try to re-parent the ``pillow`` node to the root ``Node3D`` node; the hole will
 disappear.
 
 .. note:: This is to illustrate the effect of CSG processing order.
-          Since the root node is not a CSG node, the CSGCombiner nodes are
-          the end of the operations; this shows the use of CSGCombiner to
+          Since the root node is not a CSG node, the CSGCombiner3D nodes are
+          the end of the operations; this shows the use of CSGCombiner3D to
           organize the CSG scene.
 
 Undo the re-parent after observing the effect. The bed you've built should look
@@ -195,16 +246,16 @@ like this:
 
 .. image:: img/csg_bed.png
 
-Create a CSGCombiner and name it ``lamp``.
+Create a CSGCombiner3D and name it ``lamp``.
 
 A lamp consists of 3 parts: the stand, the pole and the lampshade.
-Create a CSGCylinder, enable the **Cone** option and make it the stand. Create
-another CSGCylinder and adjust the dimensions to use it as a pole.
+Create a CSGCylinder3D, enable the **Cone** option and make it the stand. Create
+another CSGCylinder3D and adjust the dimensions to use it as a pole.
 
 .. image:: img/csg_lamp_pole_stand.png
 
-We will use a CSGPolygon for the lampshade. Use the **Spin** mode for the
-CSGPolygon and draw a `trapezoid <https://en.wikipedia.org/wiki/Trapezoid>`_
+We will use a CSGPolygon3D for the lampshade. Use the **Spin** mode for the
+CSGPolygon3D and draw a `trapezoid <https://en.wikipedia.org/wiki/Trapezoid>`_
 while in **Front View** (numeric keypad 1); this shape will extrude around the
 origin and form the lampshade.
 
@@ -218,21 +269,21 @@ Adjust the placement of the 3 parts to make it look like a lamp.
 
 .. image:: img/csg_lamp.png
 
-Create a CSGCombiner and name it ``bookshelf``.
+Create a CSGCombiner3D and name it ``bookshelf``.
 
-We will use 3 CSGBox nodes for the bookshelf. Create a CSGBox and adjust its
+We will use 3 CSGBox3D nodes for the bookshelf. Create a CSGBox3D and adjust its
 dimensions; this will be the size of the bookshelf.
 
 .. image:: img/csg_shelf_big.png
 
-Duplicate the CSGBox and shorten the dimensions of each axis and change the mode
+Duplicate the CSGBox3D and shorten the dimensions of each axis and change the mode
 to **Subtraction**.
 
 .. image:: img/csg_shelf_subtract.png
 
 .. image:: img/csg_shelf_subtract_menu.png
 
-You've almost built a shelf. Create one more CSGBox for dividing the shelf into
+You've almost built a shelf. Create one more CSGBox3D for dividing the shelf into
 two levels.
 
 .. image:: img/csg_shelf.png
@@ -261,7 +312,7 @@ to quickly apply textures to CSG-based levels.
 
 There are two ways to apply a material to a CSG node:
 
-- Applying it to a CSGCombiner node as a material override
+- Applying it to a CSGCombiner3D node as a material override
   (**Geometry > Material Override** in the Inspector). This will affect its
   children automatically, but will make it impossible to change the material in
   individual children.
@@ -271,15 +322,55 @@ There are two ways to apply a material to a CSG node:
 
 To apply triplanar mapping to a CSG node, select it, go to the Inspector, click
 the **[empty]** text next to **Material Override** (or **Material** for
-individual CSG nodes). Choose **New SpatialMaterial**. Click the newly created
+individual CSG nodes). Choose **New StandardMaterial3D**. Click the newly created
 material's icon to edit it. Unfold the **Albedo** section and load a texture
 into the **Texture** property. Now, unfold the **Uv1** section and check
 **Triplanar**. You can change the texture offset and scale on each axis by
 playing with the **Scale** and **Offset** properties just above. Higher values
 in the **Scale** property will cause the texture to repeat more often.
 
-.. tip:: You can copy a SpatialMaterial to reuse it across CSG nodes. To do so,
+.. tip:: You can copy a StandardMaterial3D to reuse it across CSG nodes. To do so,
          click the dropdown arrow next to a material property in the Inspector
          and choose **Copy**. To paste it, select the node you'd like to apply
          the material onto, click the dropdown arrow next to its material
          property then choose **Paste**.
+
+.. _doc_csg_tools_converting_to_mesh_instance_3d:
+
+Converting to MeshInstance3D
+----------------------------
+
+Since Godot 4.4, you can convert a CSG node and its children to a :ref:`class_MeshInstance3D` node.
+
+This has several benefits:
+
+- Bake lightmaps, since UV2 can be generated on a MeshInstance3D.
+- Bake occlusion culling, since the occlusion culling bake process only takes MeshInstance3D into account.
+- Faster loading times, since the CSG mesh no longer needs to be rebuilt when the scene loads.
+- Better performance when updating the node's transform if using the mesh within another CSG node.
+
+To convert a CSG node to a MeshInstance3D node, select it, then choose
+**CSG > Bake Mesh Instance** in the toolbar. The MeshInstance3D node
+will be created as a sibling. Note that the CSG node that was used for baking is **not** hidden
+automatically, so remember to hide it to prevent its geometry from overlapping with the newly created
+MeshInstance3D.
+
+You can also create a trimesh collision shape using **CSG > Bake Collision Shape**.
+The generated :ref:`class_CollisionShape3D` node must be a child of a :ref:`class_StaticBody3D`
+or :ref:`class_AnimatableBody3D` node to be effective.
+
+.. tip::
+
+    Remember to keep the original CSG node in the scene tree, so that you can
+    perform changes to the geometry later if needed. To make changes to the
+    geometry, remove the MeshInstance3D node and make the root CSG node visible
+    again.
+
+Exporting as glTF
+-----------------
+
+It can be useful to block out a level using CSG, then export it as a 3d model, to
+import into 3D modeling software. You can do this by selecting **Scene > Export As... >
+glTF 2.0 Scene**.
+
+.. image:: img/export_as_gltf.webp

@@ -14,6 +14,8 @@ PacketPeerStream
 
 Wrapper to use a PacketPeer over a StreamPeer.
 
+.. rst-class:: classref-introduction-group
+
 Description
 -----------
 
@@ -21,63 +23,88 @@ PacketStreamPeer provides a wrapper for working using packets over a stream. Thi
 
 \ **Note:** When exporting to Android, make sure to enable the ``INTERNET`` permission in the Android export preset before exporting the project or using one-click deploy. Otherwise, network communication of any kind will be blocked by Android.
 
+.. rst-class:: classref-reftable-group
+
 Properties
 ----------
 
-+-------------------------------------+---------------------------------------------------------------------------------------+-----------+
-| :ref:`int<class_int>`               | :ref:`input_buffer_max_size<class_PacketPeerStream_property_input_buffer_max_size>`   | ``65532`` |
-+-------------------------------------+---------------------------------------------------------------------------------------+-----------+
-| :ref:`int<class_int>`               | :ref:`output_buffer_max_size<class_PacketPeerStream_property_output_buffer_max_size>` | ``65532`` |
-+-------------------------------------+---------------------------------------------------------------------------------------+-----------+
-| :ref:`StreamPeer<class_StreamPeer>` | :ref:`stream_peer<class_PacketPeerStream_property_stream_peer>`                       |           |
-+-------------------------------------+---------------------------------------------------------------------------------------+-----------+
+.. table::
+   :widths: auto
+
+   +-------------------------------------+---------------------------------------------------------------------------------------+-----------+
+   | :ref:`int<class_int>`               | :ref:`input_buffer_max_size<class_PacketPeerStream_property_input_buffer_max_size>`   | ``65532`` |
+   +-------------------------------------+---------------------------------------------------------------------------------------+-----------+
+   | :ref:`int<class_int>`               | :ref:`output_buffer_max_size<class_PacketPeerStream_property_output_buffer_max_size>` | ``65532`` |
+   +-------------------------------------+---------------------------------------------------------------------------------------+-----------+
+   | :ref:`StreamPeer<class_StreamPeer>` | :ref:`stream_peer<class_PacketPeerStream_property_stream_peer>`                       |           |
+   +-------------------------------------+---------------------------------------------------------------------------------------+-----------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Property Descriptions
 ---------------------
 
 .. _class_PacketPeerStream_property_input_buffer_max_size:
 
-- :ref:`int<class_int>` **input_buffer_max_size**
+.. rst-class:: classref-property
 
-+-----------+----------------------------------+
-| *Default* | ``65532``                        |
-+-----------+----------------------------------+
-| *Setter*  | set_input_buffer_max_size(value) |
-+-----------+----------------------------------+
-| *Getter*  | get_input_buffer_max_size()      |
-+-----------+----------------------------------+
+:ref:`int<class_int>` **input_buffer_max_size** = ``65532`` :ref:`🔗<class_PacketPeerStream_property_input_buffer_max_size>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_input_buffer_max_size**\ (\ value\: :ref:`int<class_int>`\ )
+- :ref:`int<class_int>` **get_input_buffer_max_size**\ (\ )
+
+.. container:: contribute
+
+	There is currently no description for this property. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PacketPeerStream_property_output_buffer_max_size:
 
-- :ref:`int<class_int>` **output_buffer_max_size**
+.. rst-class:: classref-property
 
-+-----------+-----------------------------------+
-| *Default* | ``65532``                         |
-+-----------+-----------------------------------+
-| *Setter*  | set_output_buffer_max_size(value) |
-+-----------+-----------------------------------+
-| *Getter*  | get_output_buffer_max_size()      |
-+-----------+-----------------------------------+
+:ref:`int<class_int>` **output_buffer_max_size** = ``65532`` :ref:`🔗<class_PacketPeerStream_property_output_buffer_max_size>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_output_buffer_max_size**\ (\ value\: :ref:`int<class_int>`\ )
+- :ref:`int<class_int>` **get_output_buffer_max_size**\ (\ )
+
+.. container:: contribute
+
+	There is currently no description for this property. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PacketPeerStream_property_stream_peer:
 
-- :ref:`StreamPeer<class_StreamPeer>` **stream_peer**
+.. rst-class:: classref-property
 
-+----------+------------------------+
-| *Setter* | set_stream_peer(value) |
-+----------+------------------------+
-| *Getter* | get_stream_peer()      |
-+----------+------------------------+
+:ref:`StreamPeer<class_StreamPeer>` **stream_peer** :ref:`🔗<class_PacketPeerStream_property_stream_peer>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_stream_peer**\ (\ value\: :ref:`StreamPeer<class_StreamPeer>`\ )
+- :ref:`StreamPeer<class_StreamPeer>` **get_stream_peer**\ (\ )
 
 The wrapped :ref:`StreamPeer<class_StreamPeer>` object.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

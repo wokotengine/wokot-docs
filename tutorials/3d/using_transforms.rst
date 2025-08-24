@@ -13,7 +13,7 @@ At first, this seems easy. For simple games, this way of thinking may even be en
 
 Angles in three dimensions are most commonly referred to as "Euler Angles".
 
-.. image:: img/transforms_euler.png
+.. image:: img/transforms_euler.webp
 
 Euler angles were introduced by mathematician Leonhard Euler in the early 1700s.
 
@@ -79,14 +79,14 @@ There are a few reasons this may happen:
 Say no to Euler angles
 ======================
 
-The result of all this is that you should **not use** the ``rotation`` property of :ref:`class_Spatial` nodes in Godot for games. It's there to be used mainly in the editor, for coherence with the 2D engine, and for simple rotations (generally just one axis, or even two in limited cases). As much as you may be tempted, don't use it.
+The result of all this is that you should **not use** the ``rotation`` property of :ref:`class_Node3D` nodes in Godot for games. It's there to be used mainly in the editor, for coherence with the 2D engine, and for simple rotations (generally just one axis, or even two in limited cases). As much as you may be tempted, don't use it.
 
 Instead, there is a better way to solve your rotation problems.
 
 Introducing transforms
 ----------------------
 
-Godot uses the :ref:`class_Transform` datatype for orientations. Each :ref:`class_Spatial` node contains a ``transform`` property which is relative to the parent's transform, if the parent is a Spatial-derived type.
+Godot uses the :ref:`class_Transform3D` datatype for orientations. Each :ref:`class_Node3D` node contains a ``transform`` property which is relative to the parent's transform, if the parent is a Node3D-derived type.
 
 It is also possible to access the world coordinate transform via the ``global_transform`` property.
 
@@ -112,9 +112,9 @@ A default basis (unmodified) is akin to:
 
     // Instead we can use the Identity property.
     var identityBasis = Basis.Identity;
-    GD.Print(identityBasis.x); // prints: (1, 0, 0)
-    GD.Print(identityBasis.y); // prints: (0, 1, 0)
-    GD.Print(identityBasis.z); // prints: (0, 0, 1)
+    GD.Print(identityBasis.X); // prints: (1, 0, 0)
+    GD.Print(identityBasis.Y); // prints: (0, 1, 0)
+    GD.Print(identityBasis.Z); // prints: (0, 0, 1)
 
     // The Identity basis is equivalent to:
     var basis = new Basis(Vector3.Right, Vector3.Up, Vector3.Back);
@@ -158,14 +158,18 @@ It is possible to rotate a transform, either by multiplying its basis by another
 
  .. code-tab:: csharp
 
+    Transform3D transform = Transform;
     Vector3 axis = new Vector3(1, 0, 0); // Or Vector3.Right
     float rotationAmount = 0.1f;
-    // Rotate the transform around the X axis by 0.1 radians.
-    transform.basis = new Basis(axis, rotationAmount) * transform.basis;
-    // shortened
-    transform.basis = transform.basis.Rotated(axis, rotationAmount);
 
-A method in Spatial simplifies this:
+    // Rotate the transform around the X axis by 0.1 radians.
+    transform.Basis = new Basis(axis, rotationAmount) * transform.Basis;
+    // shortened
+    transform.Basis = transform.Basis.Rotated(axis, rotationAmount);
+
+    Transform = transform;
+
+A method in Node3D simplifies this:
 
 .. tabs::
  .. code-tab:: gdscript GDScript
@@ -197,6 +201,8 @@ To rotate relative to object space (the node's own transform), use the following
     // Rotate around the object's local X axis by 0.1 radians.
     RotateObjectLocal(new Vector3(1, 0, 0), 0.1f);
 
+The axis should be defined in the local coordinate system of the object. For example, to rotate around the object's local X, Y, or Z axes, use ``Vector3.RIGHT`` for the X-axis, ``Vector3.UP`` for the Y-axis, and ``Vector3.FORWARD`` for the Z-axis.
+
 Precision errors
 ================
 
@@ -217,7 +223,7 @@ There are two different ways to handle this. The first is to *orthonormalize* th
 
 This will make all axes have ``1.0`` length again and be ``90`` degrees from each other. However, any scale applied to the transform will be lost.
 
-It is recommended you not scale nodes that are going to be manipulated; scale their children nodes instead (such as MeshInstance). If you absolutely must scale the node, then re-apply it at the end:
+It is recommended you not scale nodes that are going to be manipulated; scale their children nodes instead (such as MeshInstance3D). If you absolutely must scale the node, then re-apply it at the end:
 
 .. tabs::
  .. code-tab:: gdscript GDScript
@@ -246,7 +252,7 @@ Imagine you need to shoot a bullet in the direction your player is facing. Just 
  .. code-tab:: csharp
 
     bullet.Transform = transform;
-    bullet.LinearVelocity = transform.basis.z * BulletSpeed;
+    bullet.LinearVelocity = transform.Basis.Z * BulletSpeed;
 
 Is the enemy looking at the player? Use the dot product for this (see the :ref:`doc_vector_math` tutorial for an explanation of the dot product):
 
@@ -261,8 +267,8 @@ Is the enemy looking at the player? Use the dot product for this (see the :ref:`
  .. code-tab:: csharp
 
     // Get the direction vector from player to enemy
-    Vector3 direction = enemy.Transform.origin - player.Transform.origin;
-    if (direction.Dot(enemy.Transform.basis.z) > 0)
+    Vector3 direction = enemy.Transform.Origin - player.Transform.Origin;
+    if (direction.Dot(enemy.Transform.Basis.Z) > 0)
     {
         enemy.ImWatchingYou(player);
     }
@@ -281,7 +287,7 @@ Strafe left:
     // Remember that +X is right
     if (Input.IsActionPressed("strafe_left"))
     {
-        TranslateObjectLocal(-Transform.basis.x);
+        TranslateObjectLocal(-Transform.Basis.X);
     }
 
 Jump:
@@ -293,15 +299,17 @@ Jump:
     if Input.is_action_just_pressed("jump"):
         velocity.y = JUMP_SPEED
 
-    velocity = move_and_slide(velocity)
+    move_and_slide()
 
  .. code-tab:: csharp
 
     // Keep in mind Y is up-axis
     if (Input.IsActionJustPressed("jump"))
-        velocity.y = JumpSpeed;
+    {
+        velocity.Y = JumpSpeed;
+    }
 
-    velocity = MoveAndSlide(velocity);
+    MoveAndSlide();
 
 All common behaviors and logic can be done with just vectors.
 
@@ -310,7 +318,7 @@ Setting information
 
 There are, of course, cases where you want to set information to a transform. Imagine a first person controller or orbiting camera. Those are definitely done using angles, because you *do want* the transforms to happen in a specific order.
 
-For such cases, keep the angles and rotations *outside* the transform and set them every frame. Don't try to retrieve and re-use them because the transform is not meant to be used this way.
+For such cases, keep the angles and rotations *outside* the transform and set them every frame. Don't try to retrieve and reuse them because the transform is not meant to be used this way.
 
 Example of looking around, FPS style:
 
@@ -341,12 +349,12 @@ Example of looking around, FPS style:
         if (@event is InputEventMouseMotion mouseMotion)
         {
             // modify accumulated mouse rotation
-            _rotationX += mouseMotion.Relative.x * LookAroundSpeed;
-            _rotationY += mouseMotion.Relative.y * LookAroundSpeed;
+            _rotationX += mouseMotion.Relative.X * LookAroundSpeed;
+            _rotationY += mouseMotion.Relative.Y * LookAroundSpeed;
 
             // reset rotation
             Transform3D transform = Transform;
-            transform.basis = Basis.Identity;
+            transform.Basis = Basis.Identity;
             Transform = transform;
 
             RotateObjectLocal(Vector3.Up, _rotationX); // first rotate about Y
@@ -367,8 +375,8 @@ Converting a rotation to quaternion is straightforward.
  .. code-tab:: gdscript GDScript
 
     # Convert basis to quaternion, keep in mind scale is lost
-    var a = Quat(transform.basis)
-    var b = Quat(transform2.basis)
+    var a = Quaternion(transform.basis)
+    var b = Quaternion(transform2.basis)
     # Interpolate using spherical-linear interpolation (SLERP).
     var c = a.slerp(b,0.5) # find halfway point between a and b
     # Apply back
@@ -377,14 +385,14 @@ Converting a rotation to quaternion is straightforward.
  .. code-tab:: csharp
 
     // Convert basis to quaternion, keep in mind scale is lost
-    var a = transform.basis.Quat();
-    var b = transform2.basis.Quat();
+    var a = new Quaternion(transform.Basis);
+    var b = new Quaternion(transform2.Basis);
     // Interpolate using spherical-linear interpolation (SLERP).
     var c = a.Slerp(b, 0.5f); // find halfway point between a and b
     // Apply back
-    transform.basis = new Basis(c);
+    transform.Basis = new Basis(c);
 
-The :ref:`class_Quat` type reference has more information on the datatype (it
+The :ref:`class_Quaternion` type reference has more information on the datatype (it
 can also do transform accumulation, transform points, etc., though this is used
 less often). If you interpolate or apply operations to quaternions many times,
 keep in mind they need to be eventually normalized. Otherwise, they will also

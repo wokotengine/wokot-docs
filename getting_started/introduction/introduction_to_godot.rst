@@ -21,7 +21,7 @@ on desktop or mobile, as well as on the web.
 You can also create console games with it, although you either need strong
 programming skills or a developer to port the game for you.
 
-.. note:: The Godot team can't provide an open-source console export due to the
+.. note:: The Godot team can't provide an open source console export due to the
           licensing terms imposed by console manufacturers. Regardless of the
           engine you use, though, releasing games on consoles is always a lot of
           work. You can read more on that here: :ref:`doc_consoles`.
@@ -29,22 +29,35 @@ programming skills or a developer to port the game for you.
 What can the engine do?
 -----------------------
 
-Godot was initially developed in-house by an Argentinan game studio. Its
+Godot was initially developed in-house by an Argentinian game studio. Its
 development started in 2001, and the engine was rewritten and improved
-tremendously since its open-source release in 2014.
+tremendously since its open source release in 2014.
 
-Some examples of games created with Godot include Ex-Zodiac and Helms of Fury.
+Some examples of games created with Godot include Cassette Beasts, PVKK, and
+Usagi Shima. As for applications, the open source pixel art drawing program
+Pixelorama is powered by Godot, and so is the voxel RPG creator RPG in a Box.
+You can find many more examples in the `Official Showcase
+<https://godotengine.org/showcase/>`_.
 
-.. image:: img/introduction_ex_zodiac.png
+.. figure:: img/introduction_usagi_shima.webp
+   :align: center
 
-.. image:: img/introduction_helms_of_fury.jpg
+   Usagi Shima
 
-As for applications, the open-source pixel art drawing program Pixelorama is
-powered by Godot, and so is the voxel RPG creator RPG in a box.
+.. figure:: img/introduction_cassette_beasts.webp
+   :align: center
 
-.. image:: img/introduction_rpg_in_a_box.png
+   Cassette Beasts
 
-You can find many more examples in the `official showcase videos`_.
+.. figure:: img/introduction_pvkk.webp
+   :align: center
+
+   PVKK: Planetenverteidigungskanonenkommandant
+
+.. figure:: img/introduction_rpg_in_a_box.webp
+   :align: center
+
+   RPG in a Box
 
 How does it work and look?
 --------------------------
@@ -53,7 +66,7 @@ Godot comes with a fully-fledged game editor with integrated tools to answer the
 most common needs. It includes a code editor, an animation editor, a tilemap
 editor, a shader editor, a debugger, a profiler, and more.
 
-.. image:: img/introduction_editor.png
+.. image:: img/introduction_editor.webp
 
 The team strives to offer a feature-rich game editor with a consistent user
 experience. While there is always room for improvement, the user interface keeps
@@ -71,25 +84,20 @@ Programming languages
 
 Let's talk about the available programming languages.
 
-You can code your games using :ref:`GDScript <toc-learn-scripting-gdscript>`, a
+You can code your games using :ref:`GDScript <doc_gdscript>`, a
 Godot-specific and tightly integrated language with a lightweight syntax, or
-:ref:`C# <toc-learn-scripting-C#>`, which is popular in the games industry.
+:ref:`C# <doc_c_sharp>`, which is popular in the games industry.
 These are the two main scripting languages we support.
 
-With the :ref:`GDNative <toc-tutorials-gdnative>` technology, you can also write
+With the GDExtension technology, you can also write
 gameplay or high-performance algorithms in C or C++ without recompiling the
 engine. You can use this technology to integrate third-party libraries and other
 Software Development Kits (SDK) in the engine.
 
 Of course, you can also directly add modules and features to the engine, as it's
-completely free and open-source.
+completely free and open source.
 
-.. seealso:: These are the five officially supported programming languages. The
-             community maintains support for many more. For more information,
-             see :ref:`GDNative third-party bindings
-             <doc_what_is_gdnative_third_party_bindings>`.
-
-.. doc_learning_programming
+.. _doc_introduction_learning_programming:
 
 What do I need to know to use Godot?
 ------------------------------------

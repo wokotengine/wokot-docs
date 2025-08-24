@@ -12,81 +12,123 @@ VisualShaderNodeParameter
 
 **Inherits:** :ref:`VisualShaderNode<class_VisualShaderNode>` **<** :ref:`Resource<class_Resource>` **<** :ref:`RefCounted<class_RefCounted>` **<** :ref:`Object<class_Object>`
 
-**Inherited By:** :ref:`VisualShaderNodeBooleanParameter<class_VisualShaderNodeBooleanParameter>`, :ref:`VisualShaderNodeColorParameter<class_VisualShaderNodeColorParameter>`, :ref:`VisualShaderNodeFloatParameter<class_VisualShaderNodeFloatParameter>`, :ref:`VisualShaderNodeIntParameter<class_VisualShaderNodeIntParameter>`, :ref:`VisualShaderNodeTextureParameter<class_VisualShaderNodeTextureParameter>`, :ref:`VisualShaderNodeTransformParameter<class_VisualShaderNodeTransformParameter>`, :ref:`VisualShaderNodeVec2Parameter<class_VisualShaderNodeVec2Parameter>`, :ref:`VisualShaderNodeVec3Parameter<class_VisualShaderNodeVec3Parameter>`, :ref:`VisualShaderNodeVec4Parameter<class_VisualShaderNodeVec4Parameter>`
+**Inherited By:** :ref:`VisualShaderNodeBooleanParameter<class_VisualShaderNodeBooleanParameter>`, :ref:`VisualShaderNodeColorParameter<class_VisualShaderNodeColorParameter>`, :ref:`VisualShaderNodeFloatParameter<class_VisualShaderNodeFloatParameter>`, :ref:`VisualShaderNodeIntParameter<class_VisualShaderNodeIntParameter>`, :ref:`VisualShaderNodeTextureParameter<class_VisualShaderNodeTextureParameter>`, :ref:`VisualShaderNodeTransformParameter<class_VisualShaderNodeTransformParameter>`, :ref:`VisualShaderNodeUIntParameter<class_VisualShaderNodeUIntParameter>`, :ref:`VisualShaderNodeVec2Parameter<class_VisualShaderNodeVec2Parameter>`, :ref:`VisualShaderNodeVec3Parameter<class_VisualShaderNodeVec3Parameter>`, :ref:`VisualShaderNodeVec4Parameter<class_VisualShaderNodeVec4Parameter>`
 
 A base type for the parameters within the visual shader graph.
+
+.. rst-class:: classref-introduction-group
 
 Description
 -----------
 
-A parameter represents a variable in the shader which is set externally, i.e. from the :ref:`ShaderMaterial<class_ShaderMaterial>`. Parameters are exposed as properties in the :ref:`ShaderMaterial<class_ShaderMaterial>` and can be assigned from the inspector or from a script.
+A parameter represents a variable in the shader which is set externally, i.e. from the :ref:`ShaderMaterial<class_ShaderMaterial>`. Parameters are exposed as properties in the :ref:`ShaderMaterial<class_ShaderMaterial>` and can be assigned from the Inspector or from a script.
+
+.. rst-class:: classref-reftable-group
 
 Properties
 ----------
 
-+------------------------------------------------------------+--------------------------------------------------------------------------------+--------+
-| :ref:`String<class_String>`                                | :ref:`parameter_name<class_VisualShaderNodeParameter_property_parameter_name>` | ``""`` |
-+------------------------------------------------------------+--------------------------------------------------------------------------------+--------+
-| :ref:`Qualifier<enum_VisualShaderNodeParameter_Qualifier>` | :ref:`qualifier<class_VisualShaderNodeParameter_property_qualifier>`           | ``0``  |
-+------------------------------------------------------------+--------------------------------------------------------------------------------+--------+
+.. table::
+   :widths: auto
+
+   +------------------------------------------------------------+--------------------------------------------------------------------------------+--------+
+   | :ref:`String<class_String>`                                | :ref:`parameter_name<class_VisualShaderNodeParameter_property_parameter_name>` | ``""`` |
+   +------------------------------------------------------------+--------------------------------------------------------------------------------+--------+
+   | :ref:`Qualifier<enum_VisualShaderNodeParameter_Qualifier>` | :ref:`qualifier<class_VisualShaderNodeParameter_property_qualifier>`           | ``0``  |
+   +------------------------------------------------------------+--------------------------------------------------------------------------------+--------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Enumerations
 ------------
 
 .. _enum_VisualShaderNodeParameter_Qualifier:
 
+.. rst-class:: classref-enumeration
+
+enum **Qualifier**: :ref:`🔗<enum_VisualShaderNodeParameter_Qualifier>`
+
 .. _class_VisualShaderNodeParameter_constant_QUAL_NONE:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Qualifier<enum_VisualShaderNodeParameter_Qualifier>` **QUAL_NONE** = ``0``
+
+The parameter will be tied to the :ref:`ShaderMaterial<class_ShaderMaterial>` using this shader.
 
 .. _class_VisualShaderNodeParameter_constant_QUAL_GLOBAL:
 
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Qualifier<enum_VisualShaderNodeParameter_Qualifier>` **QUAL_GLOBAL** = ``1``
+
+The parameter will use a global value, defined in Project Settings.
+
 .. _class_VisualShaderNodeParameter_constant_QUAL_INSTANCE:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Qualifier<enum_VisualShaderNodeParameter_Qualifier>` **QUAL_INSTANCE** = ``2``
+
+The parameter will be tied to the node with attached :ref:`ShaderMaterial<class_ShaderMaterial>` using this shader.
 
 .. _class_VisualShaderNodeParameter_constant_QUAL_MAX:
 
-enum **Qualifier**:
+.. rst-class:: classref-enumeration-constant
 
-- **QUAL_NONE** = **0**
+:ref:`Qualifier<enum_VisualShaderNodeParameter_Qualifier>` **QUAL_MAX** = ``3``
 
-- **QUAL_GLOBAL** = **1**
+Represents the size of the :ref:`Qualifier<enum_VisualShaderNodeParameter_Qualifier>` enum.
 
-- **QUAL_INSTANCE** = **2**
+.. rst-class:: classref-section-separator
 
-- **QUAL_MAX** = **3** --- Represents the size of the :ref:`Qualifier<enum_VisualShaderNodeParameter_Qualifier>` enum.
+----
+
+.. rst-class:: classref-descriptions-group
 
 Property Descriptions
 ---------------------
 
 .. _class_VisualShaderNodeParameter_property_parameter_name:
 
-- :ref:`String<class_String>` **parameter_name**
+.. rst-class:: classref-property
 
-+-----------+---------------------------+
-| *Default* | ``""``                    |
-+-----------+---------------------------+
-| *Setter*  | set_parameter_name(value) |
-+-----------+---------------------------+
-| *Getter*  | get_parameter_name()      |
-+-----------+---------------------------+
+:ref:`String<class_String>` **parameter_name** = ``""`` :ref:`🔗<class_VisualShaderNodeParameter_property_parameter_name>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_parameter_name**\ (\ value\: :ref:`String<class_String>`\ )
+- :ref:`String<class_String>` **get_parameter_name**\ (\ )
 
 Name of the parameter, by which it can be accessed through the :ref:`ShaderMaterial<class_ShaderMaterial>` properties.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_VisualShaderNodeParameter_property_qualifier:
 
-- :ref:`Qualifier<enum_VisualShaderNodeParameter_Qualifier>` **qualifier**
+.. rst-class:: classref-property
 
-+-----------+----------------------+
-| *Default* | ``0``                |
-+-----------+----------------------+
-| *Setter*  | set_qualifier(value) |
-+-----------+----------------------+
-| *Getter*  | get_qualifier()      |
-+-----------+----------------------+
+:ref:`Qualifier<enum_VisualShaderNodeParameter_Qualifier>` **qualifier** = ``0`` :ref:`🔗<class_VisualShaderNodeParameter_property_qualifier>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_qualifier**\ (\ value\: :ref:`Qualifier<enum_VisualShaderNodeParameter_Qualifier>`\ )
+- :ref:`Qualifier<enum_VisualShaderNodeParameter_Qualifier>` **get_qualifier**\ (\ )
+
+Defines the scope of the parameter.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

@@ -24,7 +24,6 @@ are that:
 
 -  The language is easy to get started with.
 -  Most code can be written and changed quickly and without hassle.
--  Less code written means less errors & mistakes to fix.
 -  The code is easy to read (little clutter).
 -  No compilation is required to test.
 -  Runtime is tiny.
@@ -38,7 +37,7 @@ While the main disadvantages are:
    statically typed languages only appear while running the code
    (because expression parsing is more strict).
 -  Less flexibility for code-completion (some variable types are only
-   known at run-time).
+   known at runtime).
 
 This, translated to reality, means that Godot used with GDScript is a combination
 designed to create games quickly and efficiently. For games that are very
@@ -166,7 +165,7 @@ too. Some Examples:
 In GDScript, only base types (int, float, string and the vector types)
 are passed by value to functions (value is copied). Everything else
 (instances, arrays, dictionaries, etc) is passed as reference. Classes
-that inherit :ref:`class_Reference` (the default if nothing is specified)
+that inherit :ref:`class_RefCounted` (the default if nothing is specified)
 will be freed when not used, but manual memory management is allowed too
 if inheriting manually from :ref:`class_Object`.
 
@@ -230,11 +229,9 @@ Or unordered sets:
 Dictionaries
 ------------
 
-Dictionaries are a powerful tool in dynamically typed languages.
-Most programmers that come from statically typed languages (such as C++
-or C#) ignore their existence and make their life unnecessarily more
-difficult. This datatype is generally not present in such languages (or
-only in limited form).
+Dictionaries are a powerful tool in dynamically typed languages. In
+GDScript, untyped dictionaries can be used for many cases where a statically
+typed language would tend to use another data structure.
 
 Dictionaries can map any value to any other value with complete
 disregard for the datatype used as either key or value. Contrary to
@@ -322,23 +319,24 @@ Iterating using the C-style for loop in C-derived languages can be quite complex
 
 .. code-block:: cpp
 
-    const char* strings = new const char*[50];
+    const char** strings = new const char*[50];
 
     [..]
 
     for (int i = 0; i < 50; i++) {
-
-        printf("Value: %s\n", i, strings[i]);
+        printf("Value: %c Index: %d\n", strings[i], i);
     }
 
     // Even in STL:
+    std::list<std::string> strings;
 
-    for (std::list<std::string>::const_iterator it = strings.begin(); it != strings.end(); it++) {
+    [..]
 
+    for (std::string::const_iterator it = strings.begin(); it != strings.end(); it++) {
         std::cout << *it << std::endl;
     }
 
-Because of this, GDScript makes the opinonated decision to have a for-in loop over iterables instead:
+Because of this, GDScript makes the opinionated decision to have a for-in loop over iterables instead:
 
 ::
 
@@ -364,9 +362,9 @@ The range() function can take 3 arguments:
 
 ::
 
-    range(n) # Will go from 0 to n-1.
-    range(b, n) # Will go from b to n-1.
-    range(b, n, s) # Will go from b to n-1, in steps of s.
+    range(n) # Will count from 0 to n in steps of 1. The parameter n is exclusive.
+    range(b, n) # Will count from b to n in steps of 1. The parameters b is inclusive. The parameter n is exclusive.
+    range(b, n, s) # Will count from b to n, in steps of s. The parameters b is inclusive. The parameter n is exclusive.
 
 Some examples involving C-style for loops:
 
@@ -524,5 +522,4 @@ exists is desirable:
         if object.has_method("smash"):
             object.smash()
 
-Then, simply define that method and anything the rock touches can be
-smashed.
+Then, define that method and anything the rock touches can be smashed.

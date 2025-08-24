@@ -14,10 +14,12 @@ DTLSServer
 
 Helper class to implement a DTLS server.
 
+.. rst-class:: classref-introduction-group
+
 Description
 -----------
 
-This class is used to store the state of a DTLS server. Upon :ref:`setup<class_DTLSServer_method_setup>` it converts connected :ref:`PacketPeerUDP<class_PacketPeerUDP>` to :ref:`PacketPeerDTLS<class_PacketPeerDTLS>` accepting them via :ref:`take_connection<class_DTLSServer_method_take_connection>` as DTLS clients. Under the hood, this class is used to store the DTLS state and cookies of the server. The reason of why the state and cookies are needed is outside of the scope of this documentation.
+This class is used to store the state of a DTLS server. Upon :ref:`setup()<class_DTLSServer_method_setup>` it converts connected :ref:`PacketPeerUDP<class_PacketPeerUDP>` to :ref:`PacketPeerDTLS<class_PacketPeerDTLS>` accepting them via :ref:`take_connection()<class_DTLSServer_method_take_connection>` as DTLS clients. Under the hood, this class is used to store the DTLS state and cookies of the server. The reason of why the state and cookies are needed is outside of the scope of this documentation.
 
 Below a small example of how to use it:
 
@@ -26,76 +28,77 @@ Below a small example of how to use it:
 
  .. code-tab:: gdscript
 
-    # ServerNode.gd
+    # server_node.gd
     extends Node
-    
-    var dtls := DTLSServer.new()
-    var server := UDPServer.new()
+
+    var dtls = DTLSServer.new()
+    var server = UDPServer.new()
     var peers = []
-    
+
     func _ready():
         server.listen(4242)
         var key = load("key.key") # Your private key.
         var cert = load("cert.crt") # Your X509 certificate.
-        dtls.setup(key, cert)
-    
+        dtls.setup(TlsOptions.server(key, cert))
+
     func _process(delta):
         while server.is_connection_available():
-            var peer : PacketPeerUDP = server.take_connection()
-            var dtls_peer : PacketPeerDTLS = dtls.take_connection(peer)
+            var peer = server.take_connection()
+            var dtls_peer = dtls.take_connection(peer)
             if dtls_peer.get_status() != PacketPeerDTLS.STATUS_HANDSHAKING:
                 continue # It is normal that 50% of the connections fails due to cookie exchange.
             print("Peer connected!")
             peers.append(dtls_peer)
-    
+
         for p in peers:
             p.poll() # Must poll to update the state.
             if p.get_status() == PacketPeerDTLS.STATUS_CONNECTED:
                 while p.get_available_packet_count() > 0:
                     print("Received message from client: %s" % p.get_packet().get_string_from_utf8())
-                    p.put_packet("Hello DTLS client".to_utf8())
+                    p.put_packet("Hello DTLS client".to_utf8_buffer())
 
  .. code-tab:: csharp
 
-    using Godot;
-    using System;
     // ServerNode.cs
-    public class ServerNode : Node
+    using Godot;
+
+    public partial class ServerNode : Node
     {
-        public DTLSServer Dtls = new DTLSServer();
-        public UDPServer Server = new UDPServer();
-        public Godot.Collections.Array<PacketPeerDTLS> Peers = new Godot.Collections.Array<PacketPeerDTLS>();
+        private DtlsServer _dtls = new DtlsServer();
+        private UdpServer _server = new UdpServer();
+        private Godot.Collections.Array<PacketPeerDtls> _peers = [];
+
         public override void _Ready()
         {
-            Server.Listen(4242);
+            _server.Listen(4242);
             var key = GD.Load<CryptoKey>("key.key"); // Your private key.
             var cert = GD.Load<X509Certificate>("cert.crt"); // Your X509 certificate.
-            Dtls.Setup(key, cert);
+            _dtls.Setup(TlsOptions.Server(key, cert));
         }
-    
-        public override void _Process(float delta)
+
+        public override void _Process(double delta)
         {
-            while (Server.IsConnectionAvailable())
+            while (_server.IsConnectionAvailable())
             {
-                PacketPeerUDP peer = Server.TakeConnection();
-                PacketPeerDTLS dtlsPeer = Dtls.TakeConnection(peer);
-                if (dtlsPeer.GetStatus() != PacketPeerDTLS.Status.Handshaking)
+                PacketPeerUdp peer = _server.TakeConnection();
+                PacketPeerDtls dtlsPeer = _dtls.TakeConnection(peer);
+                if (dtlsPeer.GetStatus() != PacketPeerDtls.Status.Handshaking)
                 {
                     continue; // It is normal that 50% of the connections fails due to cookie exchange.
                 }
                 GD.Print("Peer connected!");
-                Peers.Add(dtlsPeer);
+                _peers.Add(dtlsPeer);
             }
-    
-            foreach (var p in Peers)
+
+            foreach (var p in _peers)
             {
                 p.Poll(); // Must poll to update the state.
-                if (p.GetStatus() == PacketPeerDTLS.Status.Connected)
+                if (p.GetStatus() == PacketPeerDtls.Status.Connected)
                 {
                     while (p.GetAvailablePacketCount() > 0)
                     {
-                        GD.Print("Received Message From Client: " + p.GetPacket().GetStringFromUTF8());
-                        p.PutPacket("Hello Dtls Client".ToUTF8());
+                        GD.Print($"Received Message From Client: {p.GetPacket().GetStringFromUtf8()}");
+                        p.PutPacket("Hello DTLS Client".ToUtf8Buffer());
                     }
                 }
             }
@@ -109,57 +112,59 @@ Below a small example of how to use it:
 
  .. code-tab:: gdscript
 
-    # ClientNode.gd
+    # client_node.gd
     extends Node
-    
-    var dtls := PacketPeerDTLS.new()
-    var udp := PacketPeerUDP.new()
+
+    var dtls = PacketPeerDTLS.new()
+    var udp = PacketPeerUDP.new()
     var connected = false
-    
+
     func _ready():
         udp.connect_to_host("127.0.0.1", 4242)
         dtls.connect_to_peer(udp, false) # Use true in production for certificate validation!
-    
+
     func _process(delta):
         dtls.poll()
         if dtls.get_status() == PacketPeerDTLS.STATUS_CONNECTED:
             if !connected:
                 # Try to contact server
-                dtls.put_packet("The answer is... 42!".to_utf8())
+                dtls.put_packet("The answer is... 42!".to_utf8_buffer())
             while dtls.get_available_packet_count() > 0:
                 print("Connected: %s" % dtls.get_packet().get_string_from_utf8())
                 connected = true
 
  .. code-tab:: csharp
 
+    // ClientNode.cs
     using Godot;
     using System.Text;
-    // ClientNode.cs
-    public class ClientNode : Node
+
+    public partial class ClientNode : Node
     {
-        public PacketPeerDTLS Dtls = new PacketPeerDTLS();
-        public PacketPeerUDP Udp = new PacketPeerUDP();
-        public bool Connected = false;
+        private PacketPeerDtls _dtls = new PacketPeerDtls();
+        private PacketPeerUdp _udp = new PacketPeerUdp();
+        private bool _connected = false;
+
         public override void _Ready()
         {
-            Udp.ConnectToHost("127.0.0.1", 4242);
-            Dtls.ConnectToPeer(Udp, false); // Use true in production for certificate validation!
+            _udp.ConnectToHost("127.0.0.1", 4242);
+            _dtls.ConnectToPeer(_udp, validateCerts: false); // Use true in production for certificate validation!
         }
-    
-        public override void _Process(float delta)
+
+        public override void _Process(double delta)
         {
-            Dtls.Poll();
-            if (Dtls.GetStatus() == PacketPeerDTLS.Status.Connected)
+            _dtls.Poll();
+            if (_dtls.GetStatus() == PacketPeerDtls.Status.Connected)
             {
-                if (!Connected)
+                if (!_connected)
                 {
                     // Try to contact server
-                    Dtls.PutPacket("The Answer Is..42!".ToUTF8());
+                    _dtls.PutPacket("The Answer Is..42!".ToUtf8Buffer());
                 }
-                while (Dtls.GetAvailablePacketCount() > 0)
+                while (_dtls.GetAvailablePacketCount() > 0)
                 {
-                    GD.Print("Connected: " + Dtls.GetPacket().GetStringFromUTF8());
-                    Connected = true;
+                    GD.Print($"Connected: {_dtls.GetPacket().GetStringFromUtf8()}");
+                    _connected = true;
                 }
             }
         }
@@ -167,37 +172,57 @@ Below a small example of how to use it:
 
 
 
+.. rst-class:: classref-reftable-group
+
 Methods
 -------
 
-+---------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`Error<enum_@GlobalScope_Error>`       | :ref:`setup<class_DTLSServer_method_setup>` **(** :ref:`CryptoKey<class_CryptoKey>` key, :ref:`X509Certificate<class_X509Certificate>` certificate, :ref:`X509Certificate<class_X509Certificate>` chain=null **)** |
-+---------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`PacketPeerDTLS<class_PacketPeerDTLS>` | :ref:`take_connection<class_DTLSServer_method_take_connection>` **(** :ref:`PacketPeerUDP<class_PacketPeerUDP>` udp_peer **)**                                                                                     |
-+---------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+.. table::
+   :widths: auto
+
+   +---------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Error<enum_@GlobalScope_Error>`       | :ref:`setup<class_DTLSServer_method_setup>`\ (\ server_options\: :ref:`TLSOptions<class_TLSOptions>`\ )                     |
+   +---------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`PacketPeerDTLS<class_PacketPeerDTLS>` | :ref:`take_connection<class_DTLSServer_method_take_connection>`\ (\ udp_peer\: :ref:`PacketPeerUDP<class_PacketPeerUDP>`\ ) |
+   +---------------------------------------------+-----------------------------------------------------------------------------------------------------------------------------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Method Descriptions
 -------------------
 
 .. _class_DTLSServer_method_setup:
 
-- :ref:`Error<enum_@GlobalScope_Error>` **setup** **(** :ref:`CryptoKey<class_CryptoKey>` key, :ref:`X509Certificate<class_X509Certificate>` certificate, :ref:`X509Certificate<class_X509Certificate>` chain=null **)**
+.. rst-class:: classref-method
 
-Setup the DTLS server to use the given ``key`` and provide the given ``certificate`` to clients. You can pass the optional ``chain`` parameter to provide additional CA chain information along with the certificate.
+:ref:`Error<enum_@GlobalScope_Error>` **setup**\ (\ server_options\: :ref:`TLSOptions<class_TLSOptions>`\ ) :ref:`🔗<class_DTLSServer_method_setup>`
+
+Setup the DTLS server to use the given ``server_options``. See :ref:`TLSOptions.server()<class_TLSOptions_method_server>`.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_DTLSServer_method_take_connection:
 
-- :ref:`PacketPeerDTLS<class_PacketPeerDTLS>` **take_connection** **(** :ref:`PacketPeerUDP<class_PacketPeerUDP>` udp_peer **)**
+.. rst-class:: classref-method
 
-Try to initiate the DTLS handshake with the given ``udp_peer`` which must be already connected (see :ref:`PacketPeerUDP.connect_to_host<class_PacketPeerUDP_method_connect_to_host>`).
+:ref:`PacketPeerDTLS<class_PacketPeerDTLS>` **take_connection**\ (\ udp_peer\: :ref:`PacketPeerUDP<class_PacketPeerUDP>`\ ) :ref:`🔗<class_DTLSServer_method_take_connection>`
+
+Try to initiate the DTLS handshake with the given ``udp_peer`` which must be already connected (see :ref:`PacketPeerUDP.connect_to_host()<class_PacketPeerUDP_method_connect_to_host>`).
 
 \ **Note:** You must check that the state of the return PacketPeerUDP is :ref:`PacketPeerDTLS.STATUS_HANDSHAKING<class_PacketPeerDTLS_constant_STATUS_HANDSHAKING>`, as it is normal that 50% of the new connections will be invalid due to cookie exchange.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

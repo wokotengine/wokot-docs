@@ -8,7 +8,7 @@ needs to have a different look than what is normally defined by a :ref:`Theme <c
 Every control node has theme property overrides, which allow you to redefine the styling for
 each individual UI element.
 
-.. figure:: img/themecheck.png
+.. figure:: img/themecheck.webp
    :align: center
 
 This approach quickly becomes hard to manage, if you need to share the same custom look
@@ -46,7 +46,7 @@ you want to name your theme type variation in the text box, then click **Add Typ
 Below the **Type** dropdown are the property tabs. Switch to the tab with a wrench
 and screwdriver icon.
 
-.. figure:: img/base_type.png
+.. figure:: img/base_type.webp
    :align: center
 
 Click on the plus icon next to the **Base Type** field. You can select the base type
@@ -66,7 +66,7 @@ In the inspector dock, under the **Theme** property of a control node,
 you can find the **Theme Type Variation** property. It is empty by default,
 which means that only the base type has an effect on this node.
 
-You can either select a type variations from a dropdown list, or input its name
+You can either select a type variation from a dropdown list, or input its name
 manually. Variations appear on the list only if the type variation belongs to
 the project-wide theme, which you can configure in the project settings. For
 any other case you have to input the name of the variation manually. Click on

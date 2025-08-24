@@ -23,7 +23,7 @@ use cases:
 - If your player doesn't use a sprite, but draws itself using code, you can make
   that drawing code execute in the editor to see your player.
 
-.. DANGER::
+.. danger::
 
     ``@tool`` scripts run inside the editor, and let you access the scene tree
     of the currently edited scene. This is a powerful feature which also comes
@@ -33,8 +33,8 @@ use cases:
     :ref:`Node.queue_free<class_Node_method_queue_free>`, as it can cause
     crashes if you free a node while the editor runs logic involving it.
 
-How to use it
--------------
+How to use ``@tool``
+--------------------
 
 To turn a script into a tool, add the ``@tool`` annotation at the top of your code.
 
@@ -71,7 +71,7 @@ same statement:
         // Code to execute when in game.
     }
 
-Pieces of code do not have either of the 2 conditions above will run both
+Pieces of code that do not have either of the 2 conditions above will run both
 in-editor and in-game.
 
 Here is how a ``_process()`` function might look for you:
@@ -90,7 +90,7 @@ Here is how a ``_process()`` function might look for you:
 
  .. code-tab:: csharp
 
-    public override void _Process(float delta)
+    public override void _Process(double delta)
     {
         if (Engine.IsEditorHint())
         {
@@ -105,14 +105,41 @@ Here is how a ``_process()`` function might look for you:
         // Code to execute both in editor and in game.
     }
 
-.. note::
+.. _doc_running_code_in_the_editor_important_information:
 
-    Modifications in the editor are permanent. For example, in the following
-    case, when we remove the script, the node will keep its rotation. Be careful
-    to avoid making unwanted modifications.
+Important information
+---------------------
 
-Try it out
------------
+The general rule is that **any other GDScript that your tool script uses must
+*also* be a tool**. The editor is not able to construct instances from GDScript
+files without ``@tool``, which means you cannot call methods or reference member
+variables from them otherwise. However, since static methods, constants and
+enums can be used without creating an instance, it is possible to call them or
+reference them from a ``@tool`` script onto other non-tool scripts. One exception to
+this are :ref:`static variables <doc_gdscript_basics_static_variables>`.
+If you try to read a static variable's value in a script that does not have
+``@tool``, it will always return ``null`` but won't print a warning or error
+when doing so. This restriction does not apply to static methods, which can be
+called regardless of whether the target script is in tool mode.
+
+Extending a ``@tool`` script does not automatically make the extending script
+a ``@tool``. Omitting ``@tool`` from the extending script will disable tool
+behavior from the super class. Therefore, the extending script should also
+specify the ``@tool`` annotation.
+
+Modifications in the editor are permanent, with no undo/redo possible. For
+example, in the next section when we remove the script, the node will keep its
+rotation. Be careful to avoid making unwanted modifications. Consider setting up
+:ref:`version control <doc_version_control_systems>` to avoid losing work in
+case you make a mistake.
+
+Using the debugger and breakpoints on tool scripts is not currently supported.
+Breakpoints placed in the script editor or using the ``breakpoint`` keyword are
+ignored. You can use print statements to display the contents of variables
+instead.
+
+Try ``@tool`` out
+-----------------
 
 Add a ``Sprite2D`` node to your scene and set the texture to Godot icon. Attach
 and open a script, and change it to this:
@@ -129,19 +156,22 @@ and open a script, and change it to this:
  .. code-tab:: csharp
 
     using Godot;
-    using System;
 
     [Tool]
-    public class MySprite : Sprite2D
+    public partial class MySprite : Sprite2D
     {
-        public override void _Process(float delta)
+        public override void _Process(double delta)
         {
-            Rotation += Mathf.Pi * delta;
+            Rotation += Mathf.Pi * (float)delta;
         }
     }
 
 Save the script and return to the editor. You should now see your object rotate.
 If you run the game, it will also rotate.
+
+.. warning::
+    You may need to restart the editor. This is a known bug found in all Godot 4 versions:
+    `GH-66381 <https://github.com/godotengine/godot/issues/66381>`_.
 
 .. image:: img/rotating_in_editor.gif
 
@@ -163,15 +193,15 @@ look like this:
 
  .. code-tab:: csharp
 
-    public override void _Process(float delta)
+    public override void _Process(double delta)
     {
         if (Engine.IsEditorHint())
         {
-            Rotation += Mathf.Pi * delta;
+            Rotation += Mathf.Pi * (float)delta;
         }
         else
         {
-            Rotation -= Mathf.Pi * delta;
+            Rotation -= Mathf.Pi * (float)delta;
         }
     }
 
@@ -181,8 +211,8 @@ run the game, it will spin counter-clockwise.
 Editing variables
 -----------------
 
-Add and export a variable speed to the script. The function set_speed after
-``setget`` is executed with your input to change the variable. Modify
+Add and export a variable speed to the script. To update the speed and also reset the rotation
+angle add a setter ``set(new_speed)`` which is executed with the input from the inspector. Modify
 ``_process()`` to include the rotation speed.
 
 .. tabs::
@@ -200,34 +230,32 @@ Add and export a variable speed to the script. The function set_speed after
 
 
     func _process(delta):
-    	rotation += PI * delta * speed
+        rotation += PI * delta * speed
 
  .. code-tab:: csharp
 
     using Godot;
-    using System;
 
     [Tool]
-    public class MySprite : Sprite2D
+    public partial class MySprite : Sprite2D
     {
-        private float speed = 1;
+        private float _speed = 1;
 
         [Export]
-        public float Speed {
-            get => speed;
-            set => SetSpeed(value);
+        public float Speed
+        {
+            get => _speed;
+            set
+            {
+                // Update speed and reset the rotation.
+                _speed = value;
+                Rotation = 0;
+            }
         }
 
-        // Update speed and reset the rotation.
-        private void SetSpeed(float newSpeed)
+        public override void _Process(double delta)
         {
-            speed = newSpeed;
-            Rotation = 0;
-        }
-
-        public override void _Process(float delta)
-        {
-            Rotation += Mathf.Pi * delta * speed;
+            Rotation += Mathf.Pi * (float)delta * _speed;
         }
     }
 
@@ -236,8 +264,183 @@ Add and export a variable speed to the script. The function set_speed after
     Code from other nodes doesn't run in the editor. Your access to other nodes
     is limited. You can access the tree and nodes, and their default properties,
     but you can't access user variables. If you want to do so, other nodes have
-    to run in the editor too. AutoLoad nodes cannot be accessed in the editor at
-    all.
+    to run in the editor too.
+
+Getting notified when resources change
+--------------------------------------
+
+Sometimes you want your tool to use a resource. However, when you change a
+property of that resource in the editor, the ``set()`` method of your tool will
+not be called.
+
+.. tabs::
+ .. code-tab:: gdscript GDScript
+
+    @tool
+    class_name MyTool
+    extends Node
+
+    @export var resource: MyResource:
+        set(new_resource):
+            resource = new_resource
+            _on_resource_set()
+
+    # This will only be called when you create, delete, or paste a resource.
+    # You will not get an update when tweaking properties of it.
+    func _on_resource_set():
+        print("My resource was set!")
+
+ .. code-tab:: csharp
+
+    using Godot;
+
+    [Tool]
+    public partial class MyTool : Node
+    {
+        private MyResource _resource;
+
+        [Export]
+        public MyResource Resource
+        {
+            get => _resource;
+            set
+            {
+                _resource = value;
+                OnResourceSet();
+            }
+        }
+
+        // This will only be called when you create, delete, or paste a resource.
+        // You will not get an update when tweaking properties of it.
+        private void OnResourceSet()
+        {
+            GD.Print("My resource was set!");
+        }
+    }
+
+To get around this problem you first have to make your resource a tool and make it
+emit the ``changed`` signal whenever a property is set:
+
+.. tabs::
+ .. code-tab:: gdscript GDScript
+
+    # Make Your Resource a tool.
+    @tool
+    class_name MyResource
+    extends Resource
+
+    @export var property = 1:
+        set(new_setting):
+            property = new_setting
+            # Emit a signal when the property is changed.
+            changed.emit()
+
+ .. code-tab:: csharp
+
+    using Godot;
+
+    [Tool]
+    public partial class MyResource : Resource
+    {
+        private float _property = 1;
+
+        [Export]
+        public float Property
+        {
+            get => _property;
+            set
+            {
+                _property = value;
+                // Emit a signal when the property is changed.
+                EmitChanged();
+            }
+        }
+    }
+
+You then want to connect the signal when a new resource is set:
+
+.. tabs::
+ .. code-tab:: gdscript GDScript
+
+    @tool
+    class_name MyTool
+    extends Node
+
+    @export var resource: MyResource:
+        set(new_resource):
+            resource = new_resource
+            # Connect the changed signal as soon as a new resource is being added.
+            if resource != null:
+                resource.changed.connect(_on_resource_changed)
+
+    func _on_resource_changed():
+        print("My resource just changed!")
+
+ .. code-tab:: csharp
+
+    using Godot;
+
+    [Tool]
+    public partial class MyTool : Node
+    {
+        private MyResource _resource;
+
+        [Export]
+        public MyResource Resource
+        {
+            get => _resource;
+            set
+            {
+                _resource = value;
+                // Connect the changed signal as soon as a new resource is being added.
+                if (_resource != null)
+                {
+                    _resource.Changed += OnResourceChanged;
+                }
+            }
+        }
+
+        private void OnResourceChanged()
+        {
+            GD.Print("My resource just changed!");
+        }
+    }
+
+Lastly, remember to disconnect the signal as the old resource being used and changed somewhere else
+would cause unneeded updates.
+
+.. tabs::
+ .. code-tab:: gdscript GDScript
+
+    @export var resource: MyResource:
+        set(new_resource):
+            # Disconnect the signal if the previous resource was not null.
+            if resource != null:
+                resource.changed.disconnect(_on_resource_changed)
+            resource = new_resource
+            if resource != null:
+                resource.changed.connect(_on_resource_changed)
+
+ .. code-tab:: csharp
+
+    [Export]
+    public MyResource Resource
+    {
+        get => _resource;
+        set
+        {
+            // Disconnect the signal if the previous resource was not null.
+            if (_resource != null)
+            {
+                _resource.Changed -= OnResourceChanged;
+            }
+            _resource = value;
+            if (_resource != null)
+            {
+                _resource.Changed += OnResourceChanged;
+            }
+        }
+    }
 
 Reporting node configuration warnings
 -------------------------------------
@@ -250,38 +453,135 @@ help you and your team avoid mistakes when setting up scenes.
 
 When using node configuration warnings, when any value that should affect or
 remove the warning changes, you need to call
-:ref:`update_configuration_warning<class_Node_method_update_configuration_warning>` .
+:ref:`update_configuration_warnings<class_Node_method_update_configuration_warnings>` .
 By default, the warning only updates when closing and reopening the scene.
 
 .. tabs::
  .. code-tab:: gdscript GDScript
 
     # Use setters to update the configuration warning automatically.
-    export var title = "":
+    @export var title = "":
         set(p_title):
             if p_title != title:
                 title = p_title
-                update_configuration_warning()
+                update_configuration_warnings()
 
-    export var description = "":
+    @export var description = "":
         set(p_description):
             if p_description != description:
                 description = p_description
-                update_configuration_warning()
+                update_configuration_warnings()
 
 
-    func _get_configuration_warning():
-        var warning = ""
+    func _get_configuration_warnings():
+        var warnings = []
+
         if title == "":
-            warning += "Please set `title` to a non-empty value."
-        if description.size() >= 100:
-            # Add a blank line between each warning to distinguish them individually.
-            if warning != "":
-                warning += "\n"
-            warning += "`description` should be less than 100 characters long."
+            warnings.append("Please set `title` to a non-empty value.")
 
-        # Returning an empty string means "no warning".
-        return warning
+        if description.length() >= 100:
+            warnings.append("`description` should be less than 100 characters long.")
+
+        # Returning an empty array means "no warning".
+        return warnings
+
+.. _doc_running_code_in_the_editor_editorscript:
+
+Running one-off scripts using EditorScript
+------------------------------------------
+
+Sometimes, you need to run code just one time to automate a certain task that is
+not available in the editor out of the box. Some examples might be:
+
+- Use as a playground for GDScript or C# scripting without having to run a project.
+  ``print()`` output is displayed in the editor Output panel.
+- Scale all light nodes in the currently edited scene, as you noticed your level
+  ends up looking too dark or too bright after placing lights where desired.
+- Replace nodes that were copy-pasted with scene instances to make them easier
+  to modify later.
+
+This is available in Godot by extending :ref:`class_EditorScript` in a script.
+This provides a way to run individual scripts in the editor without having to
+create an editor plugin.
+
+To create an EditorScript, right-click a folder or empty space in the FileSystem
+dock then choose **New > Script...**. In the script creation dialog, click the
+tree icon to choose an object to extend from (or enter ``EditorScript`` directly
+in the field on the left, though note this is case-sensitive):
+
+.. figure:: img/running_code_in_the_editor_creating_editor_script.webp
+   :align: center
+   :alt: Creating an editor script in the script editor creation dialog
+
+   Creating an editor script in the script editor creation dialog
+
+This will automatically select a script template that is suited for
+EditorScripts, with a ``_run()`` method already inserted:
+
+::
+
+    @tool
+    extends EditorScript
+
+    # Called when the script is executed (using File -> Run in Script Editor).
+    func _run():
+        pass
+
+This ``_run()`` method is executed when you use **File > Run** or the keyboard
+shortcut :kbd:`Ctrl + Shift + X` while the EditorScript is the currently open
+script in the script editor. This keyboard shortcut is only effective when
+currently focused on the script editor.
+
+Scripts that extend EditorScript must be ``@tool`` scripts to function.
+
+.. note::
+
+    EditorScripts can only be run from the Godot script editor. If you are using
+    an external editor, open the script inside the Godot script editor to run it.
+
+.. danger::
+
+    EditorScripts have no undo/redo functionality, so **make sure to save your
+    scene before running one** if the script is designed to modify any data.
+
+To access nodes in the currently edited scene, use the
+:ref:`EditorScript.get_scene <class_EditorScript_method_get_scene>` method which
+returns the root Node of the currently edited scene. Here's an example that
+recursively gets all nodes in the currently edited scene and doubles the range
+of all OmniLight3D nodes:
+
+::
+
+    @tool
+    extends EditorScript
+
+    func _run():
+        for node in get_all_children(get_scene()):
+            if node is OmniLight3D:
+                # Don't operate on instanced subscene children, as changes are lost
+                # when reloading the scene.
+                # See the "Instancing scenes" section below for a description of `owner`.
+                var is_instanced_subscene_child = node != get_scene() and node.owner != get_scene()
+                if not is_instanced_subscene_child:
+                    node.omni_range *= 2.0
+
+    # This function is recursive: it calls itself to get lower levels of child nodes as needed.
+    # `children_acc` is the accumulator parameter that allows this function to work.
+    # It should be left to its default value when you call this function directly.
+    func get_all_children(in_node, children_acc = []):
+        children_acc.push_back(in_node)
+        for child in in_node.get_children():
+            children_acc = get_all_children(child, children_acc)
+
+        return children_acc
+
+.. tip::
+
+    You can change the currently edited scene at the top of the editor even
+    while the Script view is open. This will affect the return value of
+    :ref:`EditorScript.get_scene <class_EditorScript_method_get_scene>`, so make
+    sure you've selected the scene you intend to iterate upon before running
+    the script.
 
 Instancing scenes
 -----------------
@@ -300,18 +600,18 @@ If you are using ``@tool``:
  .. code-tab:: gdscript GDScript
 
     func _ready():
-        var node = Spatial.new()
+        var node = Node3D.new()
         add_child(node) # Parent could be any node in the scene
 
         # The line below is required to make the node visible in the Scene tree dock
         # and persist changes made by the tool script to the saved scene file.
-        node.set_owner(get_tree().edited_scene_root)
+        node.owner = get_tree().edited_scene_root
 
  .. code-tab:: csharp
 
     public override void _Ready()
     {
-        var node = new Spatial();
+        var node = new Node3D();
         AddChild(node); // Parent could be any node in the scene
 
         // The line below is required to make the node visible in the Scene tree dock
@@ -326,21 +626,21 @@ If you are using :ref:`EditorScript<class_EditorScript>`:
 
     func _run():
         # `parent` could be any node in the scene.
-        var parent = get_scene().find_node("Parent")
-        var node = Spatial.new()
+        var parent = get_scene().get_node("Parent")
+        var node = Node3D.new()
         parent.add_child(node)
 
         # The line below is required to make the node visible in the Scene tree dock
         # and persist changes made by the tool script to the saved scene file.
-        node.set_owner(get_scene())
+        node.owner = get_scene()
 
  .. code-tab:: csharp
 
     public override void _Run()
     {
         // `parent` could be any node in the scene.
-        var parent = GetScene().FindNode("Parent");
-        var node = new Spatial();
+        var parent = GetScene().GetNode("Parent");
+        var node = new Node3D();
         parent.AddChild(node);
 
         // The line below is required to make the node visible in the Scene tree dock

@@ -14,33 +14,36 @@ EditorScript
 
 Base script that can be used to add extension functions to the editor.
 
+.. rst-class:: classref-introduction-group
+
 Description
 -----------
 
-Scripts extending this class and implementing its :ref:`_run<class_EditorScript_method__run>` method can be executed from the Script Editor's **File > Run** menu option (or by pressing :kbd:`Ctrl + Shift + X`) while the editor is running. This is useful for adding custom in-editor functionality to Godot. For more complex additions, consider using :ref:`EditorPlugin<class_EditorPlugin>`\ s instead.
+Scripts extending this class and implementing its :ref:`_run()<class_EditorScript_private_method__run>` method can be executed from the Script Editor's **File > Run** menu option (or by pressing :kbd:`Ctrl + Shift + X`) while the editor is running. This is useful for adding custom in-editor functionality to Godot. For more complex additions, consider using :ref:`EditorPlugin<class_EditorPlugin>`\ s instead.
+
+If a script extending this class also has a global class name, it will be included in the editor's command palette.
 
 \ **Note:** Extending scripts need to have ``tool`` mode enabled.
 
-\ **Example script:**\ 
+\ **Example:** Running the following script prints "Hello from the Godot Editor!":
 
 
 .. tabs::
 
  .. code-tab:: gdscript
 
-    tool
+    @tool
     extends EditorScript
-    
+
     func _run():
         print("Hello from the Godot Editor!")
 
  .. code-tab:: csharp
 
     using Godot;
-    using System;
-    
+
     [Tool]
-    public class HelloEditor : EditorScript
+    public partial class HelloEditor : EditorScript
     {
         public override void _Run()
         {
@@ -50,59 +53,87 @@ Scripts extending this class and implementing its :ref:`_run<class_EditorScript_
 
 
 
-\ **Note:** The script is run in the Editor context, which means the output is visible in the console window started with the Editor (stdout) instead of the usual Godot **Output** dock.
+\ **Note:** EditorScript is :ref:`RefCounted<class_RefCounted>`, meaning it is destroyed when nothing references it. This can cause errors during asynchronous operations if there are no references to the script.
+
+.. rst-class:: classref-reftable-group
 
 Methods
 -------
 
-+-----------------------------------------------+--------------------------------------------------------------------------------------------------------+
-| void                                          | :ref:`_run<class_EditorScript_method__run>` **(** **)** |virtual|                                      |
-+-----------------------------------------------+--------------------------------------------------------------------------------------------------------+
-| void                                          | :ref:`add_root_node<class_EditorScript_method_add_root_node>` **(** :ref:`Node<class_Node>` node **)** |
-+-----------------------------------------------+--------------------------------------------------------------------------------------------------------+
-| :ref:`EditorInterface<class_EditorInterface>` | :ref:`get_editor_interface<class_EditorScript_method_get_editor_interface>` **(** **)**                |
-+-----------------------------------------------+--------------------------------------------------------------------------------------------------------+
-| :ref:`Node<class_Node>`                       | :ref:`get_scene<class_EditorScript_method_get_scene>` **(** **)**                                      |
-+-----------------------------------------------+--------------------------------------------------------------------------------------------------------+
+.. table::
+   :widths: auto
+
+   +-----------------------------------------------+-----------------------------------------------------------------------------------------------------+
+   | |void|                                        | :ref:`_run<class_EditorScript_private_method__run>`\ (\ ) |virtual| |required|                      |
+   +-----------------------------------------------+-----------------------------------------------------------------------------------------------------+
+   | |void|                                        | :ref:`add_root_node<class_EditorScript_method_add_root_node>`\ (\ node\: :ref:`Node<class_Node>`\ ) |
+   +-----------------------------------------------+-----------------------------------------------------------------------------------------------------+
+   | :ref:`EditorInterface<class_EditorInterface>` | :ref:`get_editor_interface<class_EditorScript_method_get_editor_interface>`\ (\ ) |const|           |
+   +-----------------------------------------------+-----------------------------------------------------------------------------------------------------+
+   | :ref:`Node<class_Node>`                       | :ref:`get_scene<class_EditorScript_method_get_scene>`\ (\ ) |const|                                 |
+   +-----------------------------------------------+-----------------------------------------------------------------------------------------------------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Method Descriptions
 -------------------
 
-.. _class_EditorScript_method__run:
+.. _class_EditorScript_private_method__run:
 
-- void **_run** **(** **)** |virtual|
+.. rst-class:: classref-method
+
+|void| **_run**\ (\ ) |virtual| |required| :ref:`🔗<class_EditorScript_private_method__run>`
 
 This method is executed by the Editor when **File > Run** is used.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_EditorScript_method_add_root_node:
 
-- void **add_root_node** **(** :ref:`Node<class_Node>` node **)**
+.. rst-class:: classref-method
 
-Adds ``node`` as a child of the root node in the editor context.
+|void| **add_root_node**\ (\ node\: :ref:`Node<class_Node>`\ ) :ref:`🔗<class_EditorScript_method_add_root_node>`
 
-\ **Warning:** The implementation of this method is currently disabled.
+Makes ``node`` root of the currently opened scene. Only works if the scene is empty. If the ``node`` is a scene instance, an inheriting scene will be created.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_EditorScript_method_get_editor_interface:
 
-- :ref:`EditorInterface<class_EditorInterface>` **get_editor_interface** **(** **)**
+.. rst-class:: classref-method
+
+:ref:`EditorInterface<class_EditorInterface>` **get_editor_interface**\ (\ ) |const| :ref:`🔗<class_EditorScript_method_get_editor_interface>`
+
+**Deprecated:** :ref:`EditorInterface<class_EditorInterface>` is a global singleton and can be accessed directly by its name.
 
 Returns the :ref:`EditorInterface<class_EditorInterface>` singleton instance.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_EditorScript_method_get_scene:
 
-- :ref:`Node<class_Node>` **get_scene** **(** **)**
+.. rst-class:: classref-method
 
-Returns the Editor's currently active scene.
+:ref:`Node<class_Node>` **get_scene**\ (\ ) |const| :ref:`🔗<class_EditorScript_method_get_scene>`
+
+Returns the edited (current) scene's root :ref:`Node<class_Node>`. Equivalent of :ref:`EditorInterface.get_edited_scene_root()<class_EditorInterface_method_get_edited_scene_root>`.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

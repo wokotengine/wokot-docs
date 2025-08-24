@@ -1,3 +1,5 @@
+:article_outdated: True
+
 .. _doc_using_multimesh:
 
 Optimization using MultiMeshes
@@ -15,8 +17,7 @@ MultiMeshes
 -----------
 
 A :ref:`MultiMesh<class_MultiMesh>` is a single draw primitive that can draw up to millions
-of objects in one go. It's extremely efficient because it uses the GPU hardware to do this
-(in OpenGL ES 2.0, it's less efficient because there is no hardware support for it, though).
+of objects in one go. It's extremely efficient because it uses the GPU hardware to do this.
 
 The only drawback is that there is no *screen* or *frustum* culling possible for individual instances.
 This means, that millions of objects will be *always* or *never* drawn, depending on the visibility
@@ -33,7 +34,7 @@ see the :ref:`Animating thousands of fish <doc_animating_thousands_of_fish>` tut
 to the shader can be provided via textures (there are floating-point :ref:`Image<class_Image>` formats
 which are ideal for this).
 
-Another alternative is to use GDNative and C++, which should be extremely efficient (it's possible
+Another alternative is to use a GDExtension and C++, which should be extremely efficient (it's possible
 to set the entire state for all objects using linear memory via the
 :ref:`RenderingServer.multimesh_set_buffer() <class_RenderingServer_method_multimesh_set_buffer>`
 function). This way, the array can be created with multiple threads, then set in one call, providing
@@ -53,7 +54,7 @@ efficient for millions of objects, but for a few thousands, GDScript should be f
 .. tabs::
  .. code-tab:: gdscript GDScript
 
-    extends MultiMeshInstance
+    extends MultiMeshInstance3D
 
 
     func _ready():
@@ -61,8 +62,6 @@ efficient for millions of objects, but for a few thousands, GDScript should be f
         multimesh = MultiMesh.new()
         # Set the format first.
         multimesh.transform_format = MultiMesh.TRANSFORM_3D
-        multimesh.color_format = MultiMesh.COLOR_NONE
-        multimesh.custom_data_format = MultiMesh.CUSTOM_DATA_NONE
         # Then resize (otherwise, changing the format is not allowed).
         multimesh.instance_count = 10000
         # Maybe not all of them should be visible at first.
@@ -75,18 +74,15 @@ efficient for millions of objects, but for a few thousands, GDScript should be f
  .. code-tab:: csharp C#
 
     using Godot;
-    using System;
 
-    public class YourClassName : MultiMeshInstance
+    public partial class MyMultiMeshInstance3D : MultiMeshInstance3D
     {
         public override void _Ready()
         {
             // Create the multimesh.
             Multimesh = new MultiMesh();
             // Set the format first.
-            Multimesh.TransformFormat = MultiMesh.TransformFormatEnum.Transform3d;
-            Multimesh.ColorFormat = MultiMesh.ColorFormatEnum.None;
-            Multimesh.CustomDataFormat = MultiMesh.CustomDataFormatEnum.None;
+            Multimesh.TransformFormat = MultiMesh.TransformFormatEnum.Transform3D;
             // Then resize (otherwise, changing the format is not allowed)
             Multimesh.InstanceCount = 1000;
             // Maybe not all of them should be visible at first.

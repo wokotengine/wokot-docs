@@ -1,10 +1,12 @@
+:article_outdated: True
+
 .. _doc_using_the_web_editor:
 
 Using the Web editor
 ====================
 
-Since Godot 3.3, there is a `Web editor <https://editor.godotengine.org/>`__
-you can use to work on new or existing projects.
+There is a `Web editor <https://editor.godotengine.org/>`__ you can use to work
+on new or existing projects.
 
 .. note::
 
@@ -23,13 +25,16 @@ browsers support WebAssembly threading and can therefore run the web editor:
 - Firefox 79 or later
 - Edge 79 or later
 
+.. UPDATE: Not supported yet. When Opera, Safari, or mobile browsers are
+.. supported, update or remove these paragraphs.
+
 Opera and Safari are not supported yet. Safari may work in the future once
 proper threading support is added.
 
 **Mobile browsers are currently not supported.**
 
-The web editor supports both the GLES3 and GLES2 renderers, although GLES2 is
-recommended for better performance and compatibility with old/low-end hardware.
+The web editor only supports the Compatibility rendering method, as there is no
+stable way to run Vulkan applications on the web yet.
 
 .. note::
 
@@ -46,7 +51,7 @@ Due to limitations on the Godot or Web platform side, the following features
 are currently missing:
 
 - No C#/Mono support.
-- No GDNative support.
+- No GDExtension support.
 - No debugging support. This means GDScript debugging/profiling, live scene
   editing, the Remote Scene tree dock and other features that rely on the debugger
   protocol will not work.
@@ -67,7 +72,8 @@ of the Web platform:
 .. seealso::
 
     See the
-    `list of open issues on GitHub related to the web editor <https://github.com/godotengine/godot/issues?q=is%3Aopen+is%3Aissue+label%3Aplatform%3Ahtml5+label%3Atopic%3Aeditor>`__ for a list of known bugs.
+    `list of open issues on GitHub related to the web editor <https://github.com/godotengine/godot/issues?q=is%3Aopen+is%3Aissue+label%3Aplatform%3Aweb+label%3Atopic%3Aeditor>`__
+    for a list of known bugs.
 
 Importing a project
 -------------------
@@ -77,7 +83,7 @@ To import an existing project, the current process is as follows:
 - Specify a ZIP file to preload on the HTML5 filesystem using the
   **Preload project ZIP** input.
 - Run the editor by clicking **Start Godot editor**.
-  The Godot project manager should appear after 10-20 seconds.
+  The Godot Project Manager should appear after 10-20 seconds.
   On slower machines or connections, loading may take up to a minute.
 - In the dialog that appears at the middle of the window, specify a name for
   the folder to create then click the **Create Folder** button
@@ -112,6 +118,9 @@ Where are my project files?
 Due to browser security limitations, the editor will save the project files to
 the browser's IndexedDB storage. This storage isn't accessible as a regular folder
 on your machine, but is abstracted away in a database.
+
+.. UPDATE: Not supported yet. When exporting from the web editor is supported,
+.. update this paragraph.
 
 You can download the project files as a ZIP archive by using
 **Project > Tools > Download Project Source**. This can be used to export the

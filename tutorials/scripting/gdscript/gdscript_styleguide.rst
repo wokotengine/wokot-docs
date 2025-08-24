@@ -19,8 +19,10 @@ and ask fellow developers for insights.
 In general, keeping your code consistent in your projects and within your team is
 more important than following this guide to a tee.
 
-.. note:: Godot's built-in script editor uses a lot of these conventions
-          by default. Let it help you.
+.. note::
+
+    Godot's built-in script editor uses a lot of these conventions
+    by default. Let it help you.
 
 Here is a complete class example based on these guidelines:
 
@@ -28,17 +30,19 @@ Here is a complete class example based on these guidelines:
 
     class_name StateMachine
     extends Node
-    # Hierarchical State machine for the player.
-    # Initializes states and delegates engine callbacks
-    # (_physics_process, _unhandled_input) to the state.
-
+    ## Hierarchical State machine for the player.
+    ##
+    ## Initializes states and delegates engine callbacks ([method Node._physics_process],
+    ## [method Node._unhandled_input]) to the state.
 
     signal state_changed(previous, new)
 
-    export var initial_state = NodePath()
-    var is_active = true setget set_is_active
+    @export var initial_state: Node
+    var is_active = true:
+        set = set_is_active
 
-    @onready var _state = get_node(initial_state) setget set_state
+    @onready var _state = initial_state:
+        set = set_state
     @onready var _state_name = _state.name
 
 
@@ -46,8 +50,12 @@ Here is a complete class example based on these guidelines:
         add_to_group("state_machine")
 
 
+    func _enter_tree():
+        print("this happens before the ready method!")
+
+
     func _ready():
-        connect("state_changed", self, "_on_state_changed")
+        state_changed.connect(_on_state_changed)
         _state.enter()
 
 
@@ -69,7 +77,7 @@ Here is a complete class example based on these guidelines:
         _state.exit()
         self._state = target_state
         _state.enter(msg)
-        Events.emit_signal("player_state_changed", _state.name)
+        Events.player_state_changed.emit(_state.name)
 
 
     func set_is_active(value):
@@ -86,7 +94,14 @@ Here is a complete class example based on these guidelines:
 
     func _on_state_changed(previous, new):
         print("state changed")
-        emit_signal("state_changed")
+        state_changed.emit()
+
+
+    class State:
+        var foo = 0
+
+        func _init():
+            print("Hello!")
 
 .. _formatting:
 
@@ -137,8 +152,8 @@ regular code blocks.
 ::
 
     effect.interpolate_property(sprite, "transform/scale",
-                sprite.get_scale(), Vector2(2.0, 2.0), 0.3,
-                Tween.TRANS_QUAD, Tween.EASE_OUT)
+            sprite.get_scale(), Vector2(2.0, 2.0), 0.3,
+            Tween.TRANS_QUAD, Tween.EASE_OUT)
 
 **Bad**:
 
@@ -171,11 +186,11 @@ indentation level to distinguish continuation lines:
         "Job": "Mechanic",
     }
 
-    enum Tiles {
-        TILE_BRICK,
-        TILE_FLOOR,
-        TILE_SPIKE,
-        TILE_TELEPORT,
+    enum Tile {
+        BRICK,
+        FLOOR,
+        SPIKE,
+        TELEPORT,
     }
 
 **Bad**:
@@ -196,11 +211,11 @@ indentation level to distinguish continuation lines:
             "Job": "Mechanic",
     }
 
-    enum Tiles {
-            TILE_BRICK,
-            TILE_FLOOR,
-            TILE_SPIKE,
-            TILE_TELEPORT,
+    enum Tile {
+            BRICK,
+            FLOOR,
+            SPIKE,
+            TELEPORT,
     }
 
 Trailing comma
@@ -216,12 +231,11 @@ line doesn't need to be modified when adding new elements.
 
 ::
 
-    enum Tiles {
-        TILE_BRICK,
-        TILE_FLOOR,
-        TILE_SPIKE,
-        TILE_TELEPORT,
-    }
+    var array = [
+        1,
+        2,
+        3,
+    ]
 
 **Bad**:
 
@@ -229,12 +243,11 @@ line doesn't need to be modified when adding new elements.
 
 ::
 
-    enum Tiles {
-        TILE_BRICK,
-        TILE_FLOOR,
-        TILE_SPIKE,
-        TILE_TELEPORT
-    }
+    var array = [
+        1,
+        2,
+        3
+    ]
 
 Trailing commas are unnecessary in single-line lists, so don't add them in this case.
 
@@ -244,7 +257,7 @@ Trailing commas are unnecessary in single-line lists, so don't add them in this 
 
 ::
 
-    enum Tiles {TILE_BRICK, TILE_FLOOR, TILE_SPIKE, TILE_TELEPORT}
+    var array = [1, 2, 3]
 
 **Bad**:
 
@@ -252,7 +265,7 @@ Trailing commas are unnecessary in single-line lists, so don't add them in this 
 
 ::
 
-    enum Tiles {TILE_BRICK, TILE_FLOOR, TILE_SPIKE, TILE_TELEPORT,}
+    var array = [1, 2, 3,]
 
 Blank lines
 ~~~~~~~~~~~
@@ -264,18 +277,20 @@ Surround functions and class definitions with two blank lines:
     func heal(amount):
         health += amount
         health = min(health, max_health)
-        emit_signal("health_changed", health)
+        health_changed.emit(health)
 
 
     func take_damage(amount, effect=null):
         health -= amount
         health = max(0, health)
-        emit_signal("health_changed", health)
+        health_changed.emit(health)
 
 Use one blank line inside functions to separate logical sections.
 
-.. note:: We use a single line between classes and function definitions in the class reference and
-          in short code snippets in this documentation.
+.. note::
+
+    We use a single line between classes and function definitions in the class reference and
+    in short code snippets in this documentation.
 
 Line length
 ~~~~~~~~~~~
@@ -289,8 +304,8 @@ editor. For example, when looking at a differential revision.
 One statement per line
 ~~~~~~~~~~~~~~~~~~~~~~
 
-Never combine multiple statements on a single line. No, C programmers,
-not even with a single line conditional statement.
+Avoid combining multiple statements on a single line, including conditional
+statements, to adhere to the GDScript style guidelines for readability.
 
 **Good**:
 
@@ -318,7 +333,7 @@ The only exception to that rule is the ternary operator:
 
 ::
 
-   next_state = "fall" if not is_on_floor() else "idle"
+    next_state = "idle" if is_on_floor() else "fall"
 
 Format multiline statements for readability
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -396,6 +411,8 @@ they only reduce readability.
     if (is_colliding()):
         queue_free()
 
+.. _boolean_operators:
+
 Boolean operators
 ~~~~~~~~~~~~~~~~~
 
@@ -403,6 +420,7 @@ Prefer the plain English versions of boolean operators, as they are the most acc
 
 - Use ``and`` instead of ``&&``.
 - Use ``or`` instead of ``||``.
+- Use ``not`` instead of ``!``.
 
 You may also use parentheses around boolean operators to clear any ambiguity.
 This can make long expressions easier to read.
@@ -413,7 +431,7 @@ This can make long expressions easier to read.
 
 ::
 
-    if (foo and bar) or baz:
+    if (foo and bar) or not baz:
         print("condition is true")
 
 **Bad**:
@@ -422,14 +440,19 @@ This can make long expressions easier to read.
 
 ::
 
-    if foo && bar || baz:
+    if foo && bar || !baz:
         print("condition is true")
 
 Comment spacing
 ~~~~~~~~~~~~~~~
 
-Regular comments should start with a space, but not code that you comment out.
-This helps differentiate text comments from disabled code.
+Regular comments (``#``) and documentation comments (``##``) should start with a
+space, but not code that you comment out. Additionally, code region comments
+(``#region``/``#endregion``) must follow that precise syntax, so they should not
+start with a space.
+
+Using a space for regular and documentation comments helps differentiate text
+comments from disabled code.
 
 **Good**:
 
@@ -451,15 +474,40 @@ This helps differentiate text comments from disabled code.
 
 .. note::
 
-   In the script editor, to toggle the selected code commented, press
-   :kbd:`Ctrl + K`. This feature adds a single # sign at the start
-   of the selected lines.
+    In the script editor, to toggle commenting of the selected code, press
+    :kbd:`Ctrl + K`. This feature adds/removes a single ``#`` sign before any
+    code on the selected lines.
+
+Prefer writing comments on their own line as opposed to inline comments
+(comments written on the same line as code). Inline comments are best used for
+short comments, typically a few words at most:
+
+**Good**:
+
+.. rst-class:: code-example-good
+
+::
+
+    # This is a long comment that would make the line below too long if written inline.
+    print("Example") # Short comment.
+
+**Bad**:
+
+.. rst-class:: code-example-bad
+
+::
+
+    print("Example") # This is a long comment that would make this line too long if written inline.
 
 Whitespace
 ~~~~~~~~~~
 
 Always use one space around operators and after commas. Also, avoid extra spaces
-in dictionary references and function calls.
+in dictionary references and function calls. One exception to this is for
+single-line dictionary declarations, where a space should be added after the
+opening brace and before the closing brace. This makes the dictionary easier to
+visually distinguish from an array, as the ``[]`` characters look close to
+``{}`` with most fonts.
 
 **Good**:
 
@@ -471,6 +519,7 @@ in dictionary references and function calls.
     position.y = target_position.y + 10
     dict["key"] = 5
     my_array = [4, 5, 6]
+    my_dictionary = { key = "value" }
     print("foo")
 
 **Bad**:
@@ -483,6 +532,7 @@ in dictionary references and function calls.
     position.y = mpos.y+10
     dict ["key"] = 5
     myarray = [4,5,6]
+    my_dictionary = {key = "value"}
     print ("foo")
 
 Don't use spaces to align expressions vertically:
@@ -591,13 +641,37 @@ Naming conventions
 
 These naming conventions follow the Godot Engine style. Breaking these will make
 your code clash with the built-in naming conventions, leading to inconsistent
-code.
+code. As a summary table:
+
++---------------+----------------+----------------------------------------------------+
+| Type          | Convention     | Example                                            |
++===============+================+====================================================+
+| File names    | snake_case     | ``yaml_parser.gd``                                 |
++---------------+----------------+----------------------------------------------------+
+| Class names   | PascalCase     | ``class_name YAMLParser``                          |
++---------------+----------------+----------------------------------------------------+
+| Node names    | PascalCase     | ``Camera3D``, ``Player``                           |
++---------------+----------------+----------------------------------------------------+
+| Functions     | snake_case     | ``func load_level():``                             |
++---------------+----------------+----------------------------------------------------+
+| Variables     | snake_case     | ``var particle_effect``                            |
++---------------+----------------+----------------------------------------------------+
+| Signals       | snake_case     | ``signal door_opened``                             |
++---------------+----------------+----------------------------------------------------+
+| Constants     | CONSTANT_CASE  | ``const MAX_SPEED = 200``                          |
++---------------+----------------+----------------------------------------------------+
+| Enum names    | PascalCase     | ``enum Element``                                   |
++---------------+----------------+----------------------------------------------------+
+| Enum members  | CONSTANT_CASE  | ``{EARTH, WATER, AIR, FIRE}``                      |
++---------------+----------------+----------------------------------------------------+
 
 File names
 ~~~~~~~~~~
 
 Use snake_case for file names. For named classes, convert the PascalCase class
-name to snake_case::
+name to snake_case:
+
+::
 
     # This file should be saved as `weapon.gd`.
     class_name Weapon
@@ -620,7 +694,7 @@ Use PascalCase for class and node names:
 
 ::
 
-   extends KinematicBody
+    extends CharacterBody3D
 
 Also use PascalCase when loading a class into a constant or a variable:
 
@@ -635,16 +709,16 @@ Use snake\_case to name functions and variables:
 
 ::
 
-   var particle_effect
-   func load_level():
+    var particle_effect
+    func load_level():
 
 Prepend a single underscore (\_) to virtual methods functions the user must
 override, private functions, and private variables:
 
 ::
 
-   var _counter = 0
-   func _recalculate_path():
+    var _counter = 0
+    func _recalculate_path():
 
 Signals
 ~~~~~~~
@@ -666,7 +740,7 @@ underscore (\_) to separate words:
 
     const MAX_SPEED = 200
 
-Use PascalCase for enum *names* and CONSTANT\_CASE for their members, as they
+Use PascalCase for enum *names* and keep them singular, as they represent a type. Use CONSTANT\_CASE for their members, as they
 are constants:
 
 ::
@@ -678,35 +752,72 @@ are constants:
         FIRE,
     }
 
+Write enums with each item on its own line. This allows adding documentation comments above each item
+more easily, and also makes for cleaner diffs in version control when items are added or removed.
+
+**Good**:
+
+.. rst-class:: code-example-good
+
+::
+
+    enum Element {
+        EARTH,
+        WATER,
+        AIR,
+        FIRE,
+    }
+
+**Bad**:
+
+.. rst-class:: code-example-bad
+
+::
+
+    enum Element { EARTH, WATER, AIR, FIRE }
 
 Code order
 ----------
 
-This first section focuses on code order. For formatting, see
+This section focuses on code order. For formatting, see
 :ref:`formatting`. For naming conventions, see :ref:`naming_conventions`.
 
 We suggest to organize GDScript code this way:
 
 ::
 
-    01. @tool
+    01. @tool, @icon, @static_unload
     02. class_name
     03. extends
-    04. # docstring
+    04. ## doc comment
 
     05. signals
     06. enums
     07. constants
-    08. exported variables
-    09. public variables
-    10. private variables
-    11. onready variables
+    08. static variables
+    09. @export variables
+    10. remaining regular variables
+    11. @onready variables
 
-    12. optional built-in virtual _init method
-    13. built-in virtual _ready method
-    14. remaining built-in virtual methods
-    15. public methods
-    16. private methods
+    12. _static_init()
+    13. remaining static methods
+    14. overridden built-in virtual methods:
+        1. _init()
+        2. _enter_tree()
+        3. _ready()
+        4. _process()
+        5. _physics_process()
+        6. remaining virtual methods
+    15. overridden custom methods
+    16. remaining methods
+    17. subclasses
+
+And put the class methods and variables in the following order depending on their access modifiers:
+
+::
+
+    1. public
+    2. private
 
 We optimized the order to make it easy to read the code from top to bottom, to
 help developers reading the code for the first time understand how it works, and
@@ -720,29 +831,45 @@ This code order follows four rules of thumb:
 4. The object's construction and initialization functions, ``_init`` and
    ``_ready``, come before functions that modify the object at runtime.
 
-
 Class declaration
 ~~~~~~~~~~~~~~~~~
 
 If the code is meant to run in the editor, place the ``@tool`` annotation on the
 first line of the script.
 
-Follow with the `class_name` if necessary. You can turn a GDScript file into a
-global type in your project using this feature. For more information, see
-:ref:`doc_gdscript`.
+Follow with the optional ``@icon`` then the ``class_name`` if necessary. You can turn a
+GDScript file into a global type in your project using ``class_name``. For more
+information, see :ref:`doc_gdscript_basics_class_name`. If the class is meant
+to be an :ref:`abstract class <doc_gdscript_basics_abstract_class>`,
+add ``@abstract`` *before* the ``class_name`` keyword.
 
-Then, add the `extends` keyword if the class extends a built-in type.
+Then, add the ``extends`` keyword if the class extends a built-in type.
 
-Following that, you should have the class's optional docstring as comments. You
-can use that to explain the role of your class to your teammates, how it works,
+Following that, you should have the class's optional
+:ref:`documentation comments <doc_gdscript_documentation_comments>`.
+You can use that to explain the role of your class to your teammates, how it works,
 and how other developers should use it, for example.
 
 ::
 
-   class_name MyNode
-   extends Node
-   # A brief description of the class's role and functionality.
-   # Longer description.
+    @abstract
+    class_name MyNode
+    extends Node
+    ## A brief description of the class's role and functionality.
+    ##
+    ## The description of the script, what it can do,
+    ## and any further detail.
+
+For inner classes, use single-line declarations:
+
+::
+
+    ## A brief description of the class's role and functionality.
+    ##
+    ## The description of the script, what it can do,
+    ## and any further detail.
+    @abstract class MyNode extends Node:
+        pass
 
 Signals and properties
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -758,30 +885,38 @@ variables, in that order.
 
 ::
 
-   signal spawn_player(position)
+    signal player_spawned(position)
 
-   enum Jobs {KNIGHT, WIZARD, ROGUE, HEALER, SHAMAN}
+    enum Job {
+        KNIGHT,
+        WIZARD,
+        ROGUE,
+        HEALER,
+        SHAMAN,
+    }
 
-   const MAX_LIVES = 3
+    const MAX_LIVES = 3
 
-   export(Jobs) var job = Jobs.KNIGHT
-   export var max_health = 50
-   export var attack = 5
+    @export var job: Job = Job.KNIGHT
+    @export var max_health = 50
+    @export var attack = 5
 
-   var health = max_health setget set_health
+    var health = max_health:
+        set(new_health):
+            health = new_health
 
-   var _speed = 300.0
+    var _speed = 300.0
 
-   @onready var sword = get_node("Sword")
-   @onready var gun = get_node("Gun")
+    @onready var sword = get_node("Sword")
+    @onready var gun = get_node("Gun")
 
 
 .. note::
 
-   The GDScript compiler evaluates onready variables right before the ``_ready``
-   callback. You can use that to cache node dependencies, that is to say, to get
-   child nodes in the scene that your class relies on. This is what the example
-   above shows.
+    GDScript evaluates ``@onready`` variables right before the ``_ready``
+    callback. You can use that to cache node dependencies, that is to say, to get
+    child nodes in the scene that your class relies on. This is what the example
+    above shows.
 
 Member variables
 ~~~~~~~~~~~~~~~~
@@ -823,7 +958,7 @@ in that order.
 
 
     func _ready():
-        connect("state_changed", self, "_on_state_changed")
+        state_changed.connect(_on_state_changed)
         _state.enter()
 
 
@@ -841,18 +976,18 @@ in that order.
         _state.exit()
         self._state = target_state
         _state.enter(msg)
-        Events.emit_signal("player_state_changed", _state.name)
+        Events.player_state_changed.emit(_state.name)
 
 
     func _on_state_changed(previous, new):
         print("state changed")
-        emit_signal("state_changed")
+        state_changed.emit()
 
 
 Static typing
 -------------
 
-Since Godot 3.1, GDScript supports :ref:`optional static typing<doc_gdscript_static_typing>`.
+GDScript supports :ref:`optional static typing<doc_gdscript_static_typing>`.
 
 Declared types
 ~~~~~~~~~~~~~~
@@ -861,22 +996,53 @@ To declare a variable's type, use ``<variable>: <type>``:
 
 ::
 
-   var health: int = 0
+    var health: int = 0
 
 To declare the return type of a function, use ``-> <type>``:
 
 ::
 
-   func heal(amount: int) -> void:
+    func heal(amount: int) -> void:
 
 Inferred types
 ~~~~~~~~~~~~~~
 
-In most cases you can let the compiler infer the type, using ``:=``::
+In most cases, you can let the compiler infer the type using ``:=``.
+Prefer ``:=`` when the type is written on the same line as the assignment,
+otherwise prefer writing the type explicitly.
 
-    var health := 0  # The compiler will use the int type.
+**Good**:
 
-However, in a few cases when context is missing, the compiler falls back to
+.. rst-class:: code-example-good
+
+::
+
+    # The type can be int or float, and thus should be stated explicitly.
+    var health: int = 0
+
+    # The type is clearly inferred as Vector3.
+    var direction := Vector3(1, 2, 3)
+
+Include the type hint when the type is ambiguous, and
+omit the type hint when it's redundant.
+
+**Bad**:
+
+.. rst-class:: code-example-bad
+
+::
+
+    # Typed as int, but it could be that float was intended.
+    var health := 0
+
+    # The type hint has redundant information.
+    var direction: Vector3 = Vector3(1, 2, 3)
+
+    # What type is this? It's not immediately clear to the reader, so it's bad.
+    var value := complex_function()
+
+In some cases, the type must be stated explicitly, otherwise the behavior
+will not be as expected because the compiler will only be able to use
 the function's return type. For example, ``get_node()`` cannot infer a type
 unless the scene or file of the node is loaded in memory. In this case, you
 should set the type explicitly.
@@ -887,7 +1053,17 @@ should set the type explicitly.
 
 ::
 
-   @onready var health_bar: ProgressBar = get_node("UI/LifeBar")
+    @onready var health_bar: ProgressBar = get_node("UI/LifeBar")
+
+**Bad**:
+
+.. rst-class:: code-example-bad
+
+::
+
+    # The compiler can't infer the exact type and will use Node
+    # instead of ProgressBar.
+    @onready var health_bar := get_node("UI/LifeBar")
 
 Alternatively, you can use the ``as`` keyword to cast the return type, and
 that type will be used to infer the type of the var.
@@ -896,17 +1072,12 @@ that type will be used to infer the type of the var.
 
 ::
 
-   @onready var health_bar := get_node("UI/LifeBar") as ProgressBar
-   # health_bar will be typed as ProgressBar
+    @onready var health_bar := get_node("UI/LifeBar") as ProgressBar
+    # health_bar will be typed as ProgressBar
 
-This option is also considered more :ref:`type-safe<doc_gdscript_static_typing_safe_lines>` than the first.
 
-**Bad**:
+.. note::
 
-.. rst-class:: code-example-bad
-
-::
-
-   # The compiler can't infer the exact type and will use Node
-   # instead of ProgressBar.
-   @onready var health_bar := get_node("UI/LifeBar")
+    This option is considered more :ref:`type-safe<doc_gdscript_static_typing_safe_lines>` than type hints,
+    but also less null-safe as it silently casts the variable to ``null`` in case of a type mismatch at runtime,
+    without an error/warning.

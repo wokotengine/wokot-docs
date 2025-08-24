@@ -14,97 +14,172 @@ VisualShaderNodeVectorOp
 
 A vector operator to be used within the visual shader graph.
 
+.. rst-class:: classref-introduction-group
+
 Description
 -----------
 
 A visual shader node for use of vector operators. Operates on vector ``a`` and vector ``b``.
 
+.. rst-class:: classref-reftable-group
+
 Properties
 ----------
 
-+---------------------------------------------------------+-------------------------------------------------------------------+-------+
-| :ref:`Operator<enum_VisualShaderNodeVectorOp_Operator>` | :ref:`operator<class_VisualShaderNodeVectorOp_property_operator>` | ``0`` |
-+---------------------------------------------------------+-------------------------------------------------------------------+-------+
+.. table::
+   :widths: auto
+
+   +---------------------------------------------------------+-------------------------------------------------------------------+-------+
+   | :ref:`Operator<enum_VisualShaderNodeVectorOp_Operator>` | :ref:`operator<class_VisualShaderNodeVectorOp_property_operator>` | ``0`` |
+   +---------------------------------------------------------+-------------------------------------------------------------------+-------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Enumerations
 ------------
 
 .. _enum_VisualShaderNodeVectorOp_Operator:
 
+.. rst-class:: classref-enumeration
+
+enum **Operator**: :ref:`🔗<enum_VisualShaderNodeVectorOp_Operator>`
+
 .. _class_VisualShaderNodeVectorOp_constant_OP_ADD:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Operator<enum_VisualShaderNodeVectorOp_Operator>` **OP_ADD** = ``0``
+
+Adds two vectors.
 
 .. _class_VisualShaderNodeVectorOp_constant_OP_SUB:
 
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Operator<enum_VisualShaderNodeVectorOp_Operator>` **OP_SUB** = ``1``
+
+Subtracts a vector from a vector.
+
 .. _class_VisualShaderNodeVectorOp_constant_OP_MUL:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Operator<enum_VisualShaderNodeVectorOp_Operator>` **OP_MUL** = ``2``
+
+Multiplies two vectors.
 
 .. _class_VisualShaderNodeVectorOp_constant_OP_DIV:
 
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Operator<enum_VisualShaderNodeVectorOp_Operator>` **OP_DIV** = ``3``
+
+Divides vector by vector.
+
 .. _class_VisualShaderNodeVectorOp_constant_OP_MOD:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Operator<enum_VisualShaderNodeVectorOp_Operator>` **OP_MOD** = ``4``
+
+Returns the remainder of the two vectors.
 
 .. _class_VisualShaderNodeVectorOp_constant_OP_POW:
 
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Operator<enum_VisualShaderNodeVectorOp_Operator>` **OP_POW** = ``5``
+
+Returns the value of the first parameter raised to the power of the second, for each component of the vectors.
+
 .. _class_VisualShaderNodeVectorOp_constant_OP_MAX:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Operator<enum_VisualShaderNodeVectorOp_Operator>` **OP_MAX** = ``6``
+
+Returns the greater of two values, for each component of the vectors.
 
 .. _class_VisualShaderNodeVectorOp_constant_OP_MIN:
 
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Operator<enum_VisualShaderNodeVectorOp_Operator>` **OP_MIN** = ``7``
+
+Returns the lesser of two values, for each component of the vectors.
+
 .. _class_VisualShaderNodeVectorOp_constant_OP_CROSS:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Operator<enum_VisualShaderNodeVectorOp_Operator>` **OP_CROSS** = ``8``
+
+Calculates the cross product of two vectors.
 
 .. _class_VisualShaderNodeVectorOp_constant_OP_ATAN2:
 
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Operator<enum_VisualShaderNodeVectorOp_Operator>` **OP_ATAN2** = ``9``
+
+Returns the arc-tangent of the parameters.
+
 .. _class_VisualShaderNodeVectorOp_constant_OP_REFLECT:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Operator<enum_VisualShaderNodeVectorOp_Operator>` **OP_REFLECT** = ``10``
+
+Returns the vector that points in the direction of reflection. ``a`` is incident vector and ``b`` is the normal vector.
 
 .. _class_VisualShaderNodeVectorOp_constant_OP_STEP:
 
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Operator<enum_VisualShaderNodeVectorOp_Operator>` **OP_STEP** = ``11``
+
+Vector step operator. Returns ``0.0`` if ``a`` is smaller than ``b`` and ``1.0`` otherwise.
+
 .. _class_VisualShaderNodeVectorOp_constant_OP_ENUM_SIZE:
 
-enum **Operator**:
+.. rst-class:: classref-enumeration-constant
 
-- **OP_ADD** = **0** --- Adds two vectors.
+:ref:`Operator<enum_VisualShaderNodeVectorOp_Operator>` **OP_ENUM_SIZE** = ``12``
 
-- **OP_SUB** = **1** --- Subtracts a vector from a vector.
+Represents the size of the :ref:`Operator<enum_VisualShaderNodeVectorOp_Operator>` enum.
 
-- **OP_MUL** = **2** --- Multiplies two vectors.
+.. rst-class:: classref-section-separator
 
-- **OP_DIV** = **3** --- Divides vector by vector.
+----
 
-- **OP_MOD** = **4** --- Returns the remainder of the two vectors.
-
-- **OP_POW** = **5** --- Returns the value of the first parameter raised to the power of the second, for each component of the vectors.
-
-- **OP_MAX** = **6** --- Returns the greater of two values, for each component of the vectors.
-
-- **OP_MIN** = **7** --- Returns the lesser of two values, for each component of the vectors.
-
-- **OP_CROSS** = **8** --- Calculates the cross product of two vectors.
-
-- **OP_ATAN2** = **9** --- Returns the arc-tangent of the parameters.
-
-- **OP_REFLECT** = **10** --- Returns the vector that points in the direction of reflection. ``a`` is incident vector and ``b`` is the normal vector.
-
-- **OP_STEP** = **11** --- Vector step operator. Returns ``0.0`` if ``a`` is smaller than ``b`` and ``1.0`` otherwise.
-
-- **OP_ENUM_SIZE** = **12** --- Represents the size of the :ref:`Operator<enum_VisualShaderNodeVectorOp_Operator>` enum.
+.. rst-class:: classref-descriptions-group
 
 Property Descriptions
 ---------------------
 
 .. _class_VisualShaderNodeVectorOp_property_operator:
 
-- :ref:`Operator<enum_VisualShaderNodeVectorOp_Operator>` **operator**
+.. rst-class:: classref-property
 
-+-----------+---------------------+
-| *Default* | ``0``               |
-+-----------+---------------------+
-| *Setter*  | set_operator(value) |
-+-----------+---------------------+
-| *Getter*  | get_operator()      |
-+-----------+---------------------+
+:ref:`Operator<enum_VisualShaderNodeVectorOp_Operator>` **operator** = ``0`` :ref:`🔗<class_VisualShaderNodeVectorOp_property_operator>`
 
-The operator to be used. See :ref:`Operator<enum_VisualShaderNodeVectorOp_Operator>` for options.
+.. rst-class:: classref-property-setget
+
+- |void| **set_operator**\ (\ value\: :ref:`Operator<enum_VisualShaderNodeVectorOp_Operator>`\ )
+- :ref:`Operator<enum_VisualShaderNodeVectorOp_Operator>` **get_operator**\ (\ )
+
+The operator to be used.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

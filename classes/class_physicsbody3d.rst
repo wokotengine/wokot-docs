@@ -14,183 +14,245 @@ PhysicsBody3D
 
 **Inherited By:** :ref:`CharacterBody3D<class_CharacterBody3D>`, :ref:`PhysicalBone3D<class_PhysicalBone3D>`, :ref:`RigidBody3D<class_RigidBody3D>`, :ref:`StaticBody3D<class_StaticBody3D>`
 
-Base class for all objects affected by physics in 3D space.
+Abstract base class for 3D game objects affected by physics.
+
+.. rst-class:: classref-introduction-group
 
 Description
 -----------
 
-PhysicsBody3D is an abstract base class for implementing a physics body. All \*Body types inherit from it.
+**PhysicsBody3D** is an abstract base class for 3D game objects affected by physics. All 3D physics bodies inherit from it.
+
+\ **Warning:** With a non-uniform scale, this node will likely not behave as expected. It is advised to keep its scale the same on all axes and adjust its collision shape(s) instead.
+
+.. rst-class:: classref-introduction-group
 
 Tutorials
 ---------
 
 - :doc:`Physics introduction <../tutorials/physics/physics_introduction>`
 
+- :doc:`Troubleshooting physics issues <../tutorials/physics/troubleshooting_physics_issues>`
+
+.. rst-class:: classref-reftable-group
+
 Properties
 ----------
 
-+-------------------------+------------------------------------------------------------------------------+-----------+
-| :ref:`bool<class_bool>` | :ref:`axis_lock_angular_x<class_PhysicsBody3D_property_axis_lock_angular_x>` | ``false`` |
-+-------------------------+------------------------------------------------------------------------------+-----------+
-| :ref:`bool<class_bool>` | :ref:`axis_lock_angular_y<class_PhysicsBody3D_property_axis_lock_angular_y>` | ``false`` |
-+-------------------------+------------------------------------------------------------------------------+-----------+
-| :ref:`bool<class_bool>` | :ref:`axis_lock_angular_z<class_PhysicsBody3D_property_axis_lock_angular_z>` | ``false`` |
-+-------------------------+------------------------------------------------------------------------------+-----------+
-| :ref:`bool<class_bool>` | :ref:`axis_lock_linear_x<class_PhysicsBody3D_property_axis_lock_linear_x>`   | ``false`` |
-+-------------------------+------------------------------------------------------------------------------+-----------+
-| :ref:`bool<class_bool>` | :ref:`axis_lock_linear_y<class_PhysicsBody3D_property_axis_lock_linear_y>`   | ``false`` |
-+-------------------------+------------------------------------------------------------------------------+-----------+
-| :ref:`bool<class_bool>` | :ref:`axis_lock_linear_z<class_PhysicsBody3D_property_axis_lock_linear_z>`   | ``false`` |
-+-------------------------+------------------------------------------------------------------------------+-----------+
+.. table::
+   :widths: auto
+
+   +-------------------------+------------------------------------------------------------------------------+-----------+
+   | :ref:`bool<class_bool>` | :ref:`axis_lock_angular_x<class_PhysicsBody3D_property_axis_lock_angular_x>` | ``false`` |
+   +-------------------------+------------------------------------------------------------------------------+-----------+
+   | :ref:`bool<class_bool>` | :ref:`axis_lock_angular_y<class_PhysicsBody3D_property_axis_lock_angular_y>` | ``false`` |
+   +-------------------------+------------------------------------------------------------------------------+-----------+
+   | :ref:`bool<class_bool>` | :ref:`axis_lock_angular_z<class_PhysicsBody3D_property_axis_lock_angular_z>` | ``false`` |
+   +-------------------------+------------------------------------------------------------------------------+-----------+
+   | :ref:`bool<class_bool>` | :ref:`axis_lock_linear_x<class_PhysicsBody3D_property_axis_lock_linear_x>`   | ``false`` |
+   +-------------------------+------------------------------------------------------------------------------+-----------+
+   | :ref:`bool<class_bool>` | :ref:`axis_lock_linear_y<class_PhysicsBody3D_property_axis_lock_linear_y>`   | ``false`` |
+   +-------------------------+------------------------------------------------------------------------------+-----------+
+   | :ref:`bool<class_bool>` | :ref:`axis_lock_linear_z<class_PhysicsBody3D_property_axis_lock_linear_z>`   | ``false`` |
+   +-------------------------+------------------------------------------------------------------------------+-----------+
+
+.. rst-class:: classref-reftable-group
 
 Methods
 -------
 
-+---------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| void                                                    | :ref:`add_collision_exception_with<class_PhysicsBody3D_method_add_collision_exception_with>` **(** :ref:`Node<class_Node>` body **)**                                                                                                                                                                              |
-+---------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`bool<class_bool>`                                 | :ref:`get_axis_lock<class_PhysicsBody3D_method_get_axis_lock>` **(** :ref:`BodyAxis<enum_PhysicsServer3D_BodyAxis>` axis **)** |const|                                                                                                                                                                             |
-+---------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`PhysicsBody3D[]<class_PhysicsBody3D>`             | :ref:`get_collision_exceptions<class_PhysicsBody3D_method_get_collision_exceptions>` **(** **)**                                                                                                                                                                                                                   |
-+---------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`KinematicCollision3D<class_KinematicCollision3D>` | :ref:`move_and_collide<class_PhysicsBody3D_method_move_and_collide>` **(** :ref:`Vector3<class_Vector3>` distance, :ref:`bool<class_bool>` test_only=false, :ref:`float<class_float>` safe_margin=0.001, :ref:`int<class_int>` max_collisions=1 **)**                                                              |
-+---------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| void                                                    | :ref:`remove_collision_exception_with<class_PhysicsBody3D_method_remove_collision_exception_with>` **(** :ref:`Node<class_Node>` body **)**                                                                                                                                                                        |
-+---------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| void                                                    | :ref:`set_axis_lock<class_PhysicsBody3D_method_set_axis_lock>` **(** :ref:`BodyAxis<enum_PhysicsServer3D_BodyAxis>` axis, :ref:`bool<class_bool>` lock **)**                                                                                                                                                       |
-+---------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`bool<class_bool>`                                 | :ref:`test_move<class_PhysicsBody3D_method_test_move>` **(** :ref:`Transform3D<class_Transform3D>` from, :ref:`Vector3<class_Vector3>` distance, :ref:`KinematicCollision3D<class_KinematicCollision3D>` collision=null, :ref:`float<class_float>` safe_margin=0.001, :ref:`int<class_int>` max_collisions=1 **)** |
-+---------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+.. table::
+   :widths: auto
+
+   +------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                                                 | :ref:`add_collision_exception_with<class_PhysicsBody3D_method_add_collision_exception_with>`\ (\ body\: :ref:`Node<class_Node>`\ )                                                                                                                                                                                                                                                   |
+   +------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>`                                                | :ref:`get_axis_lock<class_PhysicsBody3D_method_get_axis_lock>`\ (\ axis\: :ref:`BodyAxis<enum_PhysicsServer3D_BodyAxis>`\ ) |const|                                                                                                                                                                                                                                                  |
+   +------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Array<class_Array>`\[:ref:`PhysicsBody3D<class_PhysicsBody3D>`\] | :ref:`get_collision_exceptions<class_PhysicsBody3D_method_get_collision_exceptions>`\ (\ )                                                                                                                                                                                                                                                                                           |
+   +------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`Vector3<class_Vector3>`                                          | :ref:`get_gravity<class_PhysicsBody3D_method_get_gravity>`\ (\ ) |const|                                                                                                                                                                                                                                                                                                             |
+   +------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`KinematicCollision3D<class_KinematicCollision3D>`                | :ref:`move_and_collide<class_PhysicsBody3D_method_move_and_collide>`\ (\ motion\: :ref:`Vector3<class_Vector3>`, test_only\: :ref:`bool<class_bool>` = false, safe_margin\: :ref:`float<class_float>` = 0.001, recovery_as_collision\: :ref:`bool<class_bool>` = false, max_collisions\: :ref:`int<class_int>` = 1\ )                                                                |
+   +------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                                                 | :ref:`remove_collision_exception_with<class_PhysicsBody3D_method_remove_collision_exception_with>`\ (\ body\: :ref:`Node<class_Node>`\ )                                                                                                                                                                                                                                             |
+   +------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                                                 | :ref:`set_axis_lock<class_PhysicsBody3D_method_set_axis_lock>`\ (\ axis\: :ref:`BodyAxis<enum_PhysicsServer3D_BodyAxis>`, lock\: :ref:`bool<class_bool>`\ )                                                                                                                                                                                                                          |
+   +------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>`                                                | :ref:`test_move<class_PhysicsBody3D_method_test_move>`\ (\ from\: :ref:`Transform3D<class_Transform3D>`, motion\: :ref:`Vector3<class_Vector3>`, collision\: :ref:`KinematicCollision3D<class_KinematicCollision3D>` = null, safe_margin\: :ref:`float<class_float>` = 0.001, recovery_as_collision\: :ref:`bool<class_bool>` = false, max_collisions\: :ref:`int<class_int>` = 1\ ) |
+   +------------------------------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Property Descriptions
 ---------------------
 
 .. _class_PhysicsBody3D_property_axis_lock_angular_x:
 
-- :ref:`bool<class_bool>` **axis_lock_angular_x**
+.. rst-class:: classref-property
 
-+-----------+----------------------+
-| *Default* | ``false``            |
-+-----------+----------------------+
-| *Setter*  | set_axis_lock(value) |
-+-----------+----------------------+
-| *Getter*  | get_axis_lock()      |
-+-----------+----------------------+
+:ref:`bool<class_bool>` **axis_lock_angular_x** = ``false`` :ref:`🔗<class_PhysicsBody3D_property_axis_lock_angular_x>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_axis_lock**\ (\ axis\: :ref:`BodyAxis<enum_PhysicsServer3D_BodyAxis>`, lock\: :ref:`bool<class_bool>`\ )
+- :ref:`bool<class_bool>` **get_axis_lock**\ (\ axis\: :ref:`BodyAxis<enum_PhysicsServer3D_BodyAxis>`\ ) |const|
 
 Lock the body's rotation in the X axis.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PhysicsBody3D_property_axis_lock_angular_y:
 
-- :ref:`bool<class_bool>` **axis_lock_angular_y**
+.. rst-class:: classref-property
 
-+-----------+----------------------+
-| *Default* | ``false``            |
-+-----------+----------------------+
-| *Setter*  | set_axis_lock(value) |
-+-----------+----------------------+
-| *Getter*  | get_axis_lock()      |
-+-----------+----------------------+
+:ref:`bool<class_bool>` **axis_lock_angular_y** = ``false`` :ref:`🔗<class_PhysicsBody3D_property_axis_lock_angular_y>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_axis_lock**\ (\ axis\: :ref:`BodyAxis<enum_PhysicsServer3D_BodyAxis>`, lock\: :ref:`bool<class_bool>`\ )
+- :ref:`bool<class_bool>` **get_axis_lock**\ (\ axis\: :ref:`BodyAxis<enum_PhysicsServer3D_BodyAxis>`\ ) |const|
 
 Lock the body's rotation in the Y axis.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PhysicsBody3D_property_axis_lock_angular_z:
 
-- :ref:`bool<class_bool>` **axis_lock_angular_z**
+.. rst-class:: classref-property
 
-+-----------+----------------------+
-| *Default* | ``false``            |
-+-----------+----------------------+
-| *Setter*  | set_axis_lock(value) |
-+-----------+----------------------+
-| *Getter*  | get_axis_lock()      |
-+-----------+----------------------+
+:ref:`bool<class_bool>` **axis_lock_angular_z** = ``false`` :ref:`🔗<class_PhysicsBody3D_property_axis_lock_angular_z>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_axis_lock**\ (\ axis\: :ref:`BodyAxis<enum_PhysicsServer3D_BodyAxis>`, lock\: :ref:`bool<class_bool>`\ )
+- :ref:`bool<class_bool>` **get_axis_lock**\ (\ axis\: :ref:`BodyAxis<enum_PhysicsServer3D_BodyAxis>`\ ) |const|
 
 Lock the body's rotation in the Z axis.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PhysicsBody3D_property_axis_lock_linear_x:
 
-- :ref:`bool<class_bool>` **axis_lock_linear_x**
+.. rst-class:: classref-property
 
-+-----------+----------------------+
-| *Default* | ``false``            |
-+-----------+----------------------+
-| *Setter*  | set_axis_lock(value) |
-+-----------+----------------------+
-| *Getter*  | get_axis_lock()      |
-+-----------+----------------------+
+:ref:`bool<class_bool>` **axis_lock_linear_x** = ``false`` :ref:`🔗<class_PhysicsBody3D_property_axis_lock_linear_x>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_axis_lock**\ (\ axis\: :ref:`BodyAxis<enum_PhysicsServer3D_BodyAxis>`, lock\: :ref:`bool<class_bool>`\ )
+- :ref:`bool<class_bool>` **get_axis_lock**\ (\ axis\: :ref:`BodyAxis<enum_PhysicsServer3D_BodyAxis>`\ ) |const|
 
 Lock the body's linear movement in the X axis.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PhysicsBody3D_property_axis_lock_linear_y:
 
-- :ref:`bool<class_bool>` **axis_lock_linear_y**
+.. rst-class:: classref-property
 
-+-----------+----------------------+
-| *Default* | ``false``            |
-+-----------+----------------------+
-| *Setter*  | set_axis_lock(value) |
-+-----------+----------------------+
-| *Getter*  | get_axis_lock()      |
-+-----------+----------------------+
+:ref:`bool<class_bool>` **axis_lock_linear_y** = ``false`` :ref:`🔗<class_PhysicsBody3D_property_axis_lock_linear_y>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_axis_lock**\ (\ axis\: :ref:`BodyAxis<enum_PhysicsServer3D_BodyAxis>`, lock\: :ref:`bool<class_bool>`\ )
+- :ref:`bool<class_bool>` **get_axis_lock**\ (\ axis\: :ref:`BodyAxis<enum_PhysicsServer3D_BodyAxis>`\ ) |const|
 
 Lock the body's linear movement in the Y axis.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PhysicsBody3D_property_axis_lock_linear_z:
 
-- :ref:`bool<class_bool>` **axis_lock_linear_z**
+.. rst-class:: classref-property
 
-+-----------+----------------------+
-| *Default* | ``false``            |
-+-----------+----------------------+
-| *Setter*  | set_axis_lock(value) |
-+-----------+----------------------+
-| *Getter*  | get_axis_lock()      |
-+-----------+----------------------+
+:ref:`bool<class_bool>` **axis_lock_linear_z** = ``false`` :ref:`🔗<class_PhysicsBody3D_property_axis_lock_linear_z>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_axis_lock**\ (\ axis\: :ref:`BodyAxis<enum_PhysicsServer3D_BodyAxis>`, lock\: :ref:`bool<class_bool>`\ )
+- :ref:`bool<class_bool>` **get_axis_lock**\ (\ axis\: :ref:`BodyAxis<enum_PhysicsServer3D_BodyAxis>`\ ) |const|
 
 Lock the body's linear movement in the Z axis.
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Method Descriptions
 -------------------
 
 .. _class_PhysicsBody3D_method_add_collision_exception_with:
 
-- void **add_collision_exception_with** **(** :ref:`Node<class_Node>` body **)**
+.. rst-class:: classref-method
+
+|void| **add_collision_exception_with**\ (\ body\: :ref:`Node<class_Node>`\ ) :ref:`🔗<class_PhysicsBody3D_method_add_collision_exception_with>`
 
 Adds a body to the list of bodies that this body can't collide with.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PhysicsBody3D_method_get_axis_lock:
 
-- :ref:`bool<class_bool>` **get_axis_lock** **(** :ref:`BodyAxis<enum_PhysicsServer3D_BodyAxis>` axis **)** |const|
+.. rst-class:: classref-method
+
+:ref:`bool<class_bool>` **get_axis_lock**\ (\ axis\: :ref:`BodyAxis<enum_PhysicsServer3D_BodyAxis>`\ ) |const| :ref:`🔗<class_PhysicsBody3D_method_get_axis_lock>`
 
 Returns ``true`` if the specified linear or rotational ``axis`` is locked.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PhysicsBody3D_method_get_collision_exceptions:
 
-- :ref:`PhysicsBody3D[]<class_PhysicsBody3D>` **get_collision_exceptions** **(** **)**
+.. rst-class:: classref-method
+
+:ref:`Array<class_Array>`\[:ref:`PhysicsBody3D<class_PhysicsBody3D>`\] **get_collision_exceptions**\ (\ ) :ref:`🔗<class_PhysicsBody3D_method_get_collision_exceptions>`
 
 Returns an array of nodes that were added as collision exceptions for this body.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_PhysicsBody3D_method_get_gravity:
+
+.. rst-class:: classref-method
+
+:ref:`Vector3<class_Vector3>` **get_gravity**\ (\ ) |const| :ref:`🔗<class_PhysicsBody3D_method_get_gravity>`
+
+Returns the gravity vector computed from all sources that can affect the body, including all gravity overrides from :ref:`Area3D<class_Area3D>` nodes and the global world gravity.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PhysicsBody3D_method_move_and_collide:
 
-- :ref:`KinematicCollision3D<class_KinematicCollision3D>` **move_and_collide** **(** :ref:`Vector3<class_Vector3>` distance, :ref:`bool<class_bool>` test_only=false, :ref:`float<class_float>` safe_margin=0.001, :ref:`int<class_int>` max_collisions=1 **)**
+.. rst-class:: classref-method
 
-Moves the body along the vector ``distance``. In order to be frame rate independent in :ref:`Node._physics_process<class_Node_method__physics_process>` or :ref:`Node._process<class_Node_method__process>`, ``distance`` should be computed using ``delta``.
+:ref:`KinematicCollision3D<class_KinematicCollision3D>` **move_and_collide**\ (\ motion\: :ref:`Vector3<class_Vector3>`, test_only\: :ref:`bool<class_bool>` = false, safe_margin\: :ref:`float<class_float>` = 0.001, recovery_as_collision\: :ref:`bool<class_bool>` = false, max_collisions\: :ref:`int<class_int>` = 1\ ) :ref:`🔗<class_PhysicsBody3D_method_move_and_collide>`
+
+Moves the body along the vector ``motion``. In order to be frame rate independent in :ref:`Node._physics_process()<class_Node_private_method__physics_process>` or :ref:`Node._process()<class_Node_private_method__process>`, ``motion`` should be computed using ``delta``.
 
 The body will stop if it collides. Returns a :ref:`KinematicCollision3D<class_KinematicCollision3D>`, which contains information about the collision when stopped, or when touching another body along the motion.
 
@@ -198,43 +260,62 @@ If ``test_only`` is ``true``, the body does not move but the would-be collision 
 
 \ ``safe_margin`` is the extra margin used for collision recovery (see :ref:`CharacterBody3D.safe_margin<class_CharacterBody3D_property_safe_margin>` for more details).
 
+If ``recovery_as_collision`` is ``true``, any depenetration from the recovery phase is also reported as a collision; this is used e.g. by :ref:`CharacterBody3D<class_CharacterBody3D>` for improving floor detection during floor snapping.
+
 \ ``max_collisions`` allows to retrieve more than one collision result.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PhysicsBody3D_method_remove_collision_exception_with:
 
-- void **remove_collision_exception_with** **(** :ref:`Node<class_Node>` body **)**
+.. rst-class:: classref-method
+
+|void| **remove_collision_exception_with**\ (\ body\: :ref:`Node<class_Node>`\ ) :ref:`🔗<class_PhysicsBody3D_method_remove_collision_exception_with>`
 
 Removes a body from the list of bodies that this body can't collide with.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PhysicsBody3D_method_set_axis_lock:
 
-- void **set_axis_lock** **(** :ref:`BodyAxis<enum_PhysicsServer3D_BodyAxis>` axis, :ref:`bool<class_bool>` lock **)**
+.. rst-class:: classref-method
+
+|void| **set_axis_lock**\ (\ axis\: :ref:`BodyAxis<enum_PhysicsServer3D_BodyAxis>`, lock\: :ref:`bool<class_bool>`\ ) :ref:`🔗<class_PhysicsBody3D_method_set_axis_lock>`
 
 Locks or unlocks the specified linear or rotational ``axis`` depending on the value of ``lock``.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PhysicsBody3D_method_test_move:
 
-- :ref:`bool<class_bool>` **test_move** **(** :ref:`Transform3D<class_Transform3D>` from, :ref:`Vector3<class_Vector3>` distance, :ref:`KinematicCollision3D<class_KinematicCollision3D>` collision=null, :ref:`float<class_float>` safe_margin=0.001, :ref:`int<class_int>` max_collisions=1 **)**
+.. rst-class:: classref-method
 
-Checks for collisions without moving the body. In order to be frame rate independent in :ref:`Node._physics_process<class_Node_method__physics_process>` or :ref:`Node._process<class_Node_method__process>`, ``distance`` should be computed using ``delta``.
+:ref:`bool<class_bool>` **test_move**\ (\ from\: :ref:`Transform3D<class_Transform3D>`, motion\: :ref:`Vector3<class_Vector3>`, collision\: :ref:`KinematicCollision3D<class_KinematicCollision3D>` = null, safe_margin\: :ref:`float<class_float>` = 0.001, recovery_as_collision\: :ref:`bool<class_bool>` = false, max_collisions\: :ref:`int<class_int>` = 1\ ) :ref:`🔗<class_PhysicsBody3D_method_test_move>`
 
-Virtually sets the node's position, scale and rotation to that of the given :ref:`Transform3D<class_Transform3D>`, then tries to move the body along the vector ``distance``. Returns ``true`` if a collision would stop the body from moving along the whole path.
+Checks for collisions without moving the body. In order to be frame rate independent in :ref:`Node._physics_process()<class_Node_private_method__physics_process>` or :ref:`Node._process()<class_Node_private_method__process>`, ``motion`` should be computed using ``delta``.
+
+Virtually sets the node's position, scale and rotation to that of the given :ref:`Transform3D<class_Transform3D>`, then tries to move the body along the vector ``motion``. Returns ``true`` if a collision would stop the body from moving along the whole path.
 
 \ ``collision`` is an optional object of type :ref:`KinematicCollision3D<class_KinematicCollision3D>`, which contains additional information about the collision when stopped, or when touching another body along the motion.
 
 \ ``safe_margin`` is the extra margin used for collision recovery (see :ref:`CharacterBody3D.safe_margin<class_CharacterBody3D_property_safe_margin>` for more details).
 
+If ``recovery_as_collision`` is ``true``, any depenetration from the recovery phase is also reported as a collision; this is useful for checking whether the body would *touch* any other bodies.
+
 \ ``max_collisions`` allows to retrieve more than one collision result.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

@@ -12,79 +12,28 @@ VSplitContainer
 
 **Inherits:** :ref:`SplitContainer<class_SplitContainer>` **<** :ref:`Container<class_Container>` **<** :ref:`Control<class_Control>` **<** :ref:`CanvasItem<class_CanvasItem>` **<** :ref:`Node<class_Node>` **<** :ref:`Object<class_Object>`
 
-Vertical split container.
+A container that splits two child controls vertically and provides a grabber for adjusting the split ratio.
+
+.. rst-class:: classref-introduction-group
 
 Description
 -----------
 
-Vertical split container. See :ref:`SplitContainer<class_SplitContainer>`. This goes from top to bottom.
+A container that accepts only two child controls, then arranges them vertically and creates a divisor between them. The divisor can be dragged around to change the size relation between the child controls.
+
+.. rst-class:: classref-introduction-group
 
 Tutorials
 ---------
 
-- :doc:`GUI containers <../tutorials/ui/gui_containers>`
-
-Theme Properties
-----------------
-
-+-----------------------------------+--------------------------------------------------------------------------------------------+--------+
-| :ref:`int<class_int>`             | :ref:`autohide<class_VSplitContainer_theme_constant_autohide>`                             | ``1``  |
-+-----------------------------------+--------------------------------------------------------------------------------------------+--------+
-| :ref:`int<class_int>`             | :ref:`minimum_grab_thickness<class_VSplitContainer_theme_constant_minimum_grab_thickness>` | ``6``  |
-+-----------------------------------+--------------------------------------------------------------------------------------------+--------+
-| :ref:`int<class_int>`             | :ref:`separation<class_VSplitContainer_theme_constant_separation>`                         | ``12`` |
-+-----------------------------------+--------------------------------------------------------------------------------------------+--------+
-| :ref:`Texture2D<class_Texture2D>` | :ref:`grabber<class_VSplitContainer_theme_icon_grabber>`                                   |        |
-+-----------------------------------+--------------------------------------------------------------------------------------------+--------+
-
-Theme Property Descriptions
----------------------------
-
-.. _class_VSplitContainer_theme_constant_autohide:
-
-- :ref:`int<class_int>` **autohide**
-
-+-----------+-------+
-| *Default* | ``1`` |
-+-----------+-------+
-
-Boolean value. If 1 (``true``), the grabber will hide automatically when it isn't under the cursor. If 0 (``false``), it's always visible.
-
-----
-
-.. _class_VSplitContainer_theme_constant_minimum_grab_thickness:
-
-- :ref:`int<class_int>` **minimum_grab_thickness**
-
-+-----------+-------+
-| *Default* | ``6`` |
-+-----------+-------+
-
-The minimum thickness of the area users can click on to grab the splitting line. If :ref:`separation<class_VSplitContainer_theme_constant_separation>` or :ref:`grabber<class_VSplitContainer_theme_icon_grabber>`'s thickness are too small, this ensure that the splitting line can still be dragged.
-
-----
-
-.. _class_VSplitContainer_theme_constant_separation:
-
-- :ref:`int<class_int>` **separation**
-
-+-----------+--------+
-| *Default* | ``12`` |
-+-----------+--------+
-
-The space between sides of the container.
-
-----
-
-.. _class_VSplitContainer_theme_icon_grabber:
-
-- :ref:`Texture2D<class_Texture2D>` **grabber**
-
-The icon used for the grabber drawn in the middle area.
+- :doc:`Using Containers <../tutorials/ui/gui_containers>`
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

@@ -14,38 +14,53 @@ VisualShaderNodeTransformConstant
 
 A :ref:`Transform3D<class_Transform3D>` constant for use within the visual shader graph.
 
+.. rst-class:: classref-introduction-group
+
 Description
 -----------
 
 A constant :ref:`Transform3D<class_Transform3D>`, which can be used as an input node.
 
+.. rst-class:: classref-reftable-group
+
 Properties
 ----------
 
-+---------------------------------------+----------------------------------------------------------------------------+-----------------------------------------------------+
-| :ref:`Transform3D<class_Transform3D>` | :ref:`constant<class_VisualShaderNodeTransformConstant_property_constant>` | ``Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)`` |
-+---------------------------------------+----------------------------------------------------------------------------+-----------------------------------------------------+
+.. table::
+   :widths: auto
+
+   +---------------------------------------+----------------------------------------------------------------------------+-----------------------------------------------------+
+   | :ref:`Transform3D<class_Transform3D>` | :ref:`constant<class_VisualShaderNodeTransformConstant_property_constant>` | ``Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)`` |
+   +---------------------------------------+----------------------------------------------------------------------------+-----------------------------------------------------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Property Descriptions
 ---------------------
 
 .. _class_VisualShaderNodeTransformConstant_property_constant:
 
-- :ref:`Transform3D<class_Transform3D>` **constant**
+.. rst-class:: classref-property
 
-+-----------+-----------------------------------------------------+
-| *Default* | ``Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)`` |
-+-----------+-----------------------------------------------------+
-| *Setter*  | set_constant(value)                                 |
-+-----------+-----------------------------------------------------+
-| *Getter*  | get_constant()                                      |
-+-----------+-----------------------------------------------------+
+:ref:`Transform3D<class_Transform3D>` **constant** = ``Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)`` :ref:`🔗<class_VisualShaderNodeTransformConstant_property_constant>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_constant**\ (\ value\: :ref:`Transform3D<class_Transform3D>`\ )
+- :ref:`Transform3D<class_Transform3D>` **get_constant**\ (\ )
 
 A :ref:`Transform3D<class_Transform3D>` constant which represents the state of this node.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

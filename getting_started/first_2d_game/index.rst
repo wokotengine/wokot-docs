@@ -1,3 +1,5 @@
+:allow_comments: False
+
 .. _doc_your_first_2d_game:
 
 Your first 2D game
@@ -17,7 +19,7 @@ a 2D game.
           programming entirely, you should start here: :ref:`doc_scripting`.
 
 The game is called "Dodge the Creeps!". Your character must move and avoid the
-enemies for as long as possible. 
+enemies for as long as possible.
 
 You will learn to:
 
@@ -34,29 +36,30 @@ recommend you to start with this one, though.
 
 **Why start with 2D?**
 
-3D games are much more complex than 2D ones. It would be best if you stuck to 2D
-until you understood the game development process and how to use Godot well.
+If you are new to game development or unfamiliar with Godot, we recommend
+starting with 2D games. This will allow you to become comfortable with both
+before tackling 3D games, which tend to be more complicated.
 
 You can find a completed version of this project at this location:
 
-- https://github.com/godotengine/godot-demo-projects
+- https://github.com/godotengine/godot-demo-projects/tree/master/2d/dodge_the_creeps
 
 Prerequisites
 -------------
 
 This step-by-step tutorial is intended for beginners who followed the complete
-:ref:`Getting Started <toc-learn-step_by_step>`.
+:ref:`doc_step_by_step`.
 
 If you're an experienced programmer, you can find the complete demo's source
-code here: `Godot demo projects
-<https://github.com/godotengine/godot-demo-projects>`__.
+code here: `Dodge the Creeps source code
+<https://github.com/godotengine/godot-demo-projects/tree/master/2d/dodge_the_creeps>`__.
 
 We prepared some game assets you'll need to download so we can jump straight to
 the code.
 
 You can download them by clicking the link below.
 
-:download:`dodge_assets.zip <files/dodge_assets.zip>`.
+`dodge_the_creeps_2d_assets.zip <https://github.com/godotengine/godot-docs-project-starters/releases/download/latest-4.x/dodge_the_creeps_2d_assets.zip>`_.
 
 Contents
 --------

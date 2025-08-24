@@ -14,52 +14,92 @@ VisualShaderNodeUVFunc
 
 Contains functions to modify texture coordinates (``uv``) to be used within the visual shader graph.
 
+.. rst-class:: classref-introduction-group
+
+Description
+-----------
+
+UV functions are similar to :ref:`Vector2<class_Vector2>` functions, but the input port of this node uses the shader's UV value by default.
+
+.. rst-class:: classref-reftable-group
+
 Properties
 ----------
 
-+-------------------------------------------------------+-----------------------------------------------------------------+-------+
-| :ref:`Function<enum_VisualShaderNodeUVFunc_Function>` | :ref:`function<class_VisualShaderNodeUVFunc_property_function>` | ``0`` |
-+-------------------------------------------------------+-----------------------------------------------------------------+-------+
+.. table::
+   :widths: auto
+
+   +-------------------------------------------------------+-----------------------------------------------------------------+-------+
+   | :ref:`Function<enum_VisualShaderNodeUVFunc_Function>` | :ref:`function<class_VisualShaderNodeUVFunc_property_function>` | ``0`` |
+   +-------------------------------------------------------+-----------------------------------------------------------------+-------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Enumerations
 ------------
 
 .. _enum_VisualShaderNodeUVFunc_Function:
 
+.. rst-class:: classref-enumeration
+
+enum **Function**: :ref:`🔗<enum_VisualShaderNodeUVFunc_Function>`
+
 .. _class_VisualShaderNodeUVFunc_constant_FUNC_PANNING:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Function<enum_VisualShaderNodeUVFunc_Function>` **FUNC_PANNING** = ``0``
+
+Translates ``uv`` by using ``scale`` and ``offset`` values using the following formula: ``uv = uv + offset * scale``. ``uv`` port is connected to ``UV`` built-in by default.
 
 .. _class_VisualShaderNodeUVFunc_constant_FUNC_SCALING:
 
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Function<enum_VisualShaderNodeUVFunc_Function>` **FUNC_SCALING** = ``1``
+
+Scales ``uv`` by using ``scale`` and ``pivot`` values using the following formula: ``uv = (uv - pivot) * scale + pivot``. ``uv`` port is connected to ``UV`` built-in by default.
+
 .. _class_VisualShaderNodeUVFunc_constant_FUNC_MAX:
 
-enum **Function**:
+.. rst-class:: classref-enumeration-constant
 
-- **FUNC_PANNING** = **0** --- Translates ``uv`` by using ``scale`` and ``offset`` values using the following formula: ``uv = uv + offset * scale``. ``uv`` port is connected to ``UV`` built-in by default.
+:ref:`Function<enum_VisualShaderNodeUVFunc_Function>` **FUNC_MAX** = ``2``
 
-- **FUNC_SCALING** = **1** --- Scales ``uv`` by using ``scale`` and ``pivot`` values using the following formula: ``uv = (uv - pivot) * scale + pivot``. ``uv`` port is connected to ``UV`` built-in by default.
+Represents the size of the :ref:`Function<enum_VisualShaderNodeUVFunc_Function>` enum.
 
-- **FUNC_MAX** = **2** --- Represents the size of the :ref:`Function<enum_VisualShaderNodeUVFunc_Function>` enum.
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Property Descriptions
 ---------------------
 
 .. _class_VisualShaderNodeUVFunc_property_function:
 
-- :ref:`Function<enum_VisualShaderNodeUVFunc_Function>` **function**
+.. rst-class:: classref-property
 
-+-----------+---------------------+
-| *Default* | ``0``               |
-+-----------+---------------------+
-| *Setter*  | set_function(value) |
-+-----------+---------------------+
-| *Getter*  | get_function()      |
-+-----------+---------------------+
+:ref:`Function<enum_VisualShaderNodeUVFunc_Function>` **function** = ``0`` :ref:`🔗<class_VisualShaderNodeUVFunc_property_function>`
 
-A function to be applied to the texture coordinates. See :ref:`Function<enum_VisualShaderNodeUVFunc_Function>` for options.
+.. rst-class:: classref-property-setget
+
+- |void| **set_function**\ (\ value\: :ref:`Function<enum_VisualShaderNodeUVFunc_Function>`\ )
+- :ref:`Function<enum_VisualShaderNodeUVFunc_Function>` **get_function**\ (\ )
+
+A function to be applied to the texture coordinates.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

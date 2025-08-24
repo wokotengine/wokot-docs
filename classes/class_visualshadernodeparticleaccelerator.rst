@@ -12,56 +12,102 @@ VisualShaderNodeParticleAccelerator
 
 **Inherits:** :ref:`VisualShaderNode<class_VisualShaderNode>` **<** :ref:`Resource<class_Resource>` **<** :ref:`RefCounted<class_RefCounted>` **<** :ref:`Object<class_Object>`
 
+A visual shader node that accelerates particles.
 
+.. rst-class:: classref-introduction-group
+
+Description
+-----------
+
+Particle accelerator can be used in "process" step of particle shader. It will accelerate the particles. Connect it to the Velocity output port.
+
+.. rst-class:: classref-reftable-group
 
 Properties
 ----------
 
-+------------------------------------------------------------+----------------------------------------------------------------------+-------+
-| :ref:`Mode<enum_VisualShaderNodeParticleAccelerator_Mode>` | :ref:`mode<class_VisualShaderNodeParticleAccelerator_property_mode>` | ``0`` |
-+------------------------------------------------------------+----------------------------------------------------------------------+-------+
+.. table::
+   :widths: auto
+
+   +------------------------------------------------------------+----------------------------------------------------------------------+-------+
+   | :ref:`Mode<enum_VisualShaderNodeParticleAccelerator_Mode>` | :ref:`mode<class_VisualShaderNodeParticleAccelerator_property_mode>` | ``0`` |
+   +------------------------------------------------------------+----------------------------------------------------------------------+-------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Enumerations
 ------------
 
 .. _enum_VisualShaderNodeParticleAccelerator_Mode:
 
+.. rst-class:: classref-enumeration
+
+enum **Mode**: :ref:`🔗<enum_VisualShaderNodeParticleAccelerator_Mode>`
+
 .. _class_VisualShaderNodeParticleAccelerator_constant_MODE_LINEAR:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Mode<enum_VisualShaderNodeParticleAccelerator_Mode>` **MODE_LINEAR** = ``0``
+
+The particles will be accelerated based on their velocity.
 
 .. _class_VisualShaderNodeParticleAccelerator_constant_MODE_RADIAL:
 
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Mode<enum_VisualShaderNodeParticleAccelerator_Mode>` **MODE_RADIAL** = ``1``
+
+The particles will be accelerated towards or away from the center.
+
 .. _class_VisualShaderNodeParticleAccelerator_constant_MODE_TANGENTIAL:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Mode<enum_VisualShaderNodeParticleAccelerator_Mode>` **MODE_TANGENTIAL** = ``2``
+
+The particles will be accelerated tangentially to the radius vector from center to their position.
 
 .. _class_VisualShaderNodeParticleAccelerator_constant_MODE_MAX:
 
-enum **Mode**:
+.. rst-class:: classref-enumeration-constant
 
-- **MODE_LINEAR** = **0**
+:ref:`Mode<enum_VisualShaderNodeParticleAccelerator_Mode>` **MODE_MAX** = ``3``
 
-- **MODE_RADIAL** = **1**
+Represents the size of the :ref:`Mode<enum_VisualShaderNodeParticleAccelerator_Mode>` enum.
 
-- **MODE_TANGENTIAL** = **2**
+.. rst-class:: classref-section-separator
 
-- **MODE_MAX** = **3** --- Represents the size of the :ref:`Mode<enum_VisualShaderNodeParticleAccelerator_Mode>` enum.
+----
+
+.. rst-class:: classref-descriptions-group
 
 Property Descriptions
 ---------------------
 
 .. _class_VisualShaderNodeParticleAccelerator_property_mode:
 
-- :ref:`Mode<enum_VisualShaderNodeParticleAccelerator_Mode>` **mode**
+.. rst-class:: classref-property
 
-+-----------+-----------------+
-| *Default* | ``0``           |
-+-----------+-----------------+
-| *Setter*  | set_mode(value) |
-+-----------+-----------------+
-| *Getter*  | get_mode()      |
-+-----------+-----------------+
+:ref:`Mode<enum_VisualShaderNodeParticleAccelerator_Mode>` **mode** = ``0`` :ref:`🔗<class_VisualShaderNodeParticleAccelerator_property_mode>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_mode**\ (\ value\: :ref:`Mode<enum_VisualShaderNodeParticleAccelerator_Mode>`\ )
+- :ref:`Mode<enum_VisualShaderNodeParticleAccelerator_Mode>` **get_mode**\ (\ )
+
+Defines in what manner the particles will be accelerated.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

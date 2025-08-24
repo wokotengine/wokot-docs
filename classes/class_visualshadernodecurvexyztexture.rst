@@ -14,36 +14,53 @@ VisualShaderNodeCurveXYZTexture
 
 Performs a :ref:`CurveXYZTexture<class_CurveXYZTexture>` lookup within the visual shader graph.
 
+.. rst-class:: classref-introduction-group
+
 Description
 -----------
 
 Comes with a built-in editor for texture's curves.
 
+.. rst-class:: classref-reftable-group
+
 Properties
 ----------
 
-+-----------------------------------------------+------------------------------------------------------------------------+
-| :ref:`CurveXYZTexture<class_CurveXYZTexture>` | :ref:`texture<class_VisualShaderNodeCurveXYZTexture_property_texture>` |
-+-----------------------------------------------+------------------------------------------------------------------------+
+.. table::
+   :widths: auto
+
+   +-----------------------------------------------+------------------------------------------------------------------------+
+   | :ref:`CurveXYZTexture<class_CurveXYZTexture>` | :ref:`texture<class_VisualShaderNodeCurveXYZTexture_property_texture>` |
+   +-----------------------------------------------+------------------------------------------------------------------------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Property Descriptions
 ---------------------
 
 .. _class_VisualShaderNodeCurveXYZTexture_property_texture:
 
-- :ref:`CurveXYZTexture<class_CurveXYZTexture>` **texture**
+.. rst-class:: classref-property
 
-+----------+--------------------+
-| *Setter* | set_texture(value) |
-+----------+--------------------+
-| *Getter* | get_texture()      |
-+----------+--------------------+
+:ref:`CurveXYZTexture<class_CurveXYZTexture>` **texture** :ref:`🔗<class_VisualShaderNodeCurveXYZTexture_property_texture>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_texture**\ (\ value\: :ref:`CurveXYZTexture<class_CurveXYZTexture>`\ )
+- :ref:`CurveXYZTexture<class_CurveXYZTexture>` **get_texture**\ (\ )
 
 The source texture.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

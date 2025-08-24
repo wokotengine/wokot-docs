@@ -14,65 +14,108 @@ VisualShaderNodeIntFunc
 
 A scalar integer function to be used within the visual shader graph.
 
+.. rst-class:: classref-introduction-group
+
 Description
 -----------
 
 Accept an integer scalar (``x``) to the input port and transform it according to :ref:`function<class_VisualShaderNodeIntFunc_property_function>`.
 
+.. rst-class:: classref-reftable-group
+
 Properties
 ----------
 
-+--------------------------------------------------------+------------------------------------------------------------------+-------+
-| :ref:`Function<enum_VisualShaderNodeIntFunc_Function>` | :ref:`function<class_VisualShaderNodeIntFunc_property_function>` | ``2`` |
-+--------------------------------------------------------+------------------------------------------------------------------+-------+
+.. table::
+   :widths: auto
+
+   +--------------------------------------------------------+------------------------------------------------------------------+-------+
+   | :ref:`Function<enum_VisualShaderNodeIntFunc_Function>` | :ref:`function<class_VisualShaderNodeIntFunc_property_function>` | ``2`` |
+   +--------------------------------------------------------+------------------------------------------------------------------+-------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Enumerations
 ------------
 
 .. _enum_VisualShaderNodeIntFunc_Function:
 
+.. rst-class:: classref-enumeration
+
+enum **Function**: :ref:`🔗<enum_VisualShaderNodeIntFunc_Function>`
+
 .. _class_VisualShaderNodeIntFunc_constant_FUNC_ABS:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Function<enum_VisualShaderNodeIntFunc_Function>` **FUNC_ABS** = ``0``
+
+Returns the absolute value of the parameter. Translates to ``abs(x)`` in the Godot Shader Language.
 
 .. _class_VisualShaderNodeIntFunc_constant_FUNC_NEGATE:
 
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Function<enum_VisualShaderNodeIntFunc_Function>` **FUNC_NEGATE** = ``1``
+
+Negates the ``x`` using ``-(x)``.
+
 .. _class_VisualShaderNodeIntFunc_constant_FUNC_SIGN:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Function<enum_VisualShaderNodeIntFunc_Function>` **FUNC_SIGN** = ``2``
+
+Extracts the sign of the parameter. Translates to ``sign(x)`` in the Godot Shader Language.
 
 .. _class_VisualShaderNodeIntFunc_constant_FUNC_BITWISE_NOT:
 
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Function<enum_VisualShaderNodeIntFunc_Function>` **FUNC_BITWISE_NOT** = ``3``
+
+Returns the result of bitwise ``NOT`` operation on the integer. Translates to ``~a`` in the Godot Shader Language.
+
 .. _class_VisualShaderNodeIntFunc_constant_FUNC_MAX:
 
-enum **Function**:
+.. rst-class:: classref-enumeration-constant
 
-- **FUNC_ABS** = **0** --- Returns the absolute value of the parameter. Translates to ``abs(x)`` in the Godot Shader Language.
+:ref:`Function<enum_VisualShaderNodeIntFunc_Function>` **FUNC_MAX** = ``4``
 
-- **FUNC_NEGATE** = **1** --- Negates the ``x`` using ``-(x)``.
+Represents the size of the :ref:`Function<enum_VisualShaderNodeIntFunc_Function>` enum.
 
-- **FUNC_SIGN** = **2** --- Extracts the sign of the parameter. Translates to ``sign(x)`` in the Godot Shader Language.
+.. rst-class:: classref-section-separator
 
-- **FUNC_BITWISE_NOT** = **3** --- Returns the result of bitwise ``NOT`` operation on the integer. Translates to ``~a`` in the Godot Shader Language.
+----
 
-- **FUNC_MAX** = **4** --- Represents the size of the :ref:`Function<enum_VisualShaderNodeIntFunc_Function>` enum.
+.. rst-class:: classref-descriptions-group
 
 Property Descriptions
 ---------------------
 
 .. _class_VisualShaderNodeIntFunc_property_function:
 
-- :ref:`Function<enum_VisualShaderNodeIntFunc_Function>` **function**
+.. rst-class:: classref-property
 
-+-----------+---------------------+
-| *Default* | ``2``               |
-+-----------+---------------------+
-| *Setter*  | set_function(value) |
-+-----------+---------------------+
-| *Getter*  | get_function()      |
-+-----------+---------------------+
+:ref:`Function<enum_VisualShaderNodeIntFunc_Function>` **function** = ``2`` :ref:`🔗<class_VisualShaderNodeIntFunc_property_function>`
 
-A function to be applied to the scalar. See :ref:`Function<enum_VisualShaderNodeIntFunc_Function>` for options.
+.. rst-class:: classref-property-setget
+
+- |void| **set_function**\ (\ value\: :ref:`Function<enum_VisualShaderNodeIntFunc_Function>`\ )
+- :ref:`Function<enum_VisualShaderNodeIntFunc_Function>` **get_function**\ (\ )
+
+A function to be applied to the scalar.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

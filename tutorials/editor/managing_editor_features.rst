@@ -1,3 +1,5 @@
+:article_outdated: True
+
 .. _doc_managing_editor_features:
 
 Managing editor features
@@ -9,7 +11,7 @@ Introduction
 In certain situations, it may be desirable to limit what features can be used
 in the Godot editor. For example, a UI designer on a team who doesn't need to
 see 3D features, or an educator slowly introducing features to students. Godot
-has a built in system called "feature profiles" to do this.
+has a built-in system called "feature profiles" to do this.
 
 With feature profiles, major features and nodes can be hidden from the editor.
 This only hides parts of the interface and does not actually remove support for
@@ -25,7 +27,7 @@ will open the **Manage Editor Feature Profiles** window. By default there
 will be no profile. Click on **Create Profile** and give it a name. You will
 then see a list of all the features in the Godot editor.
 
-..img:: img/configure_profile.png
+.. image:: img/configure_profile.png
 
 The first section allows major editor features to be removed, such as the 3D
 editor or scripting editor. Below the main features is every class and node in
@@ -33,7 +35,7 @@ Godot, which can be disabled as well. Click on a node and all of its properties
 and options will be listed in the **Extra Items** box, these can all be
 individually disabled.
 
-..img:: img/node_features.png
+.. image:: img/node_features.png
 
 Sharing a profile
 -----------------

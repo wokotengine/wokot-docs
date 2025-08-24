@@ -14,70 +14,95 @@ VisualShaderNodeColorOp
 
 A :ref:`Color<class_Color>` operator to be used within the visual shader graph.
 
+.. rst-class:: classref-introduction-group
+
 Description
 -----------
 
 Applies :ref:`operator<class_VisualShaderNodeColorOp_property_operator>` to two color inputs.
 
+.. rst-class:: classref-reftable-group
+
 Properties
 ----------
 
-+--------------------------------------------------------+------------------------------------------------------------------+-------+
-| :ref:`Operator<enum_VisualShaderNodeColorOp_Operator>` | :ref:`operator<class_VisualShaderNodeColorOp_property_operator>` | ``0`` |
-+--------------------------------------------------------+------------------------------------------------------------------+-------+
+.. table::
+   :widths: auto
+
+   +--------------------------------------------------------+------------------------------------------------------------------+-------+
+   | :ref:`Operator<enum_VisualShaderNodeColorOp_Operator>` | :ref:`operator<class_VisualShaderNodeColorOp_property_operator>` | ``0`` |
+   +--------------------------------------------------------+------------------------------------------------------------------+-------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Enumerations
 ------------
 
 .. _enum_VisualShaderNodeColorOp_Operator:
 
+.. rst-class:: classref-enumeration
+
+enum **Operator**: :ref:`🔗<enum_VisualShaderNodeColorOp_Operator>`
+
 .. _class_VisualShaderNodeColorOp_constant_OP_SCREEN:
 
-.. _class_VisualShaderNodeColorOp_constant_OP_DIFFERENCE:
+.. rst-class:: classref-enumeration-constant
 
-.. _class_VisualShaderNodeColorOp_constant_OP_DARKEN:
+:ref:`Operator<enum_VisualShaderNodeColorOp_Operator>` **OP_SCREEN** = ``0``
 
-.. _class_VisualShaderNodeColorOp_constant_OP_LIGHTEN:
-
-.. _class_VisualShaderNodeColorOp_constant_OP_OVERLAY:
-
-.. _class_VisualShaderNodeColorOp_constant_OP_DODGE:
-
-.. _class_VisualShaderNodeColorOp_constant_OP_BURN:
-
-.. _class_VisualShaderNodeColorOp_constant_OP_SOFT_LIGHT:
-
-.. _class_VisualShaderNodeColorOp_constant_OP_HARD_LIGHT:
-
-.. _class_VisualShaderNodeColorOp_constant_OP_MAX:
-
-enum **Operator**:
-
-- **OP_SCREEN** = **0** --- Produce a screen effect with the following formula:
+Produce a screen effect with the following formula:
 
 ::
 
     result = vec3(1.0) - (vec3(1.0) - a) * (vec3(1.0) - b);
 
-- **OP_DIFFERENCE** = **1** --- Produce a difference effect with the following formula:
+.. _class_VisualShaderNodeColorOp_constant_OP_DIFFERENCE:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Operator<enum_VisualShaderNodeColorOp_Operator>` **OP_DIFFERENCE** = ``1``
+
+Produce a difference effect with the following formula:
 
 ::
 
     result = abs(a - b);
 
-- **OP_DARKEN** = **2** --- Produce a darken effect with the following formula:
+.. _class_VisualShaderNodeColorOp_constant_OP_DARKEN:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Operator<enum_VisualShaderNodeColorOp_Operator>` **OP_DARKEN** = ``2``
+
+Produce a darken effect with the following formula:
 
 ::
 
     result = min(a, b);
 
-- **OP_LIGHTEN** = **3** --- Produce a lighten effect with the following formula:
+.. _class_VisualShaderNodeColorOp_constant_OP_LIGHTEN:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Operator<enum_VisualShaderNodeColorOp_Operator>` **OP_LIGHTEN** = ``3``
+
+Produce a lighten effect with the following formula:
 
 ::
 
     result = max(a, b);
 
-- **OP_OVERLAY** = **4** --- Produce an overlay effect with the following formula:
+.. _class_VisualShaderNodeColorOp_constant_OP_OVERLAY:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Operator<enum_VisualShaderNodeColorOp_Operator>` **OP_OVERLAY** = ``4``
+
+Produce an overlay effect with the following formula:
 
 ::
 
@@ -91,19 +116,37 @@ enum **Operator**:
         }
     }
 
-- **OP_DODGE** = **5** --- Produce a dodge effect with the following formula:
+.. _class_VisualShaderNodeColorOp_constant_OP_DODGE:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Operator<enum_VisualShaderNodeColorOp_Operator>` **OP_DODGE** = ``5``
+
+Produce a dodge effect with the following formula:
 
 ::
 
     result = a / (vec3(1.0) - b);
 
-- **OP_BURN** = **6** --- Produce a burn effect with the following formula:
+.. _class_VisualShaderNodeColorOp_constant_OP_BURN:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Operator<enum_VisualShaderNodeColorOp_Operator>` **OP_BURN** = ``6``
+
+Produce a burn effect with the following formula:
 
 ::
 
     result = vec3(1.0) - (vec3(1.0) - a) / b;
 
-- **OP_SOFT_LIGHT** = **7** --- Produce a soft light effect with the following formula:
+.. _class_VisualShaderNodeColorOp_constant_OP_SOFT_LIGHT:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Operator<enum_VisualShaderNodeColorOp_Operator>` **OP_SOFT_LIGHT** = ``7``
+
+Produce a soft light effect with the following formula:
 
 ::
 
@@ -117,7 +160,13 @@ enum **Operator**:
         }
     }
 
-- **OP_HARD_LIGHT** = **8** --- Produce a hard light effect with the following formula:
+.. _class_VisualShaderNodeColorOp_constant_OP_HARD_LIGHT:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Operator<enum_VisualShaderNodeColorOp_Operator>` **OP_HARD_LIGHT** = ``8``
+
+Produce a hard light effect with the following formula:
 
 ::
 
@@ -131,28 +180,42 @@ enum **Operator**:
         }
     }
 
-- **OP_MAX** = **9** --- Represents the size of the :ref:`Operator<enum_VisualShaderNodeColorOp_Operator>` enum.
+.. _class_VisualShaderNodeColorOp_constant_OP_MAX:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Operator<enum_VisualShaderNodeColorOp_Operator>` **OP_MAX** = ``9``
+
+Represents the size of the :ref:`Operator<enum_VisualShaderNodeColorOp_Operator>` enum.
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Property Descriptions
 ---------------------
 
 .. _class_VisualShaderNodeColorOp_property_operator:
 
-- :ref:`Operator<enum_VisualShaderNodeColorOp_Operator>` **operator**
+.. rst-class:: classref-property
 
-+-----------+---------------------+
-| *Default* | ``0``               |
-+-----------+---------------------+
-| *Setter*  | set_operator(value) |
-+-----------+---------------------+
-| *Getter*  | get_operator()      |
-+-----------+---------------------+
+:ref:`Operator<enum_VisualShaderNodeColorOp_Operator>` **operator** = ``0`` :ref:`🔗<class_VisualShaderNodeColorOp_property_operator>`
 
-An operator to be applied to the inputs. See :ref:`Operator<enum_VisualShaderNodeColorOp_Operator>` for options.
+.. rst-class:: classref-property-setget
+
+- |void| **set_operator**\ (\ value\: :ref:`Operator<enum_VisualShaderNodeColorOp_Operator>`\ )
+- :ref:`Operator<enum_VisualShaderNodeColorOp_Operator>` **get_operator**\ (\ )
+
+An operator to be applied to the inputs.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

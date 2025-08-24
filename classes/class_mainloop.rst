@@ -16,14 +16,16 @@ MainLoop
 
 Abstract base class for the game's main loop.
 
+.. rst-class:: classref-introduction-group
+
 Description
 -----------
 
-``MainLoop`` is the abstract base class for a Godot project's game loop. It is inherited by :ref:`SceneTree<class_SceneTree>`, which is the default game loop implementation used in Godot projects, though it is also possible to write and use one's own ``MainLoop`` subclass instead of the scene tree.
+**MainLoop** is the abstract base class for a Godot project's game loop. It is inherited by :ref:`SceneTree<class_SceneTree>`, which is the default game loop implementation used in Godot projects, though it is also possible to write and use one's own **MainLoop** subclass instead of the scene tree.
 
-Upon the application start, a ``MainLoop`` implementation must be provided to the OS; otherwise, the application will exit. This happens automatically (and a :ref:`SceneTree<class_SceneTree>` is created) unless a ``MainLoop`` :ref:`Script<class_Script>` is provided from the command line (with e.g. ``godot -s my_loop.gd`` or the "Main Loop Type" project setting is overwritten.
+Upon the application start, a **MainLoop** implementation must be provided to the OS; otherwise, the application will exit. This happens automatically (and a :ref:`SceneTree<class_SceneTree>` is created) unless a **MainLoop** :ref:`Script<class_Script>` is provided from the command line (with e.g. ``godot -s my_loop.gd``) or the :ref:`ProjectSettings.application/run/main_loop_type<class_ProjectSettings_property_application/run/main_loop_type>` project setting is overwritten.
 
-Here is an example script implementing a simple ``MainLoop``:
+Here is an example script implementing a simple **MainLoop**:
 
 
 .. tabs::
@@ -32,18 +34,18 @@ Here is an example script implementing a simple ``MainLoop``:
 
     class_name CustomMainLoop
     extends MainLoop
-    
+
     var time_elapsed = 0
-    
+
     func _initialize():
         print("Initialized:")
         print("  Starting time: %s" % str(time_elapsed))
-    
+
     func _process(delta):
         time_elapsed += delta
         # Return true to end the main loop.
         return Input.get_mouse_button_mask() != 0 || Input.is_key_pressed(KEY_ESCAPE)
-    
+
     func _finalize():
         print("Finalized:")
         print("  End time: %s" % str(time_elapsed))
@@ -51,155 +53,249 @@ Here is an example script implementing a simple ``MainLoop``:
  .. code-tab:: csharp
 
     using Godot;
-    using System;
-    
-    public class CustomMainLoop : MainLoop
+
+    [GlobalClass]
+    public partial class CustomMainLoop : MainLoop
     {
-        public float TimeElapsed = 0;
-    
+        private double _timeElapsed = 0;
+
         public override void _Initialize()
         {
             GD.Print("Initialized:");
-            GD.Print($"  Starting Time: {TimeElapsed}");
+            GD.Print($"  Starting Time: {_timeElapsed}");
         }
-    
-        public override bool _Process(float delta)
+
+        public override bool _Process(double delta)
         {
-            TimeElapsed += delta;
+            _timeElapsed += delta;
             // Return true to end the main loop.
-            return Input.GetMouseButtonMask() != 0 || Input.IsKeyPressed((int)KeyList.Escape);
+            return Input.GetMouseButtonMask() != 0 || Input.IsKeyPressed(Key.Escape);
         }
-    
+
         private void _Finalize()
         {
             GD.Print("Finalized:");
-            GD.Print($"  End Time: {TimeElapsed}");
+            GD.Print($"  End Time: {_timeElapsed}");
         }
     }
 
 
 
+.. rst-class:: classref-reftable-group
+
 Methods
 -------
 
-+-------------------------+-----------------------------------------------------------------------------------------------------------------------+
-| void                    | :ref:`_finalize<class_MainLoop_method__finalize>` **(** **)** |virtual|                                               |
-+-------------------------+-----------------------------------------------------------------------------------------------------------------------+
-| void                    | :ref:`_initialize<class_MainLoop_method__initialize>` **(** **)** |virtual|                                           |
-+-------------------------+-----------------------------------------------------------------------------------------------------------------------+
-| :ref:`bool<class_bool>` | :ref:`_physics_process<class_MainLoop_method__physics_process>` **(** :ref:`float<class_float>` delta **)** |virtual| |
-+-------------------------+-----------------------------------------------------------------------------------------------------------------------+
-| :ref:`bool<class_bool>` | :ref:`_process<class_MainLoop_method__process>` **(** :ref:`float<class_float>` delta **)** |virtual|                 |
-+-------------------------+-----------------------------------------------------------------------------------------------------------------------+
+.. table::
+   :widths: auto
+
+   +-------------------------+----------------------------------------------------------------------------------------------------------------------------+
+   | |void|                  | :ref:`_finalize<class_MainLoop_private_method__finalize>`\ (\ ) |virtual|                                                  |
+   +-------------------------+----------------------------------------------------------------------------------------------------------------------------+
+   | |void|                  | :ref:`_initialize<class_MainLoop_private_method__initialize>`\ (\ ) |virtual|                                              |
+   +-------------------------+----------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>` | :ref:`_physics_process<class_MainLoop_private_method__physics_process>`\ (\ delta\: :ref:`float<class_float>`\ ) |virtual| |
+   +-------------------------+----------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>` | :ref:`_process<class_MainLoop_private_method__process>`\ (\ delta\: :ref:`float<class_float>`\ ) |virtual|                 |
+   +-------------------------+----------------------------------------------------------------------------------------------------------------------------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Signals
 -------
 
 .. _class_MainLoop_signal_on_request_permissions_result:
 
-- **on_request_permissions_result** **(** :ref:`String<class_String>` permission, :ref:`bool<class_bool>` granted **)**
+.. rst-class:: classref-signal
+
+**on_request_permissions_result**\ (\ permission\: :ref:`String<class_String>`, granted\: :ref:`bool<class_bool>`\ ) :ref:`🔗<class_MainLoop_signal_on_request_permissions_result>`
 
 Emitted when a user responds to a permission request.
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Constants
 ---------
 
 .. _class_MainLoop_constant_NOTIFICATION_OS_MEMORY_WARNING:
 
-.. _class_MainLoop_constant_NOTIFICATION_TRANSLATION_CHANGED:
+.. rst-class:: classref-constant
 
-.. _class_MainLoop_constant_NOTIFICATION_WM_ABOUT:
+**NOTIFICATION_OS_MEMORY_WARNING** = ``2009`` :ref:`🔗<class_MainLoop_constant_NOTIFICATION_OS_MEMORY_WARNING>`
 
-.. _class_MainLoop_constant_NOTIFICATION_CRASH:
-
-.. _class_MainLoop_constant_NOTIFICATION_OS_IME_UPDATE:
-
-.. _class_MainLoop_constant_NOTIFICATION_APPLICATION_RESUMED:
-
-.. _class_MainLoop_constant_NOTIFICATION_APPLICATION_PAUSED:
-
-.. _class_MainLoop_constant_NOTIFICATION_APPLICATION_FOCUS_IN:
-
-.. _class_MainLoop_constant_NOTIFICATION_APPLICATION_FOCUS_OUT:
-
-.. _class_MainLoop_constant_NOTIFICATION_TEXT_SERVER_CHANGED:
-
-- **NOTIFICATION_OS_MEMORY_WARNING** = **2009** --- Notification received from the OS when the application is exceeding its allocated memory.
+Notification received from the OS when the application is exceeding its allocated memory.
 
 Specific to the iOS platform.
 
-- **NOTIFICATION_TRANSLATION_CHANGED** = **2010** --- Notification received when translations may have changed. Can be triggered by the user changing the locale. Can be used to respond to language changes, for example to change the UI strings on the fly. Useful when working with the built-in translation support, like :ref:`Object.tr<class_Object_method_tr>`.
+.. _class_MainLoop_constant_NOTIFICATION_TRANSLATION_CHANGED:
 
-- **NOTIFICATION_WM_ABOUT** = **2011** --- Notification received from the OS when a request for "About" information is sent.
+.. rst-class:: classref-constant
+
+**NOTIFICATION_TRANSLATION_CHANGED** = ``2010`` :ref:`🔗<class_MainLoop_constant_NOTIFICATION_TRANSLATION_CHANGED>`
+
+Notification received when translations may have changed. Can be triggered by the user changing the locale. Can be used to respond to language changes, for example to change the UI strings on the fly. Useful when working with the built-in translation support, like :ref:`Object.tr()<class_Object_method_tr>`.
+
+.. _class_MainLoop_constant_NOTIFICATION_WM_ABOUT:
+
+.. rst-class:: classref-constant
+
+**NOTIFICATION_WM_ABOUT** = ``2011`` :ref:`🔗<class_MainLoop_constant_NOTIFICATION_WM_ABOUT>`
+
+Notification received from the OS when a request for "About" information is sent.
 
 Specific to the macOS platform.
 
-- **NOTIFICATION_CRASH** = **2012** --- Notification received from Godot's crash handler when the engine is about to crash.
+.. _class_MainLoop_constant_NOTIFICATION_CRASH:
+
+.. rst-class:: classref-constant
+
+**NOTIFICATION_CRASH** = ``2012`` :ref:`🔗<class_MainLoop_constant_NOTIFICATION_CRASH>`
+
+Notification received from Godot's crash handler when the engine is about to crash.
 
 Implemented on desktop platforms if the crash handler is enabled.
 
-- **NOTIFICATION_OS_IME_UPDATE** = **2013** --- Notification received from the OS when an update of the Input Method Engine occurs (e.g. change of IME cursor position or composition string).
+.. _class_MainLoop_constant_NOTIFICATION_OS_IME_UPDATE:
+
+.. rst-class:: classref-constant
+
+**NOTIFICATION_OS_IME_UPDATE** = ``2013`` :ref:`🔗<class_MainLoop_constant_NOTIFICATION_OS_IME_UPDATE>`
+
+Notification received from the OS when an update of the Input Method Engine occurs (e.g. change of IME cursor position or composition string).
 
 Specific to the macOS platform.
 
-- **NOTIFICATION_APPLICATION_RESUMED** = **2014** --- Notification received from the OS when the application is resumed.
+.. _class_MainLoop_constant_NOTIFICATION_APPLICATION_RESUMED:
 
-Specific to the Android platform.
+.. rst-class:: classref-constant
 
-- **NOTIFICATION_APPLICATION_PAUSED** = **2015** --- Notification received from the OS when the application is paused.
+**NOTIFICATION_APPLICATION_RESUMED** = ``2014`` :ref:`🔗<class_MainLoop_constant_NOTIFICATION_APPLICATION_RESUMED>`
 
-Specific to the Android platform.
+Notification received from the OS when the application is resumed.
 
-- **NOTIFICATION_APPLICATION_FOCUS_IN** = **2016** --- Notification received from the OS when the application is focused, i.e. when changing the focus from the OS desktop or a thirdparty application to any open window of the Godot instance.
+Specific to the Android and iOS platforms.
 
-Implemented on desktop platforms.
+.. _class_MainLoop_constant_NOTIFICATION_APPLICATION_PAUSED:
 
-- **NOTIFICATION_APPLICATION_FOCUS_OUT** = **2017** --- Notification received from the OS when the application is defocused, i.e. when changing the focus from any open window of the Godot instance to the OS desktop or a thirdparty application.
+.. rst-class:: classref-constant
 
-Implemented on desktop platforms.
+**NOTIFICATION_APPLICATION_PAUSED** = ``2015`` :ref:`🔗<class_MainLoop_constant_NOTIFICATION_APPLICATION_PAUSED>`
 
-- **NOTIFICATION_TEXT_SERVER_CHANGED** = **2018** --- Notification received when text server is changed.
+Notification received from the OS when the application is paused.
+
+Specific to the Android and iOS platforms.
+
+\ **Note:** On iOS, you only have approximately 5 seconds to finish a task started by this signal. If you go over this allotment, iOS will kill the app instead of pausing it.
+
+.. _class_MainLoop_constant_NOTIFICATION_APPLICATION_FOCUS_IN:
+
+.. rst-class:: classref-constant
+
+**NOTIFICATION_APPLICATION_FOCUS_IN** = ``2016`` :ref:`🔗<class_MainLoop_constant_NOTIFICATION_APPLICATION_FOCUS_IN>`
+
+Notification received from the OS when the application is focused, i.e. when changing the focus from the OS desktop or a thirdparty application to any open window of the Godot instance.
+
+Implemented on desktop and mobile platforms.
+
+.. _class_MainLoop_constant_NOTIFICATION_APPLICATION_FOCUS_OUT:
+
+.. rst-class:: classref-constant
+
+**NOTIFICATION_APPLICATION_FOCUS_OUT** = ``2017`` :ref:`🔗<class_MainLoop_constant_NOTIFICATION_APPLICATION_FOCUS_OUT>`
+
+Notification received from the OS when the application is defocused, i.e. when changing the focus from any open window of the Godot instance to the OS desktop or a thirdparty application.
+
+Implemented on desktop and mobile platforms.
+
+.. _class_MainLoop_constant_NOTIFICATION_TEXT_SERVER_CHANGED:
+
+.. rst-class:: classref-constant
+
+**NOTIFICATION_TEXT_SERVER_CHANGED** = ``2018`` :ref:`🔗<class_MainLoop_constant_NOTIFICATION_TEXT_SERVER_CHANGED>`
+
+Notification received when text server is changed.
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Method Descriptions
 -------------------
 
-.. _class_MainLoop_method__finalize:
+.. _class_MainLoop_private_method__finalize:
 
-- void **_finalize** **(** **)** |virtual|
+.. rst-class:: classref-method
+
+|void| **_finalize**\ (\ ) |virtual| :ref:`🔗<class_MainLoop_private_method__finalize>`
 
 Called before the program exits.
 
+.. rst-class:: classref-item-separator
+
 ----
 
-.. _class_MainLoop_method__initialize:
+.. _class_MainLoop_private_method__initialize:
 
-- void **_initialize** **(** **)** |virtual|
+.. rst-class:: classref-method
+
+|void| **_initialize**\ (\ ) |virtual| :ref:`🔗<class_MainLoop_private_method__initialize>`
 
 Called once during initialization.
 
-----
-
-.. _class_MainLoop_method__physics_process:
-
-- :ref:`bool<class_bool>` **_physics_process** **(** :ref:`float<class_float>` delta **)** |virtual|
-
-Called each physics frame with the time since the last physics frame as argument (``delta``, in seconds). Equivalent to :ref:`Node._physics_process<class_Node_method__physics_process>`.
-
-If implemented, the method must return a boolean value. ``true`` ends the main loop, while ``false`` lets it proceed to the next frame.
+.. rst-class:: classref-item-separator
 
 ----
 
-.. _class_MainLoop_method__process:
+.. _class_MainLoop_private_method__physics_process:
 
-- :ref:`bool<class_bool>` **_process** **(** :ref:`float<class_float>` delta **)** |virtual|
+.. rst-class:: classref-method
 
-Called each process (idle) frame with the time since the last process frame as argument (in seconds). Equivalent to :ref:`Node._process<class_Node_method__process>`.
+:ref:`bool<class_bool>` **_physics_process**\ (\ delta\: :ref:`float<class_float>`\ ) |virtual| :ref:`🔗<class_MainLoop_private_method__physics_process>`
+
+Called each physics tick. ``delta`` is the logical time between physics ticks in seconds and is equal to :ref:`Engine.time_scale<class_Engine_property_time_scale>` / :ref:`Engine.physics_ticks_per_second<class_Engine_property_physics_ticks_per_second>`. Equivalent to :ref:`Node._physics_process()<class_Node_private_method__physics_process>`.
+
+If implemented, the method must return a boolean value. ``true`` ends the main loop, while ``false`` lets it proceed to the next step.
+
+\ **Note:** :ref:`_physics_process()<class_MainLoop_private_method__physics_process>` may be called up to :ref:`Engine.max_physics_steps_per_frame<class_Engine_property_max_physics_steps_per_frame>` times per (idle) frame. This step limit may be reached when the engine is suffering performance issues.
+
+\ **Note:** Accumulated ``delta`` may diverge from real world seconds.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_MainLoop_private_method__process:
+
+.. rst-class:: classref-method
+
+:ref:`bool<class_bool>` **_process**\ (\ delta\: :ref:`float<class_float>`\ ) |virtual| :ref:`🔗<class_MainLoop_private_method__process>`
+
+Called on each idle frame, prior to rendering, and after physics ticks have been processed. ``delta`` is the time between frames in seconds. Equivalent to :ref:`Node._process()<class_Node_private_method__process>`.
 
 If implemented, the method must return a boolean value. ``true`` ends the main loop, while ``false`` lets it proceed to the next frame.
+
+\ **Note:** When the engine is struggling and the frame rate is lowered, ``delta`` will increase. When ``delta`` is increased, it's capped at a maximum of :ref:`Engine.time_scale<class_Engine_property_time_scale>` \* :ref:`Engine.max_physics_steps_per_frame<class_Engine_property_max_physics_steps_per_frame>` / :ref:`Engine.physics_ticks_per_second<class_Engine_property_physics_ticks_per_second>`. As a result, accumulated ``delta`` may not represent real world time.
+
+\ **Note:** When ``--fixed-fps`` is enabled or the engine is running in Movie Maker mode (see :ref:`MovieWriter<class_MovieWriter>`), process ``delta`` will always be the same for every frame, regardless of how much time the frame took to render.
+
+\ **Note:** Frame delta may be post-processed by :ref:`OS.delta_smoothing<class_OS_property_delta_smoothing>` if this is enabled for the project.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

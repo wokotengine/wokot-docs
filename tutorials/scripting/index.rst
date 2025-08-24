@@ -1,3 +1,5 @@
+:allow_comments: False
+
 Scripting
 =========
 
@@ -8,11 +10,10 @@ Here, you will find information that is not already covered in more specific
 sections. For instance, to learn about inputs, we recommend you to read
 :ref:`Inputs <toc-learn-features-inputs>`.
 
-Programming languages
----------------------
+.. rubric:: Programming languages
+   :heading-level: 2
 
-The sections below each focus on a given programming language or, in GDNative's
-case, an interface that works with multiple languages.
+The sections below each focus on a given programming language.
 
 .. toctree::
    :maxdepth: 1
@@ -20,7 +21,11 @@ case, an interface that works with multiple languages.
 
    gdscript/index
    c_sharp/index
-   gdnative/index
+   cpp/index
+   other_languages
+   gdextension/index
+
+.. _doc_scripting_core_features:
 
 Core features
 -------------

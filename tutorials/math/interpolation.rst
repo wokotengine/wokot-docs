@@ -3,7 +3,10 @@
 Interpolation
 =============
 
-Interpolation is a very basic operation in graphics programming. It's good to become familiar with it in order to expand your horizons as a graphics developer.
+Interpolation is a common operation in graphics programming, which is used to
+blend or transition between two values. Interpolation can also be used to smooth
+movement, rotation, etc. It's good to become familiar with it in order to expand
+your horizons as a game developer.
 
 The basic idea is that you want to transition from A to B. A value ``t``, represents the states in-between.
 
@@ -49,12 +52,12 @@ Here is example pseudo-code for going from point A to B using interpolation:
 
     private float _t = 0.0f;
 
-    public override void _PhysicsProcess(float delta)
+    public override void _PhysicsProcess(double delta)
     {
-        _t += delta * 0.4f;
+        _t += (float)delta * 0.4f;
 
-        Position2D a = GetNode<Position2D>("A");
-        Position2D b = GetNode<Position2D>("B");
+        Marker2D a = GetNode<Marker2D>("A");
+        Marker2D b = GetNode<Marker2D>("B");
         Sprite2D sprite = GetNode<Sprite2D>("Sprite2D");
 
         sprite.Position = a.Position.Lerp(b.Position, _t);
@@ -68,7 +71,7 @@ Transform interpolation
 -----------------------
 
 It is also possible to interpolate whole transforms (make sure they have either uniform scale or, at least, the same non-uniform scale).
-For this, the function :ref:`Transform.interpolate_with() <class_Transform_method_interpolate_with>` can be used.
+For this, the function :ref:`Transform3D.interpolate_with() <class_Transform3D_method_interpolate_with>` can be used.
 
 Here is an example of transforming a monkey from Position1 to Position2:
 
@@ -90,13 +93,13 @@ Using the following pseudocode:
 
     private float _t = 0.0f;
 
-    public override void _PhysicsProcess(float delta)
+    public override void _PhysicsProcess(double delta)
     {
-        _t += delta;
+        _t += (float)delta;
 
-        Position3D p1 = GetNode<Position3D>("Position1");
-        Position3D p2 = GetNode<Position3D>("Position2");
-        CSGMesh monkey = GetNode<CSGMesh>("Monkey");
+        Marker3D p1 = GetNode<Marker3D>("Position1");
+        Marker3D p2 = GetNode<Marker3D>("Position2");
+        CSGMesh3D monkey = GetNode<CSGMesh3D>("Monkey");
 
         monkey.Transform = p1.Transform.InterpolateWith(p2.Transform, _t);
     }
@@ -109,7 +112,11 @@ And again, it will produce the following motion:
 Smoothing motion
 ----------------
 
-Interpolation can be used to smooth movement, rotation, etc. Here is an example of a circle following the mouse using smoothed motion:
+Interpolation can be used to smoothly follow a moving target value, such as a
+position or a rotation. Each frame, ``lerp()`` moves the current value towards
+the target value by a fixed percentage of the remaining difference between the values.
+The current value will smoothly move towards the target, slowing down as it gets
+closer. Here is an example of a circle following the mouse using interpolation smoothing:
 
 .. tabs::
  .. code-tab:: gdscript GDScript
@@ -125,17 +132,55 @@ Interpolation can be used to smooth movement, rotation, etc. Here is an example 
 
     private const float FollowSpeed = 4.0f;
 
-    public override void _PhysicsProcess(float delta)
+    public override void _PhysicsProcess(double delta)
     {
         Vector2 mousePos = GetLocalMousePosition();
 
         Sprite2D sprite = GetNode<Sprite2D>("Sprite2D");
 
-        sprite.Position = sprite.Position.Lerp(mousePos, delta * FollowSpeed);
+        sprite.Position = sprite.Position.Lerp(mousePos, (float)delta * FollowSpeed);
     }
 
 Here is how it looks:
 
 .. image:: img/interpolation_follow.gif
 
-This useful for smoothing camera movement, allies following you (ensuring they stay within a certain range), and many other common game patterns.
+This is useful for smoothing camera movement, for allies following the player
+(ensuring they stay within a certain range), and for many other common game patterns.
+
+.. note::
+    Despite using ``delta``, the formula used above is framerate-dependent, because
+    the ``weight`` parameter of ``lerp()`` represents a *percentage* of the remaining
+    difference in values, not an *absolute amount to change*. In ``_physics_process()``,
+    this is usually fine because physics is expected to maintain a constant framerate,
+    and therefore ``delta`` is expected to remain constant.
+
+    For a framerate-independent version of interpolation smoothing that can also
+    be used in ``process()``, use the following formula instead:
+
+    .. tabs::
+        .. code-tab:: gdscript GDScript
+
+            const FOLLOW_SPEED = 4.0
+
+            func _process(delta):
+                var mouse_pos = get_local_mouse_position()
+                var weight = 1 - exp(-FOLLOW_SPEED * delta)
+                $Sprite2D.position = $Sprite2D.position.lerp(mouse_pos, weight)
+
+        .. code-tab:: csharp
+
+            private const float FollowSpeed = 4.0f;
+
+            public override void _Process(double delta)
+            {
+                Vector2 mousePos = GetLocalMousePosition();
+
+                Sprite2D sprite = GetNode<Sprite2D>("Sprite2D");
+                float weight = 1f - Mathf.Exp(-FollowSpeed * (float)delta);
+                sprite.Position = sprite.Position.Lerp(mousePos, weight);
+            }
+    
+    Deriving this formula is beyond the scope of this page. For an explanation, 
+    see `Improved Lerp Smoothing <https://www.gamedeveloper.com/programming/improved-lerp-smoothing->`__
+    or watch `Lerp smoothing is broken <https://www.youtube.com/watch?v=LSNQuFEDOyQ>`__.

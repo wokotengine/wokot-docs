@@ -9,8 +9,19 @@ Exporting for macOS
     If you're looking to compile editor or export template binaries from source instead,
     read :ref:`doc_compiling_for_macos`.
 
-macOS apps are exported as an ``.app`` bundle, a folder with a specific structure which stores the executable, libraries and all the project files.
-This bundle can be exported as is, packed in a ZIP archive or DMG disk image (only supported when exporting from a computer running macOS).
+macOS apps exported with the official export templates are exported as a single "Universal 2" binary ``.app`` bundle, a folder with a specific structure which stores the executable, libraries and all the project files.
+This bundle can be exported as is, packed in a ZIP archive, or packed in a DMG disk image (only supported when exporting from macOS).
+`Universal binaries for macOS support both Intel x86_64 and ARM64 (Apple Silicon) architectures <https://developer.apple.com/documentation/apple-silicon/building-a-universal-macos-binary>`__.
+
+.. warning::
+    Due to file system limitations, ``.app`` bundles exported from Windows lack the 
+    ``executable`` flag and won't run on macOS. Projects exported as ``.zip`` are not 
+    affected by this issue. To run ``.app`` bundles exported from Windows on macOS,
+    transfer the ``.app`` to a device running macOS or Linux and use the
+    ``chmod +x {executable_name}`` terminal command to add the ``executable`` permission.
+    The main executable located in the ``Contents/MacOS/`` subfolder, as well
+    as optional helper executables in the ``Contents/Helpers/`` subfolder, should have
+    the ``executable`` permission for the ``.app`` bundle to be valid.
 
 Requirements
 ------------
@@ -56,7 +67,7 @@ After notarization is completed, `staple the ticket <https://developer.apple.com
 If you have an Apple Developer ID Certificate and exporting from Linux or Windows
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Install `PyOxidizer rcodesign <https://github.com/indygreg/PyOxidizer/tree/main/apple-codesign>`__, and configure the path to ``rcodesign`` in the ``Editor Settings > Export > macOS > rcodesign``.
+Install `PyOxidizer rcodesign <https://github.com/indygreg/apple-platform-rs/tree/main/apple-codesign>`__, and configure the path to ``rcodesign`` in the ``Editor Settings > Export > macOS > rcodesign``.
 
 To sign exported app
 ^^^^^^^^^^^^^^^^^^^^
@@ -81,7 +92,8 @@ If you do not have an Apple Developer ID Certificate
 - Select ``Built-in (ad-hoc only)`` in the ``Code Signing > Codesign`` option.
 - Select ``Disabled`` in the ``Notarization > Notarization`` option.
 
-In this case Godot will use a ad-hoc signature, which will make running an exported app easier for the end users, see the :ref:`Running Godot apps on macOS <doc_running_on_macos>` page for more information.
+In this case Godot will use an ad-hoc signature, which will make running an exported app easier for the end users,
+see the :ref:`Running Godot apps on macOS <doc_running_on_macos>` page for more information.
 
 Signing Options
 ~~~~~~~~~~~~~~~
@@ -146,9 +158,9 @@ See `Hardened Runtime <https://developer.apple.com/documentation/security/harden
 +---------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Allow Unsigned Executable Memory [4]_ | Allows creating writable and executable memory without JIT restrictions. If you are using add-ons with dynamic or self-modifying native code, enable them according to the add-on documentation. |
 +---------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Allow DYLD Environment Variables [4]_ | Allows app to uss dynamic linker environment variables to inject code.  f you are using add-ons with dynamic or self-modifying native code, enable them according to the add-on documentation.   |
+| Allow DYLD Environment Variables [4]_ | Allows app to uss dynamic linker environment variables to inject code. If you are using add-ons with dynamic or self-modifying native code, enable them according to the add-on documentation.   |
 +---------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
-| Disable Library Validation            | Allows app to load arbitrary libraries and frameworks. Enabled it if you are using GDNative add-ons and ad-hoc signature, or want to support user-provided external add-ons.                     |
+| Disable Library Validation            | Allows app to load arbitrary libraries and frameworks. Enable it if you are using GDExtension add-ons or ad-hoc signing, or want to support user-provided external add-ons.                      |
 +---------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
 | Audio Input                           | Enable if you need to use the microphone or other audio input sources, if it's enabled you should also provide usage message in the `privacy/microphone_usage_description` option.               |
 +---------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -213,3 +225,40 @@ See `App Sandbox <https://developer.apple.com/documentation/security/app_sandbox
 .. note::
 
     You can override default entitlements by selecting custom entitlements file, in this case all other entitlement are ignored.
+
+Environment variables
+---------------------
+
+You can use the following environment variables to set export options outside of
+the editor. During the export process, these override the values that you set in
+the export menu.
+
+.. list-table:: macOS export environment variables
+   :header-rows: 1
+
+   * - Export option
+     - Environment variable
+   * - Encryption / Encryption Key
+     - ``GODOT_SCRIPT_ENCRYPTION_KEY``
+   * - Options / Codesign / Certificate File
+     - ``GODOT_MACOS_CODESIGN_CERTIFICATE_FILE``
+   * - Options / Codesign / Certificate Password
+     - ``GODOT_MACOS_CODESIGN_CERTIFICATE_PASSWORD``
+   * - Options / Codesign / Provisioning Profile
+     - ``GODOT_MACOS_CODESIGN_PROVISIONING_PROFILE``
+   * - Options / Notarization / API UUID
+     - ``GODOT_MACOS_NOTARIZATION_API_UUID``
+   * - Options / Notarization / API Key
+     - ``GODOT_MACOS_NOTARIZATION_API_KEY``
+   * - Options / Notarization / API Key ID
+     - ``GODOT_MACOS_NOTARIZATION_API_KEY_ID``
+   * - Options / Notarization / Apple ID Name
+     - ``GODOT_MACOS_NOTARIZATION_APPLE_ID_NAME``
+   * - Options / Notarization / Apple ID Password
+     - ``GODOT_MACOS_NOTARIZATION_APPLE_ID_PASSWORD``
+
+Export options
+--------------
+
+You can find a full list of export options available in the
+:ref:`class_EditorExportPlatformMacOS` class reference.

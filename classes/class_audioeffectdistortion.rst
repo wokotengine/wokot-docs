@@ -14,146 +14,199 @@ AudioEffectDistortion
 
 Adds a distortion audio effect to an Audio bus.
 
-Modify the sound to make it distorted.
+Modifies the sound to make it distorted.
+
+.. rst-class:: classref-introduction-group
 
 Description
 -----------
 
 Different types are available: clip, tan, lo-fi (bit crushing), overdrive, or waveshape.
 
-By distorting the waveform the frequency content change, which will often make the sound "crunchy" or "abrasive". For games, it can simulate sound coming from some saturated device or speaker very efficiently.
+By distorting the waveform the frequency content changes, which will often make the sound "crunchy" or "abrasive". For games, it can simulate sound coming from some saturated device or speaker very efficiently.
+
+.. rst-class:: classref-introduction-group
 
 Tutorials
 ---------
 
 - :doc:`Audio buses <../tutorials/audio/audio_buses>`
 
+.. rst-class:: classref-reftable-group
+
 Properties
 ----------
 
-+----------------------------------------------+--------------------------------------------------------------------+-------------+
-| :ref:`float<class_float>`                    | :ref:`drive<class_AudioEffectDistortion_property_drive>`           | ``0.0``     |
-+----------------------------------------------+--------------------------------------------------------------------+-------------+
-| :ref:`float<class_float>`                    | :ref:`keep_hf_hz<class_AudioEffectDistortion_property_keep_hf_hz>` | ``16000.0`` |
-+----------------------------------------------+--------------------------------------------------------------------+-------------+
-| :ref:`Mode<enum_AudioEffectDistortion_Mode>` | :ref:`mode<class_AudioEffectDistortion_property_mode>`             | ``0``       |
-+----------------------------------------------+--------------------------------------------------------------------+-------------+
-| :ref:`float<class_float>`                    | :ref:`post_gain<class_AudioEffectDistortion_property_post_gain>`   | ``0.0``     |
-+----------------------------------------------+--------------------------------------------------------------------+-------------+
-| :ref:`float<class_float>`                    | :ref:`pre_gain<class_AudioEffectDistortion_property_pre_gain>`     | ``0.0``     |
-+----------------------------------------------+--------------------------------------------------------------------+-------------+
+.. table::
+   :widths: auto
+
+   +----------------------------------------------+--------------------------------------------------------------------+-------------+
+   | :ref:`float<class_float>`                    | :ref:`drive<class_AudioEffectDistortion_property_drive>`           | ``0.0``     |
+   +----------------------------------------------+--------------------------------------------------------------------+-------------+
+   | :ref:`float<class_float>`                    | :ref:`keep_hf_hz<class_AudioEffectDistortion_property_keep_hf_hz>` | ``16000.0`` |
+   +----------------------------------------------+--------------------------------------------------------------------+-------------+
+   | :ref:`Mode<enum_AudioEffectDistortion_Mode>` | :ref:`mode<class_AudioEffectDistortion_property_mode>`             | ``0``       |
+   +----------------------------------------------+--------------------------------------------------------------------+-------------+
+   | :ref:`float<class_float>`                    | :ref:`post_gain<class_AudioEffectDistortion_property_post_gain>`   | ``0.0``     |
+   +----------------------------------------------+--------------------------------------------------------------------+-------------+
+   | :ref:`float<class_float>`                    | :ref:`pre_gain<class_AudioEffectDistortion_property_pre_gain>`     | ``0.0``     |
+   +----------------------------------------------+--------------------------------------------------------------------+-------------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Enumerations
 ------------
 
 .. _enum_AudioEffectDistortion_Mode:
 
+.. rst-class:: classref-enumeration
+
+enum **Mode**: :ref:`🔗<enum_AudioEffectDistortion_Mode>`
+
 .. _class_AudioEffectDistortion_constant_MODE_CLIP:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Mode<enum_AudioEffectDistortion_Mode>` **MODE_CLIP** = ``0``
+
+Digital distortion effect which cuts off peaks at the top and bottom of the waveform.
 
 .. _class_AudioEffectDistortion_constant_MODE_ATAN:
 
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Mode<enum_AudioEffectDistortion_Mode>` **MODE_ATAN** = ``1``
+
+.. container:: contribute
+
+	There is currently no description for this enum. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+
+
+
 .. _class_AudioEffectDistortion_constant_MODE_LOFI:
+
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Mode<enum_AudioEffectDistortion_Mode>` **MODE_LOFI** = ``2``
+
+Low-resolution digital distortion effect (bit depth reduction). You can use it to emulate the sound of early digital audio devices.
 
 .. _class_AudioEffectDistortion_constant_MODE_OVERDRIVE:
 
+.. rst-class:: classref-enumeration-constant
+
+:ref:`Mode<enum_AudioEffectDistortion_Mode>` **MODE_OVERDRIVE** = ``3``
+
+Emulates the warm distortion produced by a field effect transistor, which is commonly used in solid-state musical instrument amplifiers. The :ref:`drive<class_AudioEffectDistortion_property_drive>` property has no effect in this mode.
+
 .. _class_AudioEffectDistortion_constant_MODE_WAVESHAPE:
 
-enum **Mode**:
+.. rst-class:: classref-enumeration-constant
 
-- **MODE_CLIP** = **0** --- Digital distortion effect which cuts off peaks at the top and bottom of the waveform.
+:ref:`Mode<enum_AudioEffectDistortion_Mode>` **MODE_WAVESHAPE** = ``4``
 
-- **MODE_ATAN** = **1**
+Waveshaper distortions are used mainly by electronic musicians to achieve an extra-abrasive sound.
 
-- **MODE_LOFI** = **2** --- Low-resolution digital distortion effect. You can use it to emulate the sound of early digital audio devices.
+.. rst-class:: classref-section-separator
 
-- **MODE_OVERDRIVE** = **3** --- Emulates the warm distortion produced by a field effect transistor, which is commonly used in solid-state musical instrument amplifiers.
+----
 
-- **MODE_WAVESHAPE** = **4** --- Waveshaper distortions are used mainly by electronic musicians to achieve an extra-abrasive sound.
+.. rst-class:: classref-descriptions-group
 
 Property Descriptions
 ---------------------
 
 .. _class_AudioEffectDistortion_property_drive:
 
-- :ref:`float<class_float>` **drive**
+.. rst-class:: classref-property
 
-+-----------+------------------+
-| *Default* | ``0.0``          |
-+-----------+------------------+
-| *Setter*  | set_drive(value) |
-+-----------+------------------+
-| *Getter*  | get_drive()      |
-+-----------+------------------+
+:ref:`float<class_float>` **drive** = ``0.0`` :ref:`🔗<class_AudioEffectDistortion_property_drive>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_drive**\ (\ value\: :ref:`float<class_float>`\ )
+- :ref:`float<class_float>` **get_drive**\ (\ )
 
 Distortion power. Value can range from 0 to 1.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_AudioEffectDistortion_property_keep_hf_hz:
 
-- :ref:`float<class_float>` **keep_hf_hz**
+.. rst-class:: classref-property
 
-+-----------+-----------------------+
-| *Default* | ``16000.0``           |
-+-----------+-----------------------+
-| *Setter*  | set_keep_hf_hz(value) |
-+-----------+-----------------------+
-| *Getter*  | get_keep_hf_hz()      |
-+-----------+-----------------------+
+:ref:`float<class_float>` **keep_hf_hz** = ``16000.0`` :ref:`🔗<class_AudioEffectDistortion_property_keep_hf_hz>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_keep_hf_hz**\ (\ value\: :ref:`float<class_float>`\ )
+- :ref:`float<class_float>` **get_keep_hf_hz**\ (\ )
 
 High-pass filter, in Hz. Frequencies higher than this value will not be affected by the distortion. Value can range from 1 to 20000.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_AudioEffectDistortion_property_mode:
 
-- :ref:`Mode<enum_AudioEffectDistortion_Mode>` **mode**
+.. rst-class:: classref-property
 
-+-----------+-----------------+
-| *Default* | ``0``           |
-+-----------+-----------------+
-| *Setter*  | set_mode(value) |
-+-----------+-----------------+
-| *Getter*  | get_mode()      |
-+-----------+-----------------+
+:ref:`Mode<enum_AudioEffectDistortion_Mode>` **mode** = ``0`` :ref:`🔗<class_AudioEffectDistortion_property_mode>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_mode**\ (\ value\: :ref:`Mode<enum_AudioEffectDistortion_Mode>`\ )
+- :ref:`Mode<enum_AudioEffectDistortion_Mode>` **get_mode**\ (\ )
 
 Distortion type.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_AudioEffectDistortion_property_post_gain:
 
-- :ref:`float<class_float>` **post_gain**
+.. rst-class:: classref-property
 
-+-----------+----------------------+
-| *Default* | ``0.0``              |
-+-----------+----------------------+
-| *Setter*  | set_post_gain(value) |
-+-----------+----------------------+
-| *Getter*  | get_post_gain()      |
-+-----------+----------------------+
+:ref:`float<class_float>` **post_gain** = ``0.0`` :ref:`🔗<class_AudioEffectDistortion_property_post_gain>`
 
-Increases or decreases the volume after the effect. Value can range from -80 to 24.
+.. rst-class:: classref-property-setget
+
+- |void| **set_post_gain**\ (\ value\: :ref:`float<class_float>`\ )
+- :ref:`float<class_float>` **get_post_gain**\ (\ )
+
+Increases or decreases the volume after the effect, in decibels. Value can range from -80 to 24.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_AudioEffectDistortion_property_pre_gain:
 
-- :ref:`float<class_float>` **pre_gain**
+.. rst-class:: classref-property
 
-+-----------+---------------------+
-| *Default* | ``0.0``             |
-+-----------+---------------------+
-| *Setter*  | set_pre_gain(value) |
-+-----------+---------------------+
-| *Getter*  | get_pre_gain()      |
-+-----------+---------------------+
+:ref:`float<class_float>` **pre_gain** = ``0.0`` :ref:`🔗<class_AudioEffectDistortion_property_pre_gain>`
 
-Increases or decreases the volume before the effect. Value can range from -60 to 60.
+.. rst-class:: classref-property-setget
+
+- |void| **set_pre_gain**\ (\ value\: :ref:`float<class_float>`\ )
+- :ref:`float<class_float>` **get_pre_gain**\ (\ )
+
+Increases or decreases the volume before the effect, in decibels. Value can range from -60 to 60.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

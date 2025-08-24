@@ -12,97 +12,131 @@ RDVertexAttribute
 
 **Inherits:** :ref:`RefCounted<class_RefCounted>` **<** :ref:`Object<class_Object>`
 
+Vertex attribute (used by :ref:`RenderingDevice<class_RenderingDevice>`).
 
+.. rst-class:: classref-introduction-group
+
+Description
+-----------
+
+This object is used by :ref:`RenderingDevice<class_RenderingDevice>`.
+
+.. rst-class:: classref-reftable-group
 
 Properties
 ----------
 
-+--------------------------------------------------------------+--------------------------------------------------------------+---------+
-| :ref:`DataFormat<enum_RenderingDevice_DataFormat>`           | :ref:`format<class_RDVertexAttribute_property_format>`       | ``218`` |
-+--------------------------------------------------------------+--------------------------------------------------------------+---------+
-| :ref:`VertexFrequency<enum_RenderingDevice_VertexFrequency>` | :ref:`frequency<class_RDVertexAttribute_property_frequency>` | ``0``   |
-+--------------------------------------------------------------+--------------------------------------------------------------+---------+
-| :ref:`int<class_int>`                                        | :ref:`location<class_RDVertexAttribute_property_location>`   | ``0``   |
-+--------------------------------------------------------------+--------------------------------------------------------------+---------+
-| :ref:`int<class_int>`                                        | :ref:`offset<class_RDVertexAttribute_property_offset>`       | ``0``   |
-+--------------------------------------------------------------+--------------------------------------------------------------+---------+
-| :ref:`int<class_int>`                                        | :ref:`stride<class_RDVertexAttribute_property_stride>`       | ``0``   |
-+--------------------------------------------------------------+--------------------------------------------------------------+---------+
+.. table::
+   :widths: auto
+
+   +--------------------------------------------------------------+--------------------------------------------------------------+---------+
+   | :ref:`DataFormat<enum_RenderingDevice_DataFormat>`           | :ref:`format<class_RDVertexAttribute_property_format>`       | ``232`` |
+   +--------------------------------------------------------------+--------------------------------------------------------------+---------+
+   | :ref:`VertexFrequency<enum_RenderingDevice_VertexFrequency>` | :ref:`frequency<class_RDVertexAttribute_property_frequency>` | ``0``   |
+   +--------------------------------------------------------------+--------------------------------------------------------------+---------+
+   | :ref:`int<class_int>`                                        | :ref:`location<class_RDVertexAttribute_property_location>`   | ``0``   |
+   +--------------------------------------------------------------+--------------------------------------------------------------+---------+
+   | :ref:`int<class_int>`                                        | :ref:`offset<class_RDVertexAttribute_property_offset>`       | ``0``   |
+   +--------------------------------------------------------------+--------------------------------------------------------------+---------+
+   | :ref:`int<class_int>`                                        | :ref:`stride<class_RDVertexAttribute_property_stride>`       | ``0``   |
+   +--------------------------------------------------------------+--------------------------------------------------------------+---------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Property Descriptions
 ---------------------
 
 .. _class_RDVertexAttribute_property_format:
 
-- :ref:`DataFormat<enum_RenderingDevice_DataFormat>` **format**
+.. rst-class:: classref-property
 
-+-----------+-------------------+
-| *Default* | ``218``           |
-+-----------+-------------------+
-| *Setter*  | set_format(value) |
-+-----------+-------------------+
-| *Getter*  | get_format()      |
-+-----------+-------------------+
+:ref:`DataFormat<enum_RenderingDevice_DataFormat>` **format** = ``232`` :ref:`🔗<class_RDVertexAttribute_property_format>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_format**\ (\ value\: :ref:`DataFormat<enum_RenderingDevice_DataFormat>`\ )
+- :ref:`DataFormat<enum_RenderingDevice_DataFormat>` **get_format**\ (\ )
+
+The way that this attribute's data is interpreted when sent to a shader.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_RDVertexAttribute_property_frequency:
 
-- :ref:`VertexFrequency<enum_RenderingDevice_VertexFrequency>` **frequency**
+.. rst-class:: classref-property
 
-+-----------+----------------------+
-| *Default* | ``0``                |
-+-----------+----------------------+
-| *Setter*  | set_frequency(value) |
-+-----------+----------------------+
-| *Getter*  | get_frequency()      |
-+-----------+----------------------+
+:ref:`VertexFrequency<enum_RenderingDevice_VertexFrequency>` **frequency** = ``0`` :ref:`🔗<class_RDVertexAttribute_property_frequency>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_frequency**\ (\ value\: :ref:`VertexFrequency<enum_RenderingDevice_VertexFrequency>`\ )
+- :ref:`VertexFrequency<enum_RenderingDevice_VertexFrequency>` **get_frequency**\ (\ )
+
+The rate at which this attribute is pulled from its vertex buffer.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_RDVertexAttribute_property_location:
 
-- :ref:`int<class_int>` **location**
+.. rst-class:: classref-property
 
-+-----------+---------------------+
-| *Default* | ``0``               |
-+-----------+---------------------+
-| *Setter*  | set_location(value) |
-+-----------+---------------------+
-| *Getter*  | get_location()      |
-+-----------+---------------------+
+:ref:`int<class_int>` **location** = ``0`` :ref:`🔗<class_RDVertexAttribute_property_location>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_location**\ (\ value\: :ref:`int<class_int>`\ )
+- :ref:`int<class_int>` **get_location**\ (\ )
+
+The location in the shader that this attribute is bound to.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_RDVertexAttribute_property_offset:
 
-- :ref:`int<class_int>` **offset**
+.. rst-class:: classref-property
 
-+-----------+-------------------+
-| *Default* | ``0``             |
-+-----------+-------------------+
-| *Setter*  | set_offset(value) |
-+-----------+-------------------+
-| *Getter*  | get_offset()      |
-+-----------+-------------------+
+:ref:`int<class_int>` **offset** = ``0`` :ref:`🔗<class_RDVertexAttribute_property_offset>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_offset**\ (\ value\: :ref:`int<class_int>`\ )
+- :ref:`int<class_int>` **get_offset**\ (\ )
+
+The number of bytes between the start of the vertex buffer and the first instance of this attribute.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_RDVertexAttribute_property_stride:
 
-- :ref:`int<class_int>` **stride**
+.. rst-class:: classref-property
 
-+-----------+-------------------+
-| *Default* | ``0``             |
-+-----------+-------------------+
-| *Setter*  | set_stride(value) |
-+-----------+-------------------+
-| *Getter*  | get_stride()      |
-+-----------+-------------------+
+:ref:`int<class_int>` **stride** = ``0`` :ref:`🔗<class_RDVertexAttribute_property_stride>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_stride**\ (\ value\: :ref:`int<class_int>`\ )
+- :ref:`int<class_int>` **get_stride**\ (\ )
+
+The number of bytes between the starts of consecutive instances of this attribute.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

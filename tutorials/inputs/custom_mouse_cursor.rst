@@ -3,19 +3,18 @@
 Customizing the mouse cursor
 ============================
 
-You might want to change the appearance of the mouse cursor in your game in order to suit the overall design. There are two ways to customize the mouse cursor:
+You might want to change the appearance of the mouse cursor in your game in
+order to suit the overall design. There are two ways to customize the mouse
+cursor:
 
-1. Using project settings
-2. Using a script
-
-Using project settings is a simpler (but more limited) way to customize the mouse cursor.
-The second way is more customizable, but involves scripting:
+1. Using project settings. This is simpler, but more limited.
+2. Using a script. This is more customizable, but involves scripting.
 
 .. note::
 
     You could display a "software" mouse cursor by hiding the mouse cursor and
-    moving a Sprite2D to the cursor position in a ``_process`` method, but this
-    will add at least one frame of latency compared to an "hardware" mouse
+    moving a Sprite2D to the cursor position in a ``_process()`` method, but
+    this will add at least one frame of latency compared to a "hardware" mouse
     cursor. Therefore, it's recommended to use the approach described here
     whenever possible.
 
@@ -25,14 +24,22 @@ The second way is more customizable, but involves scripting:
 Using project settings
 ----------------------
 
-Open project settings, go to Display>Mouse Cursor. You will see Custom Image and Custom Image Hotspot.
+Open the **Project Settings** and go to **Display > Mouse Cursor**. You will see the settings
+:ref:`Custom Image <class_ProjectSettings_property_display/mouse_cursor/custom_image>`,
+:ref:`Custom Image Hotspot <class_ProjectSettings_property_display/mouse_cursor/custom_image_hotspot>`,
+and :ref:`Tooltip Position Offset <class_ProjectSettings_property_display/mouse_cursor/tooltip_position_offset>`.
 
-.. image:: img/cursor_project_settings.png
+.. image:: img/cursor_project_settings.webp
 
-Custom Image is the desired image that you would like to set as the mouse cursor.
-Custom Hotspot is the point in the image that you would like to use as the cursor's detection point.
+**Custom Image** is the desired image that you would like to set as the mouse cursor.
+**Custom Hotspot** is the point in the image that you would like to use as the cursor's detection point.
 
-.. note:: The custom image **must** be less than 256x256.
+.. warning::
+
+    The custom image **must** be 256×256 pixels at most. To avoid rendering
+    issues, sizes of 128×128 or smaller are recommended.
+
+    On the web platform, the maximum allowed cursor image size is 128×128.
 
 Using a script
 --------------
@@ -60,31 +67,33 @@ Create a Node and attach the following script.
 
  .. code-tab:: csharp
 
-    public override void _Ready()
+    using Godot;
+
+    public partial class MyNode : Node
     {
-        // Load the custom images for the mouse cursor.
-        var arrow = ResourceLoader.Load("res://arrow.png");
-        var beam = ResourceLoader.Load("res://beam.png");
+        public override void _Ready()
+        {
+            // Load the custom images for the mouse cursor.
+            var arrow = ResourceLoader.Load("res://arrow.png");
+            var beam = ResourceLoader.Load("res://beam.png");
 
-        // Changes only the arrow shape of the cursor.
-        // This is similar to changing it in the project settings.
-        Input.SetCustomMouseCursor(arrow);
+            // Changes only the arrow shape of the cursor.
+            // This is similar to changing it in the project settings.
+            Input.SetCustomMouseCursor(arrow);
 
-        // Changes a specific shape of the cursor (here, the I-beam shape).
-        Input.SetCustomMouseCursor(beam, Input.CursorShape.Ibeam);
+            // Changes a specific shape of the cursor (here, the I-beam shape).
+            Input.SetCustomMouseCursor(beam, Input.CursorShape.Ibeam);
+        }
     }
 
-.. note::
-    Check :ref:`Input.set_custom_mouse_cursor() <class_Input_method_set_custom_mouse_cursor>`.
+.. seealso::
 
-
-Demo project
-------------
-
-Find out more by studying this demo project:
-https://github.com/guilhermefelipecgs/custom_hardware_cursor
+    Check :ref:`Input.set_custom_mouse_cursor() <class_Input_method_set_custom_mouse_cursor>`'s
+    documentation for more information on usage and platform-specific caveats.
 
 Cursor list
 -----------
 
-As documented in the :ref:`Input <class_Input>` class (see the **CursorShape** enum), there are multiple mouse cursors you can define. Which ones you want to use depends on your use case.
+There are multiple mouse cursors you can define, documented in the 
+:ref:`Input.CursorShape <enum_Input_CursorShape>` enum. Which ones you want to use
+depends on your use case.

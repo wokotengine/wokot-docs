@@ -12,6 +12,8 @@ PackedFloat64Array
 
 A packed array of 64-bit floating-point values.
 
+.. rst-class:: classref-introduction-group
+
 Description
 -----------
 
@@ -19,311 +21,507 @@ An array specifically designed to hold 64-bit floating-point values (double). Pa
 
 If you only need to pack 32-bit floats tightly, see :ref:`PackedFloat32Array<class_PackedFloat32Array>` for a more memory-friendly alternative.
 
+\ **Differences between packed arrays, typed arrays, and untyped arrays:** Packed arrays are generally faster to iterate on and modify compared to a typed array of the same type (e.g. **PackedFloat64Array** versus ``Array[float]``). Also, packed arrays consume less memory. As a downside, packed arrays are less flexible as they don't offer as many convenience methods such as :ref:`Array.map()<class_Array_method_map>`. Typed arrays are in turn faster to iterate on and modify than untyped arrays.
+
+\ **Note:** Packed arrays are always passed by reference. To get a copy of an array that can be modified independently of the original array, use :ref:`duplicate()<class_PackedFloat64Array_method_duplicate>`. This is *not* the case for built-in properties and methods. In these cases the returned packed array is a copy, and changing it will *not* affect the original value. To update a built-in property of this type, modify the returned array and then assign it to the property again.
+
+.. note::
+
+	There are notable differences when using this API with C#. See :ref:`doc_c_sharp_differences` for more information.
+
+.. rst-class:: classref-reftable-group
+
 Constructors
 ------------
 
-+-----------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`PackedFloat64Array<class_PackedFloat64Array>` | :ref:`PackedFloat64Array<class_PackedFloat64Array_constructor_PackedFloat64Array>` **(** **)**                                                          |
-+-----------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`PackedFloat64Array<class_PackedFloat64Array>` | :ref:`PackedFloat64Array<class_PackedFloat64Array_constructor_PackedFloat64Array>` **(** :ref:`PackedFloat64Array<class_PackedFloat64Array>` from **)** |
-+-----------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`PackedFloat64Array<class_PackedFloat64Array>` | :ref:`PackedFloat64Array<class_PackedFloat64Array_constructor_PackedFloat64Array>` **(** :ref:`Array<class_Array>` from **)**                           |
-+-----------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+
+.. table::
+   :widths: auto
+
+   +-----------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`PackedFloat64Array<class_PackedFloat64Array>` | :ref:`PackedFloat64Array<class_PackedFloat64Array_constructor_PackedFloat64Array>`\ (\ )                                                             |
+   +-----------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`PackedFloat64Array<class_PackedFloat64Array>` | :ref:`PackedFloat64Array<class_PackedFloat64Array_constructor_PackedFloat64Array>`\ (\ from\: :ref:`PackedFloat64Array<class_PackedFloat64Array>`\ ) |
+   +-----------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`PackedFloat64Array<class_PackedFloat64Array>` | :ref:`PackedFloat64Array<class_PackedFloat64Array_constructor_PackedFloat64Array>`\ (\ from\: :ref:`Array<class_Array>`\ )                           |
+   +-----------------------------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+.. rst-class:: classref-reftable-group
 
 Methods
 -------
 
-+-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`bool<class_bool>`                             | :ref:`append<class_PackedFloat64Array_method_append>` **(** :ref:`float<class_float>` value **)**                                         |
-+-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-| void                                                | :ref:`append_array<class_PackedFloat64Array_method_append_array>` **(** :ref:`PackedFloat64Array<class_PackedFloat64Array>` array **)**   |
-+-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`int<class_int>`                               | :ref:`bsearch<class_PackedFloat64Array_method_bsearch>` **(** :ref:`float<class_float>` value, :ref:`bool<class_bool>` before=true **)**  |
-+-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-| void                                                | :ref:`clear<class_PackedFloat64Array_method_clear>` **(** **)**                                                                           |
-+-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`int<class_int>`                               | :ref:`count<class_PackedFloat64Array_method_count>` **(** :ref:`float<class_float>` value **)** |const|                                   |
-+-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`PackedFloat64Array<class_PackedFloat64Array>` | :ref:`duplicate<class_PackedFloat64Array_method_duplicate>` **(** **)**                                                                   |
-+-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-| void                                                | :ref:`fill<class_PackedFloat64Array_method_fill>` **(** :ref:`float<class_float>` value **)**                                             |
-+-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`int<class_int>`                               | :ref:`find<class_PackedFloat64Array_method_find>` **(** :ref:`float<class_float>` value, :ref:`int<class_int>` from=0 **)** |const|       |
-+-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`bool<class_bool>`                             | :ref:`has<class_PackedFloat64Array_method_has>` **(** :ref:`float<class_float>` value **)** |const|                                       |
-+-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`int<class_int>`                               | :ref:`insert<class_PackedFloat64Array_method_insert>` **(** :ref:`int<class_int>` at_index, :ref:`float<class_float>` value **)**         |
-+-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`bool<class_bool>`                             | :ref:`is_empty<class_PackedFloat64Array_method_is_empty>` **(** **)** |const|                                                             |
-+-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`bool<class_bool>`                             | :ref:`push_back<class_PackedFloat64Array_method_push_back>` **(** :ref:`float<class_float>` value **)**                                   |
-+-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-| void                                                | :ref:`remove_at<class_PackedFloat64Array_method_remove_at>` **(** :ref:`int<class_int>` index **)**                                       |
-+-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`int<class_int>`                               | :ref:`resize<class_PackedFloat64Array_method_resize>` **(** :ref:`int<class_int>` new_size **)**                                          |
-+-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-| void                                                | :ref:`reverse<class_PackedFloat64Array_method_reverse>` **(** **)**                                                                       |
-+-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`int<class_int>`                               | :ref:`rfind<class_PackedFloat64Array_method_rfind>` **(** :ref:`float<class_float>` value, :ref:`int<class_int>` from=-1 **)** |const|    |
-+-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-| void                                                | :ref:`set<class_PackedFloat64Array_method_set>` **(** :ref:`int<class_int>` index, :ref:`float<class_float>` value **)**                  |
-+-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`int<class_int>`                               | :ref:`size<class_PackedFloat64Array_method_size>` **(** **)** |const|                                                                     |
-+-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`PackedFloat64Array<class_PackedFloat64Array>` | :ref:`slice<class_PackedFloat64Array_method_slice>` **(** :ref:`int<class_int>` begin, :ref:`int<class_int>` end=2147483647 **)** |const| |
-+-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-| void                                                | :ref:`sort<class_PackedFloat64Array_method_sort>` **(** **)**                                                                             |
-+-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`PackedByteArray<class_PackedByteArray>`       | :ref:`to_byte_array<class_PackedFloat64Array_method_to_byte_array>` **(** **)** |const|                                                   |
-+-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------+
+.. table::
+   :widths: auto
+
+   +-----------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>`                             | :ref:`append<class_PackedFloat64Array_method_append>`\ (\ value\: :ref:`float<class_float>`\ )                                             |
+   +-----------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                              | :ref:`append_array<class_PackedFloat64Array_method_append_array>`\ (\ array\: :ref:`PackedFloat64Array<class_PackedFloat64Array>`\ )       |
+   +-----------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`int<class_int>`                               | :ref:`bsearch<class_PackedFloat64Array_method_bsearch>`\ (\ value\: :ref:`float<class_float>`, before\: :ref:`bool<class_bool>` = true\ )  |
+   +-----------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                              | :ref:`clear<class_PackedFloat64Array_method_clear>`\ (\ )                                                                                  |
+   +-----------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`int<class_int>`                               | :ref:`count<class_PackedFloat64Array_method_count>`\ (\ value\: :ref:`float<class_float>`\ ) |const|                                       |
+   +-----------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`PackedFloat64Array<class_PackedFloat64Array>` | :ref:`duplicate<class_PackedFloat64Array_method_duplicate>`\ (\ )                                                                          |
+   +-----------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>`                             | :ref:`erase<class_PackedFloat64Array_method_erase>`\ (\ value\: :ref:`float<class_float>`\ )                                               |
+   +-----------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                              | :ref:`fill<class_PackedFloat64Array_method_fill>`\ (\ value\: :ref:`float<class_float>`\ )                                                 |
+   +-----------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`int<class_int>`                               | :ref:`find<class_PackedFloat64Array_method_find>`\ (\ value\: :ref:`float<class_float>`, from\: :ref:`int<class_int>` = 0\ ) |const|       |
+   +-----------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`float<class_float>`                           | :ref:`get<class_PackedFloat64Array_method_get>`\ (\ index\: :ref:`int<class_int>`\ ) |const|                                               |
+   +-----------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>`                             | :ref:`has<class_PackedFloat64Array_method_has>`\ (\ value\: :ref:`float<class_float>`\ ) |const|                                           |
+   +-----------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`int<class_int>`                               | :ref:`insert<class_PackedFloat64Array_method_insert>`\ (\ at_index\: :ref:`int<class_int>`, value\: :ref:`float<class_float>`\ )           |
+   +-----------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>`                             | :ref:`is_empty<class_PackedFloat64Array_method_is_empty>`\ (\ ) |const|                                                                    |
+   +-----------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>`                             | :ref:`push_back<class_PackedFloat64Array_method_push_back>`\ (\ value\: :ref:`float<class_float>`\ )                                       |
+   +-----------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                              | :ref:`remove_at<class_PackedFloat64Array_method_remove_at>`\ (\ index\: :ref:`int<class_int>`\ )                                           |
+   +-----------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`int<class_int>`                               | :ref:`resize<class_PackedFloat64Array_method_resize>`\ (\ new_size\: :ref:`int<class_int>`\ )                                              |
+   +-----------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                              | :ref:`reverse<class_PackedFloat64Array_method_reverse>`\ (\ )                                                                              |
+   +-----------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`int<class_int>`                               | :ref:`rfind<class_PackedFloat64Array_method_rfind>`\ (\ value\: :ref:`float<class_float>`, from\: :ref:`int<class_int>` = -1\ ) |const|    |
+   +-----------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                              | :ref:`set<class_PackedFloat64Array_method_set>`\ (\ index\: :ref:`int<class_int>`, value\: :ref:`float<class_float>`\ )                    |
+   +-----------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`int<class_int>`                               | :ref:`size<class_PackedFloat64Array_method_size>`\ (\ ) |const|                                                                            |
+   +-----------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`PackedFloat64Array<class_PackedFloat64Array>` | :ref:`slice<class_PackedFloat64Array_method_slice>`\ (\ begin\: :ref:`int<class_int>`, end\: :ref:`int<class_int>` = 2147483647\ ) |const| |
+   +-----------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                              | :ref:`sort<class_PackedFloat64Array_method_sort>`\ (\ )                                                                                    |
+   +-----------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`PackedByteArray<class_PackedByteArray>`       | :ref:`to_byte_array<class_PackedFloat64Array_method_to_byte_array>`\ (\ ) |const|                                                          |
+   +-----------------------------------------------------+--------------------------------------------------------------------------------------------------------------------------------------------+
+
+.. rst-class:: classref-reftable-group
 
 Operators
 ---------
 
-+-----------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`bool<class_bool>`                             | :ref:`operator !=<class_PackedFloat64Array_operator_neq_bool>` **(** :ref:`PackedFloat64Array<class_PackedFloat64Array>` right **)**              |
-+-----------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`PackedFloat64Array<class_PackedFloat64Array>` | :ref:`operator +<class_PackedFloat64Array_operator_sum_PackedFloat64Array>` **(** :ref:`PackedFloat64Array<class_PackedFloat64Array>` right **)** |
-+-----------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`bool<class_bool>`                             | :ref:`operator ==<class_PackedFloat64Array_operator_eq_bool>` **(** :ref:`PackedFloat64Array<class_PackedFloat64Array>` right **)**               |
-+-----------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------+
-| :ref:`float<class_float>`                           | :ref:`operator []<class_PackedFloat64Array_operator_idx_float>` **(** :ref:`int<class_int>` index **)**                                           |
-+-----------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------+
+.. table::
+   :widths: auto
+
+   +-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>`                             | :ref:`operator !=<class_PackedFloat64Array_operator_neq_PackedFloat64Array>`\ (\ right\: :ref:`PackedFloat64Array<class_PackedFloat64Array>`\ ) |
+   +-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`PackedFloat64Array<class_PackedFloat64Array>` | :ref:`operator +<class_PackedFloat64Array_operator_sum_PackedFloat64Array>`\ (\ right\: :ref:`PackedFloat64Array<class_PackedFloat64Array>`\ )  |
+   +-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>`                             | :ref:`operator ==<class_PackedFloat64Array_operator_eq_PackedFloat64Array>`\ (\ right\: :ref:`PackedFloat64Array<class_PackedFloat64Array>`\ )  |
+   +-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`float<class_float>`                           | :ref:`operator []<class_PackedFloat64Array_operator_idx_int>`\ (\ index\: :ref:`int<class_int>`\ )                                              |
+   +-----------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------+
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Constructor Descriptions
 ------------------------
 
 .. _class_PackedFloat64Array_constructor_PackedFloat64Array:
 
-- :ref:`PackedFloat64Array<class_PackedFloat64Array>` **PackedFloat64Array** **(** **)**
+.. rst-class:: classref-constructor
 
-Constructs an empty ``PackedFloat64Array``.
+:ref:`PackedFloat64Array<class_PackedFloat64Array>` **PackedFloat64Array**\ (\ ) :ref:`🔗<class_PackedFloat64Array_constructor_PackedFloat64Array>`
 
-----
+Constructs an empty **PackedFloat64Array**.
 
-- :ref:`PackedFloat64Array<class_PackedFloat64Array>` **PackedFloat64Array** **(** :ref:`PackedFloat64Array<class_PackedFloat64Array>` from **)**
-
-Constructs a ``PackedFloat64Array`` as a copy of the given ``PackedFloat64Array``.
+.. rst-class:: classref-item-separator
 
 ----
 
-- :ref:`PackedFloat64Array<class_PackedFloat64Array>` **PackedFloat64Array** **(** :ref:`Array<class_Array>` from **)**
+.. rst-class:: classref-constructor
 
-Constructs a new ``PackedFloat64Array``. Optionally, you can pass in a generic :ref:`Array<class_Array>` that will be converted.
+:ref:`PackedFloat64Array<class_PackedFloat64Array>` **PackedFloat64Array**\ (\ from\: :ref:`PackedFloat64Array<class_PackedFloat64Array>`\ )
+
+Constructs a **PackedFloat64Array** as a copy of the given **PackedFloat64Array**.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. rst-class:: classref-constructor
+
+:ref:`PackedFloat64Array<class_PackedFloat64Array>` **PackedFloat64Array**\ (\ from\: :ref:`Array<class_Array>`\ )
+
+Constructs a new **PackedFloat64Array**. Optionally, you can pass in a generic :ref:`Array<class_Array>` that will be converted.
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Method Descriptions
 -------------------
 
 .. _class_PackedFloat64Array_method_append:
 
-- :ref:`bool<class_bool>` **append** **(** :ref:`float<class_float>` value **)**
+.. rst-class:: classref-method
 
-Appends an element at the end of the array (alias of :ref:`push_back<class_PackedFloat64Array_method_push_back>`).
+:ref:`bool<class_bool>` **append**\ (\ value\: :ref:`float<class_float>`\ ) :ref:`🔗<class_PackedFloat64Array_method_append>`
+
+Appends an element at the end of the array (alias of :ref:`push_back()<class_PackedFloat64Array_method_push_back>`).
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PackedFloat64Array_method_append_array:
 
-- void **append_array** **(** :ref:`PackedFloat64Array<class_PackedFloat64Array>` array **)**
+.. rst-class:: classref-method
 
-Appends a ``PackedFloat64Array`` at the end of this array.
+|void| **append_array**\ (\ array\: :ref:`PackedFloat64Array<class_PackedFloat64Array>`\ ) :ref:`🔗<class_PackedFloat64Array_method_append_array>`
+
+Appends a **PackedFloat64Array** at the end of this array.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PackedFloat64Array_method_bsearch:
 
-- :ref:`int<class_int>` **bsearch** **(** :ref:`float<class_float>` value, :ref:`bool<class_bool>` before=true **)**
+.. rst-class:: classref-method
+
+:ref:`int<class_int>` **bsearch**\ (\ value\: :ref:`float<class_float>`, before\: :ref:`bool<class_bool>` = true\ ) :ref:`🔗<class_PackedFloat64Array_method_bsearch>`
 
 Finds the index of an existing value (or the insertion index that maintains sorting order, if the value is not yet present in the array) using binary search. Optionally, a ``before`` specifier can be passed. If ``false``, the returned index comes after all existing entries of the value in the array.
 
-\ **Note:** Calling :ref:`bsearch<class_PackedFloat64Array_method_bsearch>` on an unsorted array results in unexpected behavior.
+\ **Note:** Calling :ref:`bsearch()<class_PackedFloat64Array_method_bsearch>` on an unsorted array results in unexpected behavior.
+
+\ **Note:** :ref:`@GDScript.NAN<class_@GDScript_constant_NAN>` doesn't behave the same as other numbers. Therefore, the results from this method may not be accurate if NaNs are included.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PackedFloat64Array_method_clear:
 
-- void **clear** **(** **)**
+.. rst-class:: classref-method
 
-Clears the array. This is equivalent to using :ref:`resize<class_PackedFloat64Array_method_resize>` with a size of ``0``.
+|void| **clear**\ (\ ) :ref:`🔗<class_PackedFloat64Array_method_clear>`
+
+Clears the array. This is equivalent to using :ref:`resize()<class_PackedFloat64Array_method_resize>` with a size of ``0``.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PackedFloat64Array_method_count:
 
-- :ref:`int<class_int>` **count** **(** :ref:`float<class_float>` value **)** |const|
+.. rst-class:: classref-method
+
+:ref:`int<class_int>` **count**\ (\ value\: :ref:`float<class_float>`\ ) |const| :ref:`🔗<class_PackedFloat64Array_method_count>`
 
 Returns the number of times an element is in the array.
+
+\ **Note:** :ref:`@GDScript.NAN<class_@GDScript_constant_NAN>` doesn't behave the same as other numbers. Therefore, the results from this method may not be accurate if NaNs are included.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PackedFloat64Array_method_duplicate:
 
-- :ref:`PackedFloat64Array<class_PackedFloat64Array>` **duplicate** **(** **)**
+.. rst-class:: classref-method
+
+:ref:`PackedFloat64Array<class_PackedFloat64Array>` **duplicate**\ (\ ) :ref:`🔗<class_PackedFloat64Array_method_duplicate>`
 
 Creates a copy of the array, and returns it.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_PackedFloat64Array_method_erase:
+
+.. rst-class:: classref-method
+
+:ref:`bool<class_bool>` **erase**\ (\ value\: :ref:`float<class_float>`\ ) :ref:`🔗<class_PackedFloat64Array_method_erase>`
+
+Removes the first occurrence of a value from the array and returns ``true``. If the value does not exist in the array, nothing happens and ``false`` is returned. To remove an element by index, use :ref:`remove_at()<class_PackedFloat64Array_method_remove_at>` instead.
+
+\ **Note:** :ref:`@GDScript.NAN<class_@GDScript_constant_NAN>` doesn't behave the same as other numbers. Therefore, the results from this method may not be accurate if NaNs are included.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PackedFloat64Array_method_fill:
 
-- void **fill** **(** :ref:`float<class_float>` value **)**
+.. rst-class:: classref-method
 
-Assigns the given value to all elements in the array. This can typically be used together with :ref:`resize<class_PackedFloat64Array_method_resize>` to create an array with a given size and initialized elements.
+|void| **fill**\ (\ value\: :ref:`float<class_float>`\ ) :ref:`🔗<class_PackedFloat64Array_method_fill>`
+
+Assigns the given value to all elements in the array. This can typically be used together with :ref:`resize()<class_PackedFloat64Array_method_resize>` to create an array with a given size and initialized elements.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PackedFloat64Array_method_find:
 
-- :ref:`int<class_int>` **find** **(** :ref:`float<class_float>` value, :ref:`int<class_int>` from=0 **)** |const|
+.. rst-class:: classref-method
+
+:ref:`int<class_int>` **find**\ (\ value\: :ref:`float<class_float>`, from\: :ref:`int<class_int>` = 0\ ) |const| :ref:`🔗<class_PackedFloat64Array_method_find>`
 
 Searches the array for a value and returns its index or ``-1`` if not found. Optionally, the initial search index can be passed.
+
+\ **Note:** :ref:`@GDScript.NAN<class_@GDScript_constant_NAN>` doesn't behave the same as other numbers. Therefore, the results from this method may not be accurate if NaNs are included.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_PackedFloat64Array_method_get:
+
+.. rst-class:: classref-method
+
+:ref:`float<class_float>` **get**\ (\ index\: :ref:`int<class_int>`\ ) |const| :ref:`🔗<class_PackedFloat64Array_method_get>`
+
+Returns the 64-bit float at the given ``index`` in the array. If ``index`` out-of-bounds or negative, this method fails and returns ``0.0``.
+
+This method is similar (but not identical) to the ``[]`` operator. Most notably, when this method fails, it doesn't pause project execution if run from the editor.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PackedFloat64Array_method_has:
 
-- :ref:`bool<class_bool>` **has** **(** :ref:`float<class_float>` value **)** |const|
+.. rst-class:: classref-method
+
+:ref:`bool<class_bool>` **has**\ (\ value\: :ref:`float<class_float>`\ ) |const| :ref:`🔗<class_PackedFloat64Array_method_has>`
 
 Returns ``true`` if the array contains ``value``.
+
+\ **Note:** :ref:`@GDScript.NAN<class_@GDScript_constant_NAN>` doesn't behave the same as other numbers. Therefore, the results from this method may not be accurate if NaNs are included.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PackedFloat64Array_method_insert:
 
-- :ref:`int<class_int>` **insert** **(** :ref:`int<class_int>` at_index, :ref:`float<class_float>` value **)**
+.. rst-class:: classref-method
+
+:ref:`int<class_int>` **insert**\ (\ at_index\: :ref:`int<class_int>`, value\: :ref:`float<class_float>`\ ) :ref:`🔗<class_PackedFloat64Array_method_insert>`
 
 Inserts a new element at a given position in the array. The position must be valid, or at the end of the array (``idx == size()``).
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PackedFloat64Array_method_is_empty:
 
-- :ref:`bool<class_bool>` **is_empty** **(** **)** |const|
+.. rst-class:: classref-method
+
+:ref:`bool<class_bool>` **is_empty**\ (\ ) |const| :ref:`🔗<class_PackedFloat64Array_method_is_empty>`
 
 Returns ``true`` if the array is empty.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PackedFloat64Array_method_push_back:
 
-- :ref:`bool<class_bool>` **push_back** **(** :ref:`float<class_float>` value **)**
+.. rst-class:: classref-method
+
+:ref:`bool<class_bool>` **push_back**\ (\ value\: :ref:`float<class_float>`\ ) :ref:`🔗<class_PackedFloat64Array_method_push_back>`
 
 Appends an element at the end of the array.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PackedFloat64Array_method_remove_at:
 
-- void **remove_at** **(** :ref:`int<class_int>` index **)**
+.. rst-class:: classref-method
+
+|void| **remove_at**\ (\ index\: :ref:`int<class_int>`\ ) :ref:`🔗<class_PackedFloat64Array_method_remove_at>`
 
 Removes an element from the array by index.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PackedFloat64Array_method_resize:
 
-- :ref:`int<class_int>` **resize** **(** :ref:`int<class_int>` new_size **)**
+.. rst-class:: classref-method
 
-Sets the size of the array. If the array is grown, reserves elements at the end of the array. If the array is shrunk, truncates the array to the new size.
+:ref:`int<class_int>` **resize**\ (\ new_size\: :ref:`int<class_int>`\ ) :ref:`🔗<class_PackedFloat64Array_method_resize>`
+
+Sets the size of the array. If the array is grown, reserves elements at the end of the array. If the array is shrunk, truncates the array to the new size. Calling :ref:`resize()<class_PackedFloat64Array_method_resize>` once and assigning the new values is faster than adding new elements one by one.
+
+Returns :ref:`@GlobalScope.OK<class_@GlobalScope_constant_OK>` on success, or one of the following :ref:`Error<enum_@GlobalScope_Error>` constants if this method fails: :ref:`@GlobalScope.ERR_INVALID_PARAMETER<class_@GlobalScope_constant_ERR_INVALID_PARAMETER>` if the size is negative, or :ref:`@GlobalScope.ERR_OUT_OF_MEMORY<class_@GlobalScope_constant_ERR_OUT_OF_MEMORY>` if allocations fail. Use :ref:`size()<class_PackedFloat64Array_method_size>` to find the actual size of the array after resize.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PackedFloat64Array_method_reverse:
 
-- void **reverse** **(** **)**
+.. rst-class:: classref-method
+
+|void| **reverse**\ (\ ) :ref:`🔗<class_PackedFloat64Array_method_reverse>`
 
 Reverses the order of the elements in the array.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PackedFloat64Array_method_rfind:
 
-- :ref:`int<class_int>` **rfind** **(** :ref:`float<class_float>` value, :ref:`int<class_int>` from=-1 **)** |const|
+.. rst-class:: classref-method
+
+:ref:`int<class_int>` **rfind**\ (\ value\: :ref:`float<class_float>`, from\: :ref:`int<class_int>` = -1\ ) |const| :ref:`🔗<class_PackedFloat64Array_method_rfind>`
 
 Searches the array in reverse order. Optionally, a start search index can be passed. If negative, the start index is considered relative to the end of the array.
+
+\ **Note:** :ref:`@GDScript.NAN<class_@GDScript_constant_NAN>` doesn't behave the same as other numbers. Therefore, the results from this method may not be accurate if NaNs are included.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PackedFloat64Array_method_set:
 
-- void **set** **(** :ref:`int<class_int>` index, :ref:`float<class_float>` value **)**
+.. rst-class:: classref-method
+
+|void| **set**\ (\ index\: :ref:`int<class_int>`, value\: :ref:`float<class_float>`\ ) :ref:`🔗<class_PackedFloat64Array_method_set>`
 
 Changes the float at the given index.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PackedFloat64Array_method_size:
 
-- :ref:`int<class_int>` **size** **(** **)** |const|
+.. rst-class:: classref-method
+
+:ref:`int<class_int>` **size**\ (\ ) |const| :ref:`🔗<class_PackedFloat64Array_method_size>`
 
 Returns the number of elements in the array.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PackedFloat64Array_method_slice:
 
-- :ref:`PackedFloat64Array<class_PackedFloat64Array>` **slice** **(** :ref:`int<class_int>` begin, :ref:`int<class_int>` end=2147483647 **)** |const|
+.. rst-class:: classref-method
 
-Returns the slice of the ``PackedFloat64Array``, from ``begin`` (inclusive) to ``end`` (exclusive), as a new ``PackedFloat64Array``.
+:ref:`PackedFloat64Array<class_PackedFloat64Array>` **slice**\ (\ begin\: :ref:`int<class_int>`, end\: :ref:`int<class_int>` = 2147483647\ ) |const| :ref:`🔗<class_PackedFloat64Array_method_slice>`
+
+Returns the slice of the **PackedFloat64Array**, from ``begin`` (inclusive) to ``end`` (exclusive), as a new **PackedFloat64Array**.
 
 The absolute value of ``begin`` and ``end`` will be clamped to the array size, so the default value for ``end`` makes it slice to the size of the array by default (i.e. ``arr.slice(1)`` is a shorthand for ``arr.slice(1, arr.size())``).
 
 If either ``begin`` or ``end`` are negative, they will be relative to the end of the array (i.e. ``arr.slice(0, -2)`` is a shorthand for ``arr.slice(0, arr.size() - 2)``).
 
+.. rst-class:: classref-item-separator
+
 ----
 
 .. _class_PackedFloat64Array_method_sort:
 
-- void **sort** **(** **)**
+.. rst-class:: classref-method
+
+|void| **sort**\ (\ ) :ref:`🔗<class_PackedFloat64Array_method_sort>`
 
 Sorts the elements of the array in ascending order.
+
+\ **Note:** :ref:`@GDScript.NAN<class_@GDScript_constant_NAN>` doesn't behave the same as other numbers. Therefore, the results from this method may not be accurate if NaNs are included.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PackedFloat64Array_method_to_byte_array:
 
-- :ref:`PackedByteArray<class_PackedByteArray>` **to_byte_array** **(** **)** |const|
+.. rst-class:: classref-method
 
-Returns a copy of the data converted to a :ref:`PackedByteArray<class_PackedByteArray>`, where each element have been encoded as 8 bytes.
+:ref:`PackedByteArray<class_PackedByteArray>` **to_byte_array**\ (\ ) |const| :ref:`🔗<class_PackedFloat64Array_method_to_byte_array>`
+
+Returns a copy of the data converted to a :ref:`PackedByteArray<class_PackedByteArray>`, where each element has been encoded as 8 bytes.
 
 The size of the new array will be ``float64_array.size() * 8``.
+
+.. rst-class:: classref-section-separator
+
+----
+
+.. rst-class:: classref-descriptions-group
 
 Operator Descriptions
 ---------------------
 
-.. _class_PackedFloat64Array_operator_neq_bool:
+.. _class_PackedFloat64Array_operator_neq_PackedFloat64Array:
 
-- :ref:`bool<class_bool>` **operator !=** **(** :ref:`PackedFloat64Array<class_PackedFloat64Array>` right **)**
+.. rst-class:: classref-operator
+
+:ref:`bool<class_bool>` **operator !=**\ (\ right\: :ref:`PackedFloat64Array<class_PackedFloat64Array>`\ ) :ref:`🔗<class_PackedFloat64Array_operator_neq_PackedFloat64Array>`
 
 Returns ``true`` if contents of the arrays differ.
+
+.. rst-class:: classref-item-separator
 
 ----
 
 .. _class_PackedFloat64Array_operator_sum_PackedFloat64Array:
 
-- :ref:`PackedFloat64Array<class_PackedFloat64Array>` **operator +** **(** :ref:`PackedFloat64Array<class_PackedFloat64Array>` right **)**
+.. rst-class:: classref-operator
 
-Returns a new ``PackedFloat64Array`` with contents of ``right`` added at the end of this array. For better performance, consider using :ref:`append_array<class_PackedFloat64Array_method_append_array>` instead.
+:ref:`PackedFloat64Array<class_PackedFloat64Array>` **operator +**\ (\ right\: :ref:`PackedFloat64Array<class_PackedFloat64Array>`\ ) :ref:`🔗<class_PackedFloat64Array_operator_sum_PackedFloat64Array>`
+
+Returns a new **PackedFloat64Array** with contents of ``right`` added at the end of this array. For better performance, consider using :ref:`append_array()<class_PackedFloat64Array_method_append_array>` instead.
+
+.. rst-class:: classref-item-separator
 
 ----
 
-.. _class_PackedFloat64Array_operator_eq_bool:
+.. _class_PackedFloat64Array_operator_eq_PackedFloat64Array:
 
-- :ref:`bool<class_bool>` **operator ==** **(** :ref:`PackedFloat64Array<class_PackedFloat64Array>` right **)**
+.. rst-class:: classref-operator
+
+:ref:`bool<class_bool>` **operator ==**\ (\ right\: :ref:`PackedFloat64Array<class_PackedFloat64Array>`\ ) :ref:`🔗<class_PackedFloat64Array_operator_eq_PackedFloat64Array>`
 
 Returns ``true`` if contents of both arrays are the same, i.e. they have all equal doubles at the corresponding indices.
 
+.. rst-class:: classref-item-separator
+
 ----
 
-.. _class_PackedFloat64Array_operator_idx_float:
+.. _class_PackedFloat64Array_operator_idx_int:
 
-- :ref:`float<class_float>` **operator []** **(** :ref:`int<class_int>` index **)**
+.. rst-class:: classref-operator
+
+:ref:`float<class_float>` **operator []**\ (\ index\: :ref:`int<class_int>`\ ) :ref:`🔗<class_PackedFloat64Array_operator_idx_int>`
 
 Returns the :ref:`float<class_float>` at index ``index``. Negative indices can be used to access the elements starting from the end. Using index out of array's bounds will result in an error.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
+.. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`
