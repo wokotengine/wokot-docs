@@ -21,8 +21,11 @@ scrollbar is automatically displayed if the text does not fit within the
 control's size. The scrollbar can be disabled by unchecking the
 **Scroll Active** property in the RichTextLabel inspector.
 
-Note that the BBCode tags can also be used to some extent in the XML source of
-the class reference. For more information, see :ref:`doc_class_reference_primer`.
+Note that the BBCode tags can also be used to some extent for other use cases:
+
+- BBCode can be used to :ref:`format comments in the XML source of the class reference <doc_class_reference_bbcode>`.
+- BBCode can be used in :ref:`GDScript documentation comments <doc_gdscript_documentation_comments_bbcode_and_class_reference>`.
+- BBCode can be used when :ref:`printing rich text to the Output bottom panel <doc_output_panel_printing_rich_text>`.
 
 .. seealso::
 
@@ -223,6 +226,12 @@ The following script will result in the same visual output as using
 Reference
 ---------
 
+.. seealso::
+
+    *Some* of these BBCode tags can be used in tooltips for ``@export`` script
+    variables as well as in the XML source of the class reference. For more
+    information, see :ref:`Class reference BBCode <doc_class_reference_bbcode>`.
+
 .. list-table::
   :class: wrap-normal
   :width: 100%
@@ -256,12 +265,31 @@ Reference
 
     - ``[code]{text}[/code]``
 
+  * - | **char**
+      | Adds Unicode character with hexadecimal UTF-32 ``{codepoint}``.
+
+    - ``[char={codepoint}]``
+
   * - | **p**
       | Adds new paragraph with ``{text}``. Supports configuration options,
         see :ref:`doc_bbcode_in_richtextlabel_paragraph_options`.
 
     - | ``[p]{text}[/p]``
       | ``[p {options}]{text}[/p]``
+
+  * - | **br**
+      | Adds line break in a text, without adding a new paragraph.
+        If used within a list, this won't create a new list item,
+        but will add a line break within the current item instead.
+
+    - ``[br]``
+
+  * - | **hr**
+      | Adds new a horizontal rule to separate content. Supports configuration options,
+        see :ref:`doc_bbcode_in_richtextlabel_hr_options`.
+
+    - | ``[hr]``
+      | ``[hr {options}]``
 
   * - | **center**
       | Makes ``{text}`` horizontally centered.
@@ -270,7 +298,7 @@ Reference
     - ``[center]{text}[/center]``
 
   * - | **left**
-      | Makes ``{text}`` horizontally right-aligned.
+      | Makes ``{text}`` horizontally left-aligned.
       | Same as ``[p align=left]``.
 
     - ``[left]{text}[/left]``
@@ -289,6 +317,7 @@ Reference
 
   * - | **indent**
       | Indents ``{text}`` once.
+        The indentation width is the same as with ``[ul]`` or ``[ol]``, but without a bullet point.
 
     - ``[indent]{text}[/indent]``
 
@@ -302,8 +331,11 @@ Reference
 
   * - | **hint**
       | Creates a tooltip hint that is displayed when hovering the text with the mouse.
-        Tooltip text should not be quoted (quotes will appear as-is in the tooltip otherwise).
-    - | ``[hint={tooltip text displayed on hover}]{text}[/hint]``
+        While not required, it's recommended to put tooltip text between double or single quotes.
+        Note that it is not possible to escape quotes using ``\"`` or ``\'``. To use
+        single quotes for apostrophes in the hint string, you must use double quotes
+        to surround the string.
+    - | ``[hint="{tooltip text displayed on hover}"]{text}[/hint]``
 
   * - | **img**
       | Inserts an image from the ``{path}`` (can be any valid :ref:`class_Texture2D` resource).
@@ -311,8 +343,9 @@ Reference
         the aspect ratio.
       | If both ``{width}`` and ``{height}`` are provided, the image will be scaled
         to that size.
+      | Add ``%`` to the end of ``{width}`` or ``{height}`` value to specify it as percentages of the control width instead of pixels.
       | If ``{valign}`` configuration is provided, the image will try to align to the
-        surrounding text, see :ref:`doc_bbcode_in_richtextlabel_image_alignment`.
+        surrounding text, see :ref:`doc_bbcode_in_richtextlabel_image_and_table_alignment`.
       | Supports configuration options, see :ref:`doc_bbcode_in_richtextlabel_image_options`.
 
     - | ``[img]{path}[/img]``
@@ -339,18 +372,29 @@ Reference
       | A `drop cap <https://www.computerhope.com/jargon/d/dropcap.htm>`__ is typically one
         uppercase character, but ``[dropcap]`` supports containing multiple characters.
         ``margins`` values are comma-separated and can be positive, zero or negative.
+        Values must **not** be separated by spaces; otherwise, the values won't be parsed correctly.
         Negative top and bottom margins are particularly useful to allow the rest of
         the paragraph to display below the dropcap.
 
-    - ``[dropcap font_size={size} color={color} margins={left},{top},{right},{bottom}]{text}[/dropcap]``
+    - ``[dropcap font={font} font_size={size} color={color} outline_size={size} outline_color={color} margins={left},{top},{right},{bottom}]{text}[/dropcap]``
 
   * - | **opentype_features**
       | Enables custom OpenType font features for ``{text}``. Features must be provided as
-        a comma-separated ``{list}``.
+        a comma-separated ``{list}``. Values must **not** be separated by spaces;
+        otherwise, the list won't be parsed correctly.
 
     - | ``[opentype_features={list}]``
       | ``{text}``
       | ``[/opentype_features]``
+
+  * - | **lang**
+      | Overrides the language for ``{text}`` that is set by the **BiDi > Language** property
+        in :ref:`class_RichTextLabel`. ``{code}`` must be an ISO :ref:`language code <doc_locales>`.
+        This can be used to enforce the use of a specific script for a language without
+        starting a new paragraph. Some font files may contain script-specific substitutes,
+        in which case they will be used.
+
+    - ``[lang={code}]{text}[/lang]``
 
   * - | **color**
       | Changes the color of ``{text}``. Color must be provided by a common name (see
@@ -362,12 +406,20 @@ Reference
   * - | **bgcolor**
       | Draws the color behind ``{text}``. This can be used to highlight text.
         Accepts same values as the ``color`` tag.
+        By default, there is a slight padding which is controlled by the
+        ``text_highlight_h_padding`` and ``text_highlight_v_padding`` theme items
+        in the RichTextLabel node. Set padding to ``0`` to avoid potential overlapping
+        issues when there are background colors on neighboring lines/columns.
 
     - ``[bgcolor={code/name}]{text}[/bgcolor]``
 
   * - | **fgcolor**
       | Draws the color in front of ``{text}``. This can be used to "redact" text by using
         an opaque foreground color. Accepts same values as the ``color`` tag.
+        By default, there is a slight padding which is controlled by the
+        ``text_highlight_h_padding`` and ``text_highlight_v_padding`` theme items
+        in the RichTextLabel node. Set padding to ``0`` to avoid potential overlapping
+        issues when there are foreground colors on neighboring lines/columns.
 
     - ``[fgcolor={code/name}]{text}[/fgcolor]``
 
@@ -388,8 +440,13 @@ Reference
   * - | **table**
       | Creates a table with the ``{number}`` of columns. Use the ``cell`` tag to define
         table cells.
+      | If ``{valign}`` configuration is provided, the table will try to align to the
+        surrounding text, see :ref:`doc_bbcode_in_richtextlabel_image_and_table_alignment`.
+      | If baseline alignment is used, the table is aligned to the baseline of the row with index ``{alignment_row}`` (zero-based).
 
-    - ``[table={number}]{cells}[/table]``
+    - | ``[table={number}]{cells}[/table]``
+      | ``[table={number},{valign}]{cells}[/table]``
+      | ``[table={number},{valign},{alignment_row}]{cells}[/table]``
 
   * - | **cell**
       | Adds a cell with ``{text}`` to the table.
@@ -456,31 +513,44 @@ Paragraph options
 
 - **align**
 
-  +-----------+--------------------------------------------+
-  | `Values`  | ``left``, ``center``, ``right``, ``fill``  |
-  +-----------+--------------------------------------------+
-  | `Default` | ``left``                                   |
-  +-----------+--------------------------------------------+
+  +-----------+----------------------------------------------------------------------------------------+
+  | `Values`  | ``left`` (or ``l``), ``center`` (or ``c``), ``right`` (or ``r``), ``fill`` (or ``f``)  |
+  +-----------+----------------------------------------------------------------------------------------+
+  | `Default` | ``left``                                                                               |
+  +-----------+----------------------------------------------------------------------------------------+
 
   Text horizontal alignment.
 
 - **bidi_override**, **st**
 
-  +-----------+---------------------------------------------------------------------------+
-  | `Values`  | ``default``, ``uri``, ``file``, ``email``, ``list``, ``none``, ``custom`` |
-  +-----------+---------------------------------------------------------------------------+
-  | `Default` | ``default``                                                               |
-  +-----------+---------------------------------------------------------------------------+
+  +-----------+--------------------------------------------------------------------------------------------------------------+
+  | `Values`  | ``default`` (of ``d``), ``uri`` (or ``u``), ``file`` (or ``f``), ``email`` (or ``e``), ``list`` (or ``l``),  |
+  |           | ``none`` (or ``n``), ``custom`` (or ``c``)                                                                   |
+  +-----------+--------------------------------------------------------------------------------------------------------------+
+  | `Default` | ``default``                                                                                                  |
+  +-----------+--------------------------------------------------------------------------------------------------------------+
 
   Structured text override.
 
+- **justification_flags**, **jst**
+
+  +-----------+--------------------------------------------------------------------------------------------------------+
+  | `Values`  | Comma-separated list of the following values (no space after each comma):                              |
+  |           | ``kashida`` (or ``k``), ``word`` (or ``w``), ``trim`` (or ``tr``), ``after_last_tab`` (or ``lt``),     |
+  |           | ``skip_last`` (or ``sl``), ``skip_last_with_chars`` (or ``sv``),  ``do_not_skip_single`` (or ``ns``).  |
+  +-----------+--------------------------------------------------------------------------------------------------------+
+  | `Default` | ``word,kashida,skip_last,do_not_skip_single``                                                          |
+  +-----------+--------------------------------------------------------------------------------------------------------+
+
+  Justification (fill alignment) option. See :ref:`class_TextServer` for more details.
+
 - **direction**, **dir**
 
-  +-----------+--------------------------------------------+
-  | `Values`  | ``ltr``, ``rtl``, ``auto``                 |
-  +-----------+--------------------------------------------+
-  | `Default` | Inherit                                    |
-  +-----------+--------------------------------------------+
+  +-----------+-----------------------------------------------------------------+
+  | `Values`  | ``ltr`` (or ``l``), ``rtl`` (or ``r``), ``auto`` (or ``a``)     |
+  +-----------+-----------------------------------------------------------------+
+  | `Default` | Inherit                                                         |
+  +-----------+-----------------------------------------------------------------+
 
   Base BiDi direction.
 
@@ -492,8 +562,21 @@ Paragraph options
   | `Default` | Inherit                                    |
   +-----------+--------------------------------------------+
 
-  Locale override.
+  Locale override. Some font files may contain script-specific substitutes, in which case they will be used.
 
+- **tab_stops**
+
+  +-----------+----------------------------------------------------+
+  | `Values`  | List of floating-point numbers, e.g. ``10.0,30.0`` |
+  +-----------+----------------------------------------------------+
+  | `Default` | Width of the space character in the font           |
+  +-----------+----------------------------------------------------+
+
+  Overrides the horizontal offsets for each tab character. When the end of the
+  list is reached, the tab stops will loop over. For example, if you set
+  ``tab_stops`` to ``10.0,30.0``, the first tab will be at ``10`` pixels, the
+  second tab will be at ``10 + 30 = 40`` pixels, and the third tab will be at
+  ``10 + 30 + 10 = 50`` pixels from the origin of the RichTextLabel.
 
 .. _doc_bbcode_in_richtextlabel_handling_url_tag_clicks:
 
@@ -507,22 +590,70 @@ To handle clicked ``[url]`` tags, connect the ``RichTextLabel`` node's
 :ref:`meta_clicked <class_RichTextLabel_signal_meta_clicked>` signal to a script function.
 
 For example, the following method can be connected to ``meta_clicked`` to open
-clicked URLs using the user's default web browser::
+clicked URLs using the user's default web browser:
+
+::
 
     # This assumes RichTextLabel's `meta_clicked` signal was connected to
     # the function below using the signal connection dialog.
     func _richtextlabel_on_meta_clicked(meta):
         # `meta` is not guaranteed to be a String, so convert it to a String
-        # to avoid script errors at run-time.
+        # to avoid script errors at runtime.
         OS.shell_open(str(meta))
 
-For more advanced use cases, it's also possible to store JSON in an ``[url]``
+For more advanced use cases, it's also possible to store JSON in a ``[url]``
 tag's option and parse it in the function that handles the ``meta_clicked`` signal.
 For example:
 
 .. code-block:: none
 
   [url={"example": "value"}]JSON[/url]
+
+
+.. _doc_bbcode_in_richtextlabel_hr_options:
+
+Horizontal rule options
+~~~~~~~~~~~~~~~~~~~~~~~
+
+- **color**
+
+  +-----------+--------------------------------------------+
+  | `Values`  | Color name or color in HEX format          |
+  +-----------+--------------------------------------------+
+  | `Default` | ``Color(1, 1, 1, 1)``                      |
+  +-----------+--------------------------------------------+
+
+  Color tint of the rule (modulation).
+
+- **height**
+
+  +-----------+--------------------------------------------+
+  | `Values`  | Integer number                             |
+  +-----------+--------------------------------------------+
+  | `Default` | ``2``                                      |
+  +-----------+--------------------------------------------+
+
+  Target height of the rule in pixels, add ``%`` to the end of value to specify it as percentages of the control width instead of pixels.
+
+- **width**
+
+  +-----------+--------------------------------------------+
+  | `Values`  | Integer number                             |
+  +-----------+--------------------------------------------+
+  | `Default` | ``90%``                                    |
+  +-----------+--------------------------------------------+
+
+  Target width of the rule in pixels, add ``%`` to the end of value to specify it as percentages of the control width instead of pixels.
+
+- **align**
+
+  +-----------+----------------------------------------------------------------------------------------+
+  | `Values`  | ``left`` (or ``l``), ``center`` (or ``c``), ``right`` (or ``r``)                       |
+  +-----------+----------------------------------------------------------------------------------------+
+  | `Default` | ``left``                                                                               |
+  +-----------+----------------------------------------------------------------------------------------+
+
+  Horizontal alignment.
 
 
 .. _doc_bbcode_in_richtextlabel_image_options:
@@ -543,22 +674,22 @@ Image options
 - **height**
 
   +-----------+--------------------------------------------+
-  | `Values`  | Number in pixels                           |
+  | `Values`  | Integer number                             |
   +-----------+--------------------------------------------+
   | `Default` | Inherit                                    |
   +-----------+--------------------------------------------+
 
-  Target height of the image.
+  Target height of the image in pixels, add ``%`` to the end of value to specify it as percentages of the control width instead of pixels.
 
 - **width**
 
   +-----------+--------------------------------------------+
-  | `Values`  | Number in pixels                           |
+  | `Values`  | Integer number                             |
   +-----------+--------------------------------------------+
   | `Default` | Inherit                                    |
   +-----------+--------------------------------------------+
 
-  Target width of the image.
+  Target width of the image in pixels, add ``%`` to the end of value to specify it as percentages of the control width instead of pixels.
 
 - **region**
 
@@ -570,24 +701,54 @@ Image options
 
   Region rect of the image. This can be used to display a single image from a spritesheet.
 
-.. _doc_bbcode_in_richtextlabel_image_alignment:
+- **pad**
 
-Image vertical alignment
-~~~~~~~~~~~~~~~~~~~~~~~~
+  +-----------+--------------------------------------------+
+  | `Values`  | ``false``, ``true``                        |
+  +-----------+--------------------------------------------+
+  | `Default` | ``false``                                  |
+  +-----------+--------------------------------------------+
 
-When a vertical alignment value is provided with the ``[img]`` tag the image
-will try to align itself against the surrounding text. Alignment is performed
-using a vertical point of the image and a vertical point of the text. There are
-3 possible points on the image (``top``, ``center``, and ``bottom``) and 4
-possible points on the text (``top``, ``center``, ``baseline``, and ``bottom``),
+  If set to ``true``, and the image is smaller than the size specified by ``width`` and ``height``, the image padding is added to match the size instead of upscaling.
+
+- **tooltip**
+
+  +-----------+--------------------------------------------+
+  | `Values`  | String                                     |
+  +-----------+--------------------------------------------+
+  | `Default` |                                            |
+  +-----------+--------------------------------------------+
+
+  Image tooltip.
+
+.. _doc_bbcode_in_richtextlabel_image_and_table_alignment:
+
+Image and table vertical alignment
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When a vertical alignment value is provided with the ``[img]`` or ``[table]`` tag
+the image/table will try to align itself against the surrounding text. Alignment is
+performed using a vertical point of the image and a vertical point of the text.
+There are 3 possible points on the image (``top``, ``center``, and ``bottom``) and 4
+possible points on the text and table (``top``, ``center``, ``baseline``, and ``bottom``),
 which can be used in any combination.
 
-To specify both points, use their full or short names as a value of the image tag:
+To specify both points, use their full or short names as a value of the image/table tag:
 
 .. code-block:: none
 
-    [img=top,bottom]
-    [img=center,center]
+    text [img=top,bottom]...[/img] text
+    text [img=center,center]...[/img] text
+
+.. image:: img/bbcode_in_richtextlabel_image_align.webp
+
+.. code-block:: none
+
+    text [table=3,center]...[/table] text  # Center to center.
+    text [table=3,top,bottom]...[/table] text # Top of the table to the bottom of text.
+    text [table=3,baseline,baseline,1]...[/table] text # Baseline of the second row (rows use zero-based indexing) to the baseline of text.
+
+.. image:: img/bbcode_in_richtextlabel_table_align.webp
 
 You can also specify just one value (``top``, ``center``, or ``bottom``) to make
 use of a corresponding preset (``top-top``, ``center-center``, and ``bottom-bottom``
@@ -622,16 +783,123 @@ Font options
 
   Custom font size.
 
+- **glyph_spacing**, **gl**
+
+  +-----------+--------------------------------------------+
+  | `Values`  | Number in pixels.                          |
+  +-----------+--------------------------------------------+
+  | `Default` | Inherit                                    |
+  +-----------+--------------------------------------------+
+
+  Extra spacing for each glyph.
+
+- **space_spacing**, **sp**
+
+  +-----------+--------------------------------------------+
+  | `Values`  | Number in pixels.                          |
+  +-----------+--------------------------------------------+
+  | `Default` | Inherit                                    |
+  +-----------+--------------------------------------------+
+
+  Extra spacing for the space character.
+
+- **top_spacing**, **top**
+
+  +-----------+--------------------------------------------+
+  | `Values`  | Number in pixels.                          |
+  +-----------+--------------------------------------------+
+  | `Default` | Inherit                                    |
+  +-----------+--------------------------------------------+
+
+  Extra spacing at the top of the line.
+
+- **bottom_spacing**, **bt**
+
+  +-----------+--------------------------------------------+
+  | `Values`  | Number in pixels.                          |
+  +-----------+--------------------------------------------+
+  | `Default` | Inherit                                    |
+  +-----------+--------------------------------------------+
+
+  Extra spacing at the bottom of the line.
+
+- **embolden**, **emb**
+
+  +-----------+--------------------------------------------+
+  | `Values`  | Floating-point number.                     |
+  +-----------+--------------------------------------------+
+  | `Default` | ``0.0``                                    |
+  +-----------+--------------------------------------------+
+
+  Font embolden strength, if it is not equal to zero, emboldens the font outlines. Negative values reduce the outline thickness.
+
+- **face_index**, **fi**
+
+  +-----------+--------------------------------------------+
+  | `Values`  | Integer number.                            |
+  +-----------+--------------------------------------------+
+  | `Default` | ``0``                                      |
+  +-----------+--------------------------------------------+
+
+  An active face index in the TrueType / OpenType collection.
+
+- **slant**, **sln**
+
+  +-----------+--------------------------------------------+
+  | `Values`  | Floating-point number.                     |
+  +-----------+--------------------------------------------+
+  | `Default` | ``0.0``                                    |
+  +-----------+--------------------------------------------+
+
+  Font slant strength, positive values slant glyphs to the right. Negative values to the left.
+
+- **opentype_variation**, **otv**
+
+  +-----------+----------------------------------------------------------------------------------+
+  | `Values`  | Comma-separated list of the OpenType variation tags (no space after each comma). |
+  +-----------+----------------------------------------------------------------------------------+
+  | `Default` |                                                                                  |
+  +-----------+----------------------------------------------------------------------------------+
+
+  Font OpenType variation coordinates. See `OpenType variation tags <https://docs.microsoft.com/en-us/typography/opentype/spec/dvaraxisreg>`__.
+
+  Note: The value should be enclosed in ``"`` to allow using ``=`` inside it:
+
+.. code-block:: none
+
+    [font otv="wght=200,wdth=400"] # Sets variable font weight and width.
+
+- **opentype_features**, **otf**
+
+  +-----------+--------------------------------------------------------------------------------+
+  | `Values`  | Comma-separated list of the OpenType feature tags (no space after each comma). |
+  +-----------+--------------------------------------------------------------------------------+
+  | `Default` |                                                                                |
+  +-----------+--------------------------------------------------------------------------------+
+
+  Font OpenType features. See `OpenType features tags <https://docs.microsoft.com/en-us/typography/opentype/spec/featuretags>`__.
+
+  Note: The value should be enclosed in ``"`` to allow using ``=`` inside it:
+
+.. code-block:: none
+
+    [font otf="calt=0,zero=1"] # Disable contextual alternates, enable slashed zero.
 
 .. _doc_bbcode_in_richtextlabel_named_colors:
 
 Named colors
 ~~~~~~~~~~~~
 
-For tags that allow specifying a color by name you can use names of the constants from
+For tags that allow specifying a color by name, you can use names of the constants from
 the built-in :ref:`class_Color` class. Named classes can be specified in a number of
 styles using different casings: ``DARK_RED``, ``DarkRed``, and ``darkred`` will give
 the same exact result.
+
+See this image for a list of color constants:
+
+.. image:: /img/color_constants.png
+
+`View at full size <https://raw.githubusercontent.com/godotengine/godot-docs/master/img/color_constants.png>`__
 
 .. _doc_bbcode_in_richtextlabel_hex_colors:
 
@@ -684,6 +952,16 @@ Cell options
   Cell background color. For alternating odd/even row backgrounds,
   you can use ``bg=odd_color,even_color``.
 
+- **padding**
+
+  +-----------+--------------------------------------------------------------------------+
+  | `Values`  | 4 comma-separated floating-point numbers (no space after each comma)     |
+  +-----------+--------------------------------------------------------------------------+
+  | `Default` | ``0,0,0,0``                                                              |
+  +-----------+--------------------------------------------------------------------------+
+
+  Left, top, right, and bottom cell padding.
+
 .. _doc_bbcode_in_richtextlabel_unordered_list_bullet:
 
 Unordered list bullet
@@ -692,9 +970,9 @@ Unordered list bullet
 By default, the ``[ul]`` tag uses the ``U+2022`` "Bullet" Unicode glyph as the
 bullet character. This behavior is similar to web browsers. The bullet character
 can be customized using ``[ul bullet={bullet}]``. If provided, this ``{bullet}``
-parameter must be a *single* character with no enclosing quotes (for example,
-``[bullet=*]``). Additional characters are ignored. The bullet character's
-width does not affect the list's formatting.
+parameter must be a string with no enclosing quotes (for example,
+``[bullet=*]``). You can add trailing spaces after the bullet character
+to increase the spacing between the bullet and the list item text.
 
 See `Bullet (typography) on Wikipedia <https://en.wikipedia.org/wiki/Bullet_(typography)>`__
 for a list of common bullet characters that you can paste directly in the ``bullet`` parameter.
@@ -725,13 +1003,28 @@ All examples below mention the default values for options in the listed tag form
 
 .. note::
 
-    Text effects that move characters' position may result in characters being
+    Text effects that move characters' positions may result in characters being
     clipped by the RichTextLabel node bounds.
 
     You can resolve this by disabling **Control > Layout > Clip Contents** in
     the inspector after selecting the RichTextLabel node, or ensuring there is
     enough margin added around the text by using line breaks above and below the
     line using the effect.
+
+Pulse
+~~~~~
+
+.. image:: img/bbcode_in_richtextlabel_effect_pulse.webp
+
+Pulse creates an animated pulsing effect that multiplies each character's
+opacity and color. It can be used to bring attention to specific text. Its tag
+format is ``[pulse freq=1.0 color=#ffffff40 ease=-2.0]{text}[/pulse]``.
+
+``freq`` controls the frequency of the half-pulsing cycle (higher is faster). A
+full pulsing cycle takes ``2 * (1.0 / freq)`` seconds. ``color`` is the target
+color multiplier for blinking. The default mostly fades out text, but not
+entirely. ``ease`` is the easing function exponent to use. Negative values
+provide in-out easing, which is why the default is ``-2.0``.
 
 Wave
 ~~~~
@@ -797,12 +1090,13 @@ Rainbow
 .. image:: img/bbcode_in_richtextlabel_effect_rainbow.webp
 
 Rainbow gives the text a rainbow color that changes over time. Its tag format is
-``[rainbow freq=1.0 sat=0.8 val=0.8]{text}[/rainbow]``.
+``[rainbow freq=1.0 sat=0.8 val=0.8 speed=1.0]{text}[/rainbow]``.
 
-``freq`` is the number of full rainbow cycles per second, ``sat`` is the
-saturation of the rainbow, ``val`` is the value of the rainbow. A ``freq`` value
-of ``0`` will pause the animation, while negative ``freq`` will play the
-animation backwards.
+``freq`` determines how many letters the rainbow extends over before it repeats itself,
+``sat`` is the saturation of the rainbow, ``val`` is the value of the rainbow. ``speed``
+is the number of full rainbow cycles per second. A positive ``speed`` value will play
+the animation forwards, a value of ``0`` will pause the animation, and a negative
+``speed`` value will play the animation backwards.
 
 Font outlines are *not* affected by the rainbow effect (they keep their original color).
 Existing font colors are overridden by the rainbow effect. However, CanvasItem's
@@ -834,7 +1128,7 @@ the Inspector by adding it to the **Markup > Custom Effects** array, or in code 
     tag will be left as-is.
 
 There is only one function that you need to extend: ``_process_custom_fx(char_fx)``.
-Optionally, you can also provide a custom BBCode identifier simply by adding a member
+Optionally, you can also provide a custom BBCode identifier by adding a member
 name ``bbcode``. The code will check the ``bbcode`` property automatically or will
 use the name of the file to determine what the BBCode tag should be.
 
@@ -845,8 +1139,6 @@ This is where the logic of each effect takes place and is called once per glyph
 during the draw phase of text rendering. This passes in a :ref:`class_CharFXTransform`
 object, which holds a few variables to control how the associated glyph is rendered:
 
-- ``identity`` specifies which custom effect is being processed. You should use that for
-  code flow control.
 - ``outline`` is ``true`` if effect is called for drawing text outline.
 - ``range`` tells you how far into a given custom effect block you are in as an
   index.
@@ -892,34 +1184,6 @@ Ghost
         var alpha = sin(char_fx.elapsed_time * speed + (char_fx.range.x / span)) * 0.5 + 0.5
         char_fx.color.a = alpha
         return true
-
-Pulse
-~~~~~
-
-::
-
-    @tool
-    extends RichTextEffect
-    class_name RichTextPulse
-
-    # Syntax: [pulse color=#ffffff33 freq=1.0 ease=-2.0 height=0][/pulse]
-
-    # Define the tag name.
-    var bbcode = "pulse"
-
-    func _process_custom_fx(char_fx):
-        # Get parameters, or use the provided default value if missing.
-        var color = Color(char_fx.env.get("color", Color(1, 1, 1, 0.2)))
-        var freq = char_fx.env.get("freq", 1.0)
-        var param_ease = char_fx.env.get("ease", -2.0)
-        var height = char_fx.env.get("height", 0)
-
-        var sined_time = (ease(pingpong(char_fx.elapsed_time, 1.0 / freq) * freq, param_ease))
-        var y_off = sined_time * height
-        char_fx.color = char_fx.color.lerp(char_fx.color * color, sined_time)
-        char_fx.offset = Vector2(0, -1) * y_off
-        return true
-
 
 Matrix
 ~~~~~~

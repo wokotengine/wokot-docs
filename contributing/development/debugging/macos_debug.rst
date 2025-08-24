@@ -29,10 +29,14 @@ Create an ``editor.entitlements`` text file with the following contents:
             <true/>
             <key>com.apple.security.device.camera</key>
             <true/>
+            <key>com.apple.security.get-task-allow</key>
+            <true/>
         </dict>
     </plist>
 
-Then use the following command to re-sign the editor::
+Then use the following command to re-sign the editor:
+
+::
 
     codesign -s - --deep --force --options=runtime --entitlements ./editor.entitlements ./path/to/Godot.app
 

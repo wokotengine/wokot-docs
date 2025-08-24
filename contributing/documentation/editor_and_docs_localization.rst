@@ -12,12 +12,11 @@ translation effort of the community.
 
 These resources include:
 
-1. The `Godot editor's interface <https://hosted.weblate.org/projects/godot-engine/godot/>`__
-   (ca. 15,000 words).
-2. The `online documentation <https://hosted.weblate.org/projects/godot-engine/godot-docs/>`__
-   (editor manual and tutorials, ca. 300,000 words).
-3. The `class reference <https://hosted.weblate.org/projects/godot-engine/godot-class-reference/>`__,
-   available both online and in the editor (ca. 200,000 words).
+1. The `Godot editor's interface <https://hosted.weblate.org/projects/godot-engine/godot/>`__.
+2. The `class reference <https://hosted.weblate.org/projects/godot-engine/godot-class-reference/>`__,
+   available both online and in the editor.
+3. The `online documentation <https://hosted.weblate.org/projects/godot-engine/godot-docs/>`__
+   (editor manual and tutorials).
 
 To manage translations, we use the GNU gettext file format (``PO`` files), and
 the open source `Weblate <https://weblate.org>`__ web-based localization
@@ -33,8 +32,7 @@ localization of images.
 
     Translating all the official Godot content is a massive undertaking, so we
     advise prioritizing the resources as they are listed above: first the editor
-    interface, then the online documentation, and eventually the class reference
-    if there are enough translators to keep up with updates.
+    interface, then the class reference, then the online documentation.
 
 Using Weblate for translations
 ------------------------------
@@ -61,7 +59,7 @@ as an example) to find the list of all languages:
     more details.
 
 Adding a new language
-^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~
 
 If your language is already listed, click on its name to access the overview,
 and skip the rest of this section.
@@ -94,7 +92,7 @@ to translate to:
     ``pt_PT``).
 
 Translation interface
-^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~
 
 Once a language has been selected, you will see an overview of the translation
 status, including how many strings are left to translate or review. Each item
@@ -210,7 +208,7 @@ having some notions on the markup language used for each resource is important
 to avoid creating syntax errors in your translations.
 
 Editor interface (C++)
-^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~
 
 The editor translations originate from C++ strings, and may use:
 
@@ -219,13 +217,15 @@ The editor translations originate from C++ strings, and may use:
   placed in your translation where necessary for it to be meaningful after
   substitution. You may need to refer to the source string location to
   understand what kind of content will be substituted if it's not clear from the
-  sentence. Example (``%s``  will be substituted with a file name or path)::
+  sentence. Example (``%s``  will be substituted with a file name or path):
 
-    # PO file:
-    "There is no '%s' file."
+    ::
 
-    # Weblate:
-    There is no '%s' file.
+        # PO file:
+        "There is no '%s' file."
+
+        # Weblate:
+        There is no '%s' file.
 
 - **C escape characters** such as ``\n`` (line break) or ``\t`` (tabulation). In
   the Weblate editor, the ``\n`` characters are replaced by ``↵`` (return) and
@@ -233,26 +233,30 @@ The editor translations originate from C++ strings, and may use:
   breaks in the same way as the original English string (Weblate will issue a
   warning if you don't). Line breaks might sometimes be used for vertical
   spacing, or manual wrapping of long lines which would otherwise be too long
-  especially in the editor translation). Example::
+  especially in the editor translation). Example:
 
-    # PO file:
-    "Scene '%s' is currently being edited.\n"
-    "Changes will only take effect when reloaded."
+    ::
 
-    # Weblate:
-    Scene '%s' is currently being edited.↵
-    Changes will only take effect when reloaded.
+        # PO file:
+        "Scene '%s' is currently being edited.\n"
+        "Changes will only take effect when reloaded."
+
+        # Weblate:
+        Scene '%s' is currently being edited.↵
+        Changes will only take effect when reloaded.
 
 .. note::
   Only logical order of the characters matters, in the right-to-left text, format
   specifiers may be displayed as ``s%``.
 
 Online documentation (RST)
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The documentation translations originate from reStructuredText (RST) files,
 which also use their own markup syntax to style text, create internal and
-external links, etc. Here are some examples::
+external links, etc. Here are some examples:
+
+::
 
     # "development" is styled bold.
     # "Have a look here" is a link pointing to https://docs.godotengine.org/en/latest.
@@ -298,7 +302,7 @@ external links, etc. Here are some examples::
     and the internal and external hyperlink markup.
 
 Class reference (BBCode)
-^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~
 
 The class reference is documented in the main Godot repository using XML files,
 and with BBCode-like markup for styling and internal references.
@@ -307,7 +311,9 @@ Some of the tags used are from the original BBCode (e.g. ``[b]Bold[/b]`` and
 ``[i]Italics[/i]``), while others are Godot-specific and used for advanced
 features such as inline code (e.g. ``[code]true[/code]``), linking to another
 class (e.g. ``[Node2D]``) or to a property in a given class (e.g.
-``[member Node2D.position]``), or for multiline code blocks. Example::
+``[member Node2D.position]``), or for multiline code blocks. Example:
+
+::
 
     Returns a color according to the standardized [code]name[/code] with [code]alpha[/code] ranging from 0 to 1.
     [codeblock]

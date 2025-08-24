@@ -1,3 +1,5 @@
+:allow_comments: False
+
 .. _doc_contributing_writing_documentation:
 
 Writing documentation
@@ -23,6 +25,7 @@ documentation.
    content_guidelines
    docs_writing_guidelines
    docs_image_guidelines
+   docs_contribution_checklist
 
 Writing the manual
 ------------------

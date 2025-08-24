@@ -9,12 +9,15 @@ Most standalone headsets run on Android and OpenXR support is making its way to 
 
 Before following the OpenXR-specific instructions here, you'll need to first setup your system to export to Android in general, including:
 
-- Installing OpenJDK 11
+- Installing OpenJDK 17
 - Installing Android Studio
-- Creating a debug.keystore
-- Configuring the location of the Android SDK and debug.keystore in Godot
+- Configuring the location of the Android SDK in Godot
 
 See :ref:`doc_exporting_for_android` for the full details, and return here when you've finished these steps.
+
+.. warning::
+    While the Mobile Vulkan renderer has many optimizations targeted at mobile devices, we're still working out the kinks.
+    It is highly advisable to use the compatibility renderer (OpenGL) for the time being when targeting Android based XR devices.
 
 Gradle Android build
 --------------------
@@ -33,34 +36,20 @@ This will create a folder called **android** inside of your project that contain
 
 You can read more about gradle builds here: :ref:`doc_android_gradle_build`.
 
-Installing the loader plugin
-----------------------------
+Installing the vendors plugin
+-----------------------------
 
-.. warning::
-    The Android plugin structure has been restructured in Godot 4.2, if you've previously installed the loader plugin you need to delete it from the `android/plugins` folder.
-    The loader plugin available in the asset library is still the old one, it will be updated to the new one after 4.2 is released.
-
-The loaders can be downloaded from the asset library, search for OpenXR Loaders and install the plugin:
+The vendors plugin can be downloaded from the asset library, search for "OpenXR vendors"
+and install the one named "Godot OpenXR Vendors plugin v4".
 
 .. image:: img/openxr_loader_asset_lib.webp
 
-You will find the installed files inside the **addons** folder.
+You will find the installed files inside the **addons** folder. Alternatively you
+can manually install the vendors plugin by downloading it `from the release page here <https://github.com/GodotVR/godot_openxr_vendors/releases>`__.
+You will need to copy the `assets/addons/godotopenxrvendors` folder from the zip
+file into your projects `addons` folder.
 
-Alternatively you can manually install the loader plugin by downloading the v2.x version of the plugin `from the release page here <https://github.com/GodotVR/godot_openxr_loaders/releases>`__.
-
-You will need to copy the `assets/addons/godotopenxr` folder from the zip file into your projects `assets/addons` folder.
-
-You can find the main repository of the loader plugin `here <https://github.com/GodotVR/godot_openxr_loaders>`__.
-
-Enabling the loader plugin
---------------------------
-
-The loader plugin needs to be enabled before the export settings become accessible.
-Open **Project** and select **Project Settings...**.
-Go to the **Plugins** tab.
-Enable the **GodotOpenXR** plugin.
-
-.. image:: img/xr_enable_loader_plugin.webp
+You can find the main repository of the vendors plugin `here <https://github.com/GodotVR/godot_openxr_vendors>`__.
 
 Creating the export presets
 ---------------------------
@@ -72,30 +61,17 @@ Next change the name of the export preset for the device you're setting this up 
 And enable **Use Gradle Build**.
 If you want to use one-click deploy (described below), ensure that **Runnable** is enabled.
 
-If the loader plugins were installed correctly you should find entries for the different headsets, select the entry for meta:
+If the vendors plugins were installed correctly you should find entries for the
+different headsets under **XR Features**. Change the **XR Mode** to **OpenXR**, then
+select the entry for your headset if you see one. If you don't see one enable the
+Khronos plugin.
 
 .. image:: img/android_meta_quest.webp
 
-Also change the **XR Mode** to **OpenXR**.
-
-Scroll to the bottom of the list and you'll find additional XR feature sections, currently only **Meta XR Features** is available.
-The hand tracking and passthrough settings here currently only work for the Meta Quest and you will need to select the appropriate settings if you wish to use these features.
-
-.. image:: img/xr_export_features.webp
-
-Now you can repeat the same process for the other devices.
-
-.. note::
-    There are separate loaders for the Meta Quest, Pico and Lynx R1 headsets.
-
-    The fourth option is the official Khronos (KHR) loader, in due time all headsets should work with this loader.
-    At the moment this loader has been tested with the Magic Leap 2 and standalone HTC headsets.
-
-.. warning::
-    While the Mobile Vulkan renderer has many optimizations targeted at mobile devices, we're still working out the kinks.
-    It is highly advisable to use the OpenGL renderer for the time being when targeting Android based XR devices.
-
-    Note that we are awaiting driver updates on various devices before Vulkan support will work on these.
+Scroll to the bottom of the list and you'll find additional XR feature sections,
+currently only **Meta XR Features**, **Pico XR Features**, **Magicleap XR Features**
+and **Khronos XR Features** for HTC are available. You will need to select the
+appropriate settings if you wish to use these features.
 
 Running on your device from the Godot editor
 --------------------------------------------

@@ -1,3 +1,5 @@
+:allow_comments: False
+
 Internationalization
 ====================
 
@@ -6,6 +8,7 @@ Internationalization
    :name: toc-learn-features-i18n
 
    internationalizing_games
+   localization_using_spreadsheets
    localization_using_gettext
    locales
    pseudolocalization

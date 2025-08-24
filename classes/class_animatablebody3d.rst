@@ -28,11 +28,15 @@ When **AnimatableBody3D** is moved, its linear and angular velocity are estimate
 Tutorials
 ---------
 
-- `3D Physics Tests Demo <https://godotengine.org/asset-library/asset/675>`__
+- :doc:`Physics introduction <../tutorials/physics/physics_introduction>`
 
-- `Third Person Shooter Demo <https://godotengine.org/asset-library/asset/678>`__
+- :doc:`Troubleshooting physics issues <../tutorials/physics/troubleshooting_physics_issues>`
 
-- `3D Voxel Demo <https://godotengine.org/asset-library/asset/676>`__
+- `3D Physics Tests Demo <https://godotengine.org/asset-library/asset/2747>`__
+
+- `Third Person Shooter (TPS) Demo <https://godotengine.org/asset-library/asset/2710>`__
+
+- `3D Voxel Demo <https://godotengine.org/asset-library/asset/2755>`__
 
 .. rst-class:: classref-reftable-group
 
@@ -59,19 +63,21 @@ Property Descriptions
 
 .. rst-class:: classref-property
 
-:ref:`bool<class_bool>` **sync_to_physics** = ``true``
+:ref:`bool<class_bool>` **sync_to_physics** = ``true`` :ref:`🔗<class_AnimatableBody3D_property_sync_to_physics>`
 
 .. rst-class:: classref-property-setget
 
-- void **set_sync_to_physics** **(** :ref:`bool<class_bool>` value **)**
-- :ref:`bool<class_bool>` **is_sync_to_physics_enabled** **(** **)**
+- |void| **set_sync_to_physics**\ (\ value\: :ref:`bool<class_bool>`\ )
+- :ref:`bool<class_bool>` **is_sync_to_physics_enabled**\ (\ )
 
-If ``true``, the body's movement will be synchronized to the physics frame. This is useful when animating movement via :ref:`AnimationPlayer<class_AnimationPlayer>`, for example on moving platforms. Do **not** use together with :ref:`PhysicsBody3D.move_and_collide<class_PhysicsBody3D_method_move_and_collide>`.
+If ``true``, the body's movement will be synchronized to the physics frame. This is useful when animating movement via :ref:`AnimationPlayer<class_AnimationPlayer>`, for example on moving platforms. Do **not** use together with :ref:`PhysicsBody3D.move_and_collide()<class_PhysicsBody3D_method_move_and_collide>`.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
+.. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`
 .. |const| replace:: :abbr:`const (This method has no side effects. It doesn't modify any of the instance's member variables.)`
 .. |vararg| replace:: :abbr:`vararg (This method accepts any number of arguments after the ones described here.)`
 .. |constructor| replace:: :abbr:`constructor (This method is used to construct a type.)`
 .. |static| replace:: :abbr:`static (This method doesn't need an instance to be called, so it can be called directly using the class name.)`
 .. |operator| replace:: :abbr:`operator (This method describes a valid operator to use with this type as left-hand operand.)`
 .. |bitfield| replace:: :abbr:`BitField (This value is an integer composed as a bitmask of the following flags.)`
+.. |void| replace:: :abbr:`void (No return value.)`

@@ -25,27 +25,44 @@ For example, you might have a life bar on the screen that represents the
 player's health. When the player takes damage or uses a healing potion, you want
 the bar to reflect the change. To do so, in Godot, you would use signals.
 
-.. note:: As mentioned in the introduction, signals are Godot's version of the
-          observer pattern. You can learn more about it here:
-          https://gameprogrammingpatterns.com/observer.html
+Like methods (:ref:`class_callable`), signals are a first-class type since Godot
+4.0. This means you can pass them around as method arguments directly without
+having to pass them as strings, which allows for better autocompletion and is
+less error-prone. See the :ref:`class_signal` class reference for a list of
+what you can do with the Signal type directly.
+
+.. seealso::
+
+    As mentioned in the introduction, signals are Godot's version of the
+    observer pattern. You can learn more about it in
+    `Game Programming Patterns <https://gameprogrammingpatterns.com/observer.html>`__.
 
 We will now use a signal to make our Godot icon from the previous lesson
 (:ref:`doc_scripting_player_input`) move and stop by pressing a button.
 
-.. Example
+.. note:: For this project, we will be following the Godot naming conventions.
+
+          - **GDScript**: Classes (nodes) use PascalCase, variables and
+            functions use snake_case, and constants use ALL_CAPS (See
+            :ref:`doc_gdscript_styleguide`).
+
+          - **C#**: Classes, export variables and methods use PascalCase,
+            private fields use _camelCase, local variables and parameters use
+            camelCase (See :ref:`doc_c_sharp_styleguide`). Be careful to type
+            the method names precisely when connecting signals.
 
 Scene setup
 -----------
 
-To add a button to our game, we will create a new main scene which will include
+To add a button to our game, we will create a new scene which will include
 both a :ref:`Button <class_button>` and the ``sprite_2d.tscn`` scene we created in
 the :ref:`doc_scripting_first_script` lesson.
 
-Create a new scene by going to the menu Scene -> New Scene.
+Create a new scene by going to the menu :menu:`Scene > New Scene`.
 
 .. image:: img/signals_01_new_scene.webp
 
-In the Scene dock, click the 2D Scene button. This will add
+In the Scene dock, click the :button:`2D Scene` button. This will add
 a :ref:`Node2D <class_Node2D>` as our root.
 
 .. image:: img/signals_02_2d_scene.webp
@@ -56,7 +73,7 @@ previously onto the Node2D to instantiate it.
 .. image:: img/signals_03_dragging_scene.png
 
 We want to add another node as a sibling of the Sprite2D. To do so, right-click
-on Node2D and select Add Child Node.
+on Node2D and select :button:`Add Child Node`.
 
 .. image:: img/signals_04_add_child_node.webp
 
@@ -75,8 +92,8 @@ If you don't see the handles, ensure the select tool is active in the toolbar.
 
 Click and drag on the button itself to move it closer to the sprite.
 
-You can also write a label on the Button by editing its Text property in the
-Inspector. Enter ``Toggle motion``.
+You can also write a label on the Button by editing its :inspector:`Text` property
+in the :ui:`Inspector`. Enter ``Toggle motion``.
 
 .. image:: img/signals_08_toggle_motion_text.webp
 
@@ -97,8 +114,9 @@ want to call a new function that will toggle its motion on and off. We need to
 have a script attached to the Sprite2D node, which we do from the previous
 lesson.
 
-You can connect signals in the Node dock. Select the Button node and, on the
-right side of the editor, click on the tab named "Node" next to the Inspector.
+You can connect signals in the :ui:`Node` dock. Select the Button node and, on the
+right side of the editor, click on the tab named :ui:`Node` next to the
+:ui:`Inspector`.
 
 .. image:: img/signals_10_node_dock.webp
 
@@ -108,7 +126,7 @@ The dock displays a list of signals available on the selected node.
 
 Double-click the "pressed" signal to open the node connection window.
 
-.. image:: img/signals_12_node_connection.png
+.. image:: img/signals_12_node_connection.webp
 
 There, you can connect the signal to the Sprite2D node. The node needs a
 receiver method, a function that Godot will call when the Button emits the
@@ -125,11 +143,17 @@ methods "_on_node_name_signal_name". Here, it'll be "_on_button_pressed".
 
    The advanced view lets you connect to any node and any built-in
    function, add arguments to the callback, and set options. You can
-   toggle the mode in the window's bottom-right by clicking the Advanced
+   toggle the mode in the window's bottom-right by clicking the :button:`Advanced`
    button.
 
-Click the Connect button to complete the signal connection and jump to the
-Script workspace. You should see the new method with a connection icon in the
+.. note::
+
+    If you are using an external editor (such as VS Code), this
+    automatic code generation might not work. In this case, you need to connect
+    the signal via code as explained in the next section.
+
+Click the :button:`Connect` button to complete the signal connection and jump to the
+:ui:`Script` workspace. You should see the new method with a connection icon in the
 left margin.
 
 .. image:: img/signals_13_signals_connection_icon.webp
@@ -156,6 +180,7 @@ the ``not`` keyword to invert the value.
 
  .. code-tab:: csharp C#
 
+    // We also specified this function name in PascalCase in the editor's connection window.
     private void OnButtonPressed()
     {
         SetProcess(!IsProcessing());
@@ -221,13 +246,15 @@ Your complete ``sprite_2d.gd`` code should look like the following.
             Position += velocity * (float)delta;
         }
 
+        // We also specified this function name in PascalCase in the editor's connection window.
         private void OnButtonPressed()
         {
             SetProcess(!IsProcessing());
         }
     }
 
-Run the scene now and click the button to see the sprite start and stop.
+Run the current scene by pressing :kbd:`F6` (:kbd:`Cmd + R` on macOS),
+and click the button to see the sprite start and stop.
 
 Connecting a signal via code
 ----------------------------
@@ -245,16 +272,16 @@ In the Scene dock, right-click on the Sprite2D node and add a new child node.
 Search for Timer and add the corresponding node. Your scene should now look like
 this.
 
-.. image:: img/signals_15_scene_tree.png
+.. image:: img/signals_15_scene_tree.webp
 
-With the Timer node selected, go to the Inspector and enable the **Autostart**
+With the Timer node selected, go to the :ui:`Inspector` and enable the :inspector:`Autostart`
 property.
 
-.. image:: img/signals_18_timer_autostart.png
+.. image:: img/signals_18_timer_autostart.webp
 
 Click the script icon next to Sprite2D to jump back to the scripting workspace.
 
-.. image:: img/signals_16_click_script.png
+.. image:: img/signals_16_click_script.webp
 
 We need to do two operations to connect the nodes via code:
 
@@ -266,7 +293,7 @@ We need to do two operations to connect the nodes via code:
           listen to the Timer's "timeout" signal.
 
 We want to connect the signal when the scene is instantiated, and we can do that
-using the :ref:`Node._ready() <class_Node_method__ready>` built-in function,
+using the :ref:`Node._ready() <class_Node_private_method__ready>` built-in function,
 which is called automatically by the engine when a node is fully instantiated.
 
 To get a reference to a node relative to the current one, we use the method
@@ -335,7 +362,7 @@ The ``visible`` property is a boolean that controls the visibility of our node.
 The line ``visible = not visible`` toggles the value. If ``visible`` is
 ``true``, it becomes ``false``, and vice-versa.
 
-If you run the scene now, you will see that the sprite blinks on and off, at one
+If you run the Node2D scene now, you will see that the sprite blinks on and off, at one
 second intervals.
 
 Complete script
@@ -393,6 +420,7 @@ Here is the complete ``sprite_2d.gd`` file for reference.
             Position += velocity * (float)delta;
         }
 
+        // We also specified this function name in PascalCase in the editor's connection window.
         private void OnButtonPressed()
         {
             SetProcess(!IsProcessing());
@@ -439,10 +467,10 @@ reaches 0.
 .. note:: As signals represent events that just occurred, we generally use an
           action verb in the past tense in their names.
 
-Your signals work the same way as built-in ones: they appear in the Node tab and
+Your signals work the same way as built-in ones: they appear in the :ui:`Node` tab and
 you can connect to them like any other.
 
-.. image:: img/signals_17_custom_signal.png
+.. image:: img/signals_17_custom_signal.webp
 
 To emit a signal in your scripts, call ``emit()`` on the signal.
 
@@ -472,7 +500,7 @@ names between parentheses:
 .. tabs::
  .. code-tab:: gdscript GDScript
 
-    extends Node
+    extends Node2D
 
     signal health_changed(old_value, new_value)
 

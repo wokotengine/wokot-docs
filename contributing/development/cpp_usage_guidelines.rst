@@ -45,29 +45,25 @@ variables and ``nullptr`` is encouraged when possible. Still, try to keep your
 use of modern C++ features conservative. Their use needs to serve a real
 purpose, such as improving code readability or performance.
 
+.. _doc_cpp_godot_types:
+
 Standard Template Library
-^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
 We don't allow using the `STL <https://en.wikipedia.org/wiki/Standard_Template_Library>`__
 as Godot provides its own data types (among other things).
 See :ref:`doc_faq_why_not_stl` for more information.
 
 This means that pull requests should **not** use ``std::string``,
-``std::vector`` and the like. Instead, use Godot's datatypes as described below:
+``std::vector`` and the like. Instead, use Godot's datatypes as described in
+the :ref:`doc_core_types` documentation.
 
-- Use ``String`` instead of ``std::string``.
-- Use ``Vector`` instead of ``std::vector``. In some cases, ``LocalVector``
-  can be used as an alternative (ask core developers first).
-- Use ``Array`` instead of ``std::array``.
-
-.. note::
-
-    Godot also has a List datatype (which is a linked list). While List is already used
-    in the codebase, it typically performs worse than other datatypes like Vector
-    and Array. Therefore, List should be avoided in new code unless necessary.
+A 📜 icon denotes the type is part of :ref:`Variant <doc_variant_class>`. This
+means it can be used as a parameter or return value of a method exposed to the
+scripting API.
 
 ``auto`` keyword
-^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~
 
 Please don't use the ``auto`` keyword for type inference. While it can avoid
 repetition, it can also lead to confusing code:
@@ -84,21 +80,49 @@ Keep in mind hover documentation often isn't readily available for pull request
 reviewers. Most of the time, reviewers will use GitHub's online viewer to review
 pull requests.
 
-We chose to forbid ``auto`` instead of allowing it on a case-by-case basis to
-avoid having to decide on difficult edge cases. Thank you for your understanding.
+The ``auto`` keyword can be used in some special cases, like C++ lambda or Objective-C block
+definitions and C++ templates. Please ask before using templates with ``auto`` in a pull request.
+
+.. code-block:: cpp
+
+    // Full type definitions.
+    void (*mult64to128)(uint64_t, uint64_t, uint64_t &, uint64_t &) = [](uint64_t u, uint64_t v, uint64_t &h, uint64_t &l) { ... }
+    void (^JOYSTICK_LEFT)(GCControllerDirectionPad *__strong, float, float) = ^(GCControllerDirectionPad *dpad, float xValue, float yValue) { ... }
+
+    // Less clutter with auto.
+    auto mult64to128 = [](uint64_t u, uint64_t v, uint64_t &h, uint64_t &l) { ... }
+    auto JOYSTICK_LEFT = ^(GCControllerDirectionPad *dpad, float xValue, float yValue) { ... }
+
+    // Compare function for different types.
+    template <typename T1, typename T2>
+    constexpr auto MIN(const T1 m_a, const T2 m_b) {
+        return m_a < m_b ? m_a : m_b;
+    }
+
+We chose to forbid ``auto`` in all other cases. Thank you for your understanding.
 
 Lambdas
-^^^^^^^
+~~~~~~~
 
 Lambdas should be used conservatively when they make code effectively faster or
 simpler, and do not impede readability. Please ask before using lambdas in a
 pull request.
 
-``#pragma once`` directive
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+``#ifdef``-based include guards
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-To follow the existing style, please use standard ``#ifdef``-based include
-guards instead of ``#pragma once`` in new files.
+Starting with 4.5, all files now use the ``#pragma once`` directive, as they
+improve readability and declutter macros. Use of ``#ifdef``-based include
+guards are now actively discouraged.
+
+``try``-``catch`` blocks
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+C++ style exception handling using ``try`` and ``catch`` blocks is forbidden.
+This restriction is in place for several reasons, including performance, binary
+size and code complexity.
+Use :ref:`doc_common_engine_methods_and_macros_error_macros` instead.
+
 
 .. seealso::
 

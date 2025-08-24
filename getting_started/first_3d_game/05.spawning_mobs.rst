@@ -1,5 +1,3 @@
-:article_outdated: True
-
 .. _doc_first_3d_game_spawning_monsters:
 
 Spawning monsters
@@ -20,8 +18,10 @@ Go to *Project -> Project Settings*.
 
 |image1|
 
+If you still have *Input Map* open, switch to the *General* tab.
+
 In the left menu, navigate down to *Display -> Window*. On the right, set the
-*Width* to ``720`` and the *Height* to ``540``.
+*Viewport Width* to ``720`` and the *Viewport Height* to ``540``.
 
 |image2|
 
@@ -106,8 +106,6 @@ In the *Inspector*, expand the *Material* section and assign a :ref:`StandardMat
 
 |image13|
 
-.. image:: img/05.spawning_mobs/standard_material.webp
-
 Click the sphere icon to open the material resource. You get a preview of the
 material and a long list of sections filled with properties. You can use these
 to create all sorts of surfaces, from metal to rock or water.
@@ -145,8 +143,8 @@ Your path should look like this.
 |image18|
 
 To sample random positions on it, we need a :ref:`PathFollow3D <class_PathFollow3D>` node. Add a
-:ref:`PathFollow3D <class_PathFollow3D>` as a child of the ``Path3D``. Rename the two nodes to ``SpawnPath`` and
-``SpawnLocation``, respectively. It's more descriptive of what we'll use them for.
+:ref:`PathFollow3D <class_PathFollow3D>` as a child of the ``Path3D``. Rename the two nodes to ``SpawnLocation`` and
+``SpawnPath``, respectively. It's more descriptive of what we'll use them for.
 
 |image19|
 
@@ -244,7 +242,7 @@ Let's code the mob spawning logic. We're going to:
 
  .. code-tab:: csharp
 
-    // We also specified this function name in PascalCase in the editor's connection window
+    // We also specified this function name in PascalCase in the editor's connection window.
     private void OnMobTimerTimeout()
     {
         // Create a new instance of the Mob scene.
@@ -268,6 +266,20 @@ what the *PathFollow* node's ``progress_ratio`` expects:
 0 is the start of the path, 1 is the end of the path.
 The path we have set is around the camera's viewport, so any random value between 0 and 1
 is a random position alongside the edges of the viewport!
+
+Note that if you remove the ``Player`` from the main scene, the following line
+
+.. tabs::
+   .. code-tab:: gdscript GDScript
+
+    var player_position = $Player.position
+
+   .. code-tab:: csharp
+
+    Vector3 playerPosition = GetNode<Player>("Player").Position;
+
+
+gives an error because there is no $Player!
 
 Here is the complete ``main.gd`` script so far, for reference.
 
@@ -332,28 +344,28 @@ For now, they bump and slide against one another when their paths cross. We'll
 address this in the next part.
 
 .. |image0| image:: img/05.spawning_mobs/01.monsters_path_preview.png
-.. |image1| image:: img/05.spawning_mobs/02.project_settings.png
+.. |image1| image:: img/05.spawning_mobs/02.project_settings.webp
 .. |image2| image:: img/05.spawning_mobs/03.window_settings.webp
 .. |image3| image:: img/05.spawning_mobs/04.camera_preview.png
-.. |image4| image:: img/05.spawning_mobs/05.cylinders_node.png
-.. |image5| image:: img/05.spawning_mobs/06.cylinder_mesh.png
-.. |image6| image:: img/05.spawning_mobs/07.top_view.png
-.. |image7| image:: img/05.spawning_mobs/08.toggle_view_grid.png
-.. |image8| image:: img/05.spawning_mobs/09.toggle_grid_snap.png
+.. |image4| image:: img/05.spawning_mobs/05.cylinders_node.webp
+.. |image5| image:: img/05.spawning_mobs/06.cylinder_mesh.webp
+.. |image6| image:: img/05.spawning_mobs/07.top_view.webp
+.. |image7| image:: img/05.spawning_mobs/08.toggle_view_grid.webp
+.. |image8| image:: img/05.spawning_mobs/09.toggle_grid_snap.webp
 .. |image9| image:: img/05.spawning_mobs/10.place_first_cylinder.png
 .. |image10| image:: img/05.spawning_mobs/11.both_cylinders_selected.png
 .. |image11| image:: img/05.spawning_mobs/12.four_cylinders.png
-.. |image12| image:: img/05.spawning_mobs/13.selecting_all_cylinders.png
+.. |image12| image:: img/05.spawning_mobs/13.selecting_all_cylinders.webp
 .. |image13| image:: img/05.spawning_mobs/14.multi_material_selection.webp
-.. |image14| image:: img/05.spawning_mobs/15.bright-cylinders.png
-.. |image15| image:: img/05.spawning_mobs/16.cylinders_fold.png
-.. |image16| image:: img/05.spawning_mobs/17.points_options.png
-.. |image17| image:: img/05.spawning_mobs/18.close_path.png
+.. |image14| image:: img/05.spawning_mobs/15.bright-cylinders.webp
+.. |image15| image:: img/05.spawning_mobs/16.cylinders_fold.webp
+.. |image16| image:: img/05.spawning_mobs/17.points_options.webp
+.. |image17| image:: img/05.spawning_mobs/18.close_path.webp
 .. |image18| image:: img/05.spawning_mobs/19.path_result.png
-.. |image19| image:: img/05.spawning_mobs/20.spawn_nodes.png
-.. |image20| image:: img/05.spawning_mobs/20.mob_scene_property.png
-.. |image21| image:: img/05.spawning_mobs/21.mob_timer.png
-.. |image22| image:: img/05.spawning_mobs/22.mob_timer_properties.png
-.. |image23| image:: img/05.spawning_mobs/23.timeout_signal.png
+.. |image19| image:: img/05.spawning_mobs/20.spawn_nodes.webp
+.. |image20| image:: img/05.spawning_mobs/20.mob_scene_property.webp
+.. |image21| image:: img/05.spawning_mobs/21.mob_timer.webp
+.. |image22| image:: img/05.spawning_mobs/22.mob_timer_properties.webp
+.. |image23| image:: img/05.spawning_mobs/23.timeout_signal.webp
 .. |image24| image:: img/05.spawning_mobs/24.connect_timer_to_main.webp
 .. |image25| image:: img/05.spawning_mobs/25.spawn_result.png

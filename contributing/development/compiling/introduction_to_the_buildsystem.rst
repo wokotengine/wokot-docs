@@ -8,20 +8,26 @@ Introduction to the buildsystem
 
 Godot is a primarily C++ project and it :ref:`uses the SCons build system. <doc_faq_why_scons>`
 We love SCons for how maintainable and easy to set up it makes our buildsystem. And thanks to
-that compiling Godot from source can be as simple as running::
+that compiling Godot from source can be as simple as running:
+
+::
 
     scons
 
-This produces an *export template* for your current platform, operating system, and architecture.
-An export template is a build of the engine that is used for running exported projects. To build
-the *editor* instead you can run the following command::
+This produces an editor build for your current platform, operating system, and architecture.
+You can change what gets built by specifying a target, a platform, and/or an architecture.
+For example, to build an export template used for running exported games, you can run:
 
-    scons target=editor
+::
 
-If you plan to debug or develop the engine, then you might want to add another option to the command::
+    scons target=template_release
+
+If you plan to debug or develop the engine, then you might want to enable the ``dev_build``
+option to enable dev-only debugging code:
+
+::
 
     scons dev_build=yes
-    scons target=editor dev_build=yes
 
 Following sections in the article will explain these and other universal options in more detail. But
 before you can compile Godot, you need to install a few prerequisites. Please refer to the platform
@@ -31,7 +37,6 @@ documentation to learn more:
 - :ref:`doc_compiling_for_ios`
 - :ref:`doc_compiling_for_linuxbsd`
 - :ref:`doc_compiling_for_macos`
-- :ref:`doc_compiling_for_uwp`
 - :ref:`doc_compiling_for_web`
 - :ref:`doc_compiling_for_windows`
 
@@ -44,12 +49,16 @@ Using multi-threading
 
 The build process may take a while, depending on how powerful your system is. By default, Godot's
 SCons setup is configured to use all CPU threads but one (to keep the system responsive during
-compilation). If you want to adjust how many CPU threads SCons will use, use the ``-j <threads>``
+compilation). If the system has 4 CPU threads or fewer, it will use all threads by default.
+
+If you want to adjust how many CPU threads SCons will use, use the ``-j<threads>``
 parameter to specify how many threads will be used for the build.
 
-Example for using 4 threads::
+Example for using 12 threads:
 
-    scons -j4
+::
+
+    scons -j12
 
 Platform selection
 ------------------
@@ -63,16 +72,19 @@ SCons is invoked by just calling ``scons``. If no platform is specified,
 SCons will detect the target platform automatically based on the host platform.
 It will then start building for the target platform right away.
 
-To list the available target platforms, use ``scons platform=list``::
+To list the available target platforms, use ``scons platform=list``:
+
+.. code:: text
 
     scons platform=list
     scons: Reading SConscript files ...
     The following platforms are available:
 
         android
-        javascript
+        ios
         linuxbsd
-        server
+        macos
+        web
         windows
 
     Please run SCons again and select a valid platform: platform=<string>
@@ -90,11 +102,15 @@ Resulting binary
 ----------------
 
 The resulting binaries will be placed in the ``bin/`` subdirectory,
-generally with this naming convention::
+generally with this naming convention:
+
+::
 
     godot.<platform>.<target>[.dev][.double].<arch>[.<extra_suffix>][.<ext>]
 
-For the previous build attempt, the result would look like this::
+For the previous build attempt, the result would look like this:
+
+.. code-block:: console
 
     ls bin
     bin/godot.linuxbsd.editor.x86_64
@@ -104,7 +120,7 @@ whole editor compiled in, and is meant for 64 bits.
 
 A Windows binary with the same configuration will look like this:
 
-.. code-block:: console
+.. code-block:: doscon
 
     C:\godot> dir bin/
     godot.windows.editor.64.exe
@@ -123,20 +139,26 @@ build targets, and which will be explained below.
 Target
 ------
 
-Target controls if the editor is contained and debug flags are used.
-All builds are optimized. Each mode means:
+The ``target`` option controls if the editor is compiled and debug flags are used.
+Optimization levels (``optimize``) and whether each build contains debug symbols
+(``debug_symbols``) is controlled separately from the target. Each mode means:
 
--  ``target=editor``: Build with editor, optimized, with debugging code (defines: ``TOOLS_ENABLED``, ``DEBUG_ENABLED``, ``-O2``/``/O2``)
--  ``target=template_debug``: Build with C++ debugging symbols (defines: ``DEBUG_ENABLED``, ``-O2``/``/O2``)
--  ``target=template_release``: Build without symbols (defines: ``-O3``/``/O2``)
+-  ``target=editor``: Build an editor binary (defines ``TOOLS_ENABLED`` and ``DEBUG_ENABLED``)
+-  ``target=template_debug``: Build a debug export template (defines ``DEBUG_ENABLED``)
+-  ``target=template_release``: Build a release export template
 
 The editor is enabled by default in all PC targets (Linux, Windows, macOS),
 disabled for everything else. Disabling the editor produces a binary that can
 run projects but does not include the editor or the Project Manager.
 
+The list of :ref:`command line arguments <doc_command_line_tutorial>`
+available varies depending on the build type.
+
 ::
 
-    scons platform=<platform> target=editor/template_debug/template_release
+    scons platform=<platform> target=editor|template_debug|template_release
+
+.. _doc_introduction_to_the_buildsystem_development_and_production_aliases:
 
 Development and production aliases
 ----------------------------------
@@ -189,6 +211,8 @@ binary name.
     you can enable at compile-time to better debug certain engine issues.
     See :ref:`doc_using_sanitizers` for more information.
 
+.. _doc_introduction_to_the_buildsystem_debugging_symbols:
+
 Debugging symbols
 -----------------
 
@@ -229,6 +253,8 @@ Several compiler optimization levels can be chosen from:
   optimizations available.
 - ``optimize=size`` *(default when targeting the Web platform)*: Favors small
   binaries at the cost of slower execution speed.
+- ``optimize=size_extra``: Favors even smaller binaries, at the cost of even
+  slower execution speed compared to ``optimize=size``.
 - ``optimize=debug``: Only enables optimizations that do not impact debugging in
   any way. This results in faster binaries than ``optimize=none``, but slower
   binaries than ``optimize=speed_trace``.
@@ -236,7 +262,7 @@ Several compiler optimization levels can be chosen from:
   build times, but the slowest execution times.
 - ``optimize=custom`` *(advanced users only)*: Do not pass optimization
   arguments to the C/C++ compilers. You will have to pass arguments manually
-  using the ``CFLAGS``, ``CCFLAGS`` and ``CXXFLAGS`` SCons options.
+  using the ``cflags``, ``ccflags`` and ``cxxflags`` SCons options.
 
 Architecture
 ------------
@@ -320,15 +346,14 @@ The default ``custom.py`` file can be created at the root of the Godot Engine
 source to initialize any SCons build options passed via the command line:
 
 .. code-block:: python
-
-    # custom.py
+    :caption: custom.py
 
     optimize = "size"
     module_mono_enabled = "yes"
     use_llvm = "yes"
     extra_suffix = "game_title"
 
-You can also disable some of the builtin modules before compiling, saving some
+You can also disable some of the built-in modules before compiling, saving some
 time it takes to build the engine. See :ref:`doc_optimizing_for_size` page for more details.
 
 .. seealso::
@@ -351,8 +376,7 @@ line option, both overriding the default build configuration:
 It's also possible to override the options conditionally:
 
 .. code-block:: python
-
-    # custom.py
+    :caption: custom.py
 
     import version
 
@@ -396,13 +420,13 @@ For the folders accelerated by this option, multiple ``.cpp`` files are
 compiled in each translation unit, so headers can be shared between multiple
 files, which can dramatically decrease build times.
 
-To make a SCU build, use the ``scu_build=yes`` SCons option.
+To perform an SCU build, use the ``scu_build=yes`` SCons option.
 
 .. note:: When developing a Pull Request using SCU builds, be sure to make a
           regular build prior to submitting the PR. This is because SCU builds
           by nature include headers from earlier ``.cpp`` files in the
           translation unit, therefore won't catch all the includes you will
-          need in a regular build. The CI will catch these errors but it will
+          need in a regular build. The CI will catch these errors, but it will
           usually be faster to catch them on a local build on your machine.
 
 Export templates
@@ -421,20 +445,38 @@ platform:
 
     android_debug.apk
     android_release.apk
-    web_debug.zip
-    web_release.zip
-    linux_server_32
-    linux_server_64
-    linux_x11_32_debug
-    linux_x11_32_release
-    linux_x11_64_debug
-    linux_x11_64_release
+    android_source.zip
+    ios.zip
+    linux_debug.arm32
+    linux_debug.arm64
+    linux_debug.x86_32
+    linux_debug.x86_64
+    linux_release.arm32
+    linux_release.arm64
+    linux_release.x86_32
+    linux_release.x86_64
     macos.zip
     version.txt
-    windows_32_debug.exe
-    windows_32_release.exe
-    windows_64_debug.exe
-    windows_64_release.exe
+    web_debug.zip
+    web_dlink_debug.zip
+    web_dlink_nothreads_debug.zip
+    web_dlink_nothreads_release.zip
+    web_dlink_release.zip
+    web_nothreads_debug.zip
+    web_nothreads_release.zip
+    web_release.zip
+    windows_debug_x86_32_console.exe
+    windows_debug_x86_32.exe
+    windows_debug_x86_64_console.exe
+    windows_debug_x86_64.exe
+    windows_debug_arm64_console.exe
+    windows_debug_arm64.exe
+    windows_release_x86_32_console.exe
+    windows_release_x86_32.exe
+    windows_release_x86_64_console.exe
+    windows_release_x86_64.exe
+    windows_release_arm64_console.exe
+    windows_release_arm64.exe
 
 To create those yourself, follow the instructions detailed for each
 platform in this same tutorial section. Each platform explains how to
@@ -450,5 +492,5 @@ line (and nothing else). This version identifier is based on the ``major``,
 
 If you are developing for multiple platforms, macOS is definitely the most
 convenient host platform for cross-compilation, since you can cross-compile for
-almost every target (except for UWP). Linux and Windows come in second place,
+every target. Linux and Windows come in second place,
 but Linux has the advantage of being the easier platform to set this up.

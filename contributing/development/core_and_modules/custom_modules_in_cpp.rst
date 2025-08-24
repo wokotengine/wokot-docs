@@ -45,11 +45,9 @@ The example module will be called "summator" (``godot/modules/summator``).
 Inside we will create a summator class:
 
 .. code-block:: cpp
+    :caption: godot/modules/summator/summator.h
 
-    /* summator.h */
-
-    #ifndef SUMMATOR_H
-    #define SUMMATOR_H
+    #pragma once
 
     #include "core/object/ref_counted.h"
 
@@ -69,13 +67,10 @@ Inside we will create a summator class:
         Summator();
     };
 
-    #endif // SUMMATOR_H
-
 And then the cpp file.
 
 .. code-block:: cpp
-
-    /* summator.cpp */
+    :caption: godot/modules/summator/summator.cpp
 
     #include "summator.h"
 
@@ -116,8 +111,7 @@ need to be created:
 These files should contain the following:
 
 .. code-block:: cpp
-
-    /* register_types.h */
+    :caption: godot/modules/summator/register_types.h
 
     #include "modules/register_module_types.h"
 
@@ -126,8 +120,7 @@ These files should contain the following:
     /* yes, the word in the middle must be the same as the module folder name */
 
 .. code-block:: cpp
-
-    /* register_types.cpp */
+    :caption: godot/modules/summator/register_types.cpp
 
     #include "register_types.h"
 
@@ -135,23 +128,24 @@ These files should contain the following:
     #include "summator.h"
 
     void initialize_summator_module(ModuleInitializationLevel p_level) {
-    	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
-    		return;
-    	}
+        if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
+            return;
+        }
         ClassDB::register_class<Summator>();
     }
 
     void uninitialize_summator_module(ModuleInitializationLevel p_level) {
-    	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
-    		return;
-    	}
+        if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
+            return;
+        }
        // Nothing to do here in this example.
     }
 
-Next, we need to create a ``SCsub`` file so the build system compiles
+Next, we need to create an ``SCsub`` file so the build system compiles
 this module:
 
 .. code-block:: python
+    :caption: godot/modules/summator/SCsub
 
     # SCsub
 
@@ -184,8 +178,7 @@ If you want to add custom compiler flags when building your module, you need to 
 Example ``SCsub`` with custom flags:
 
 .. code-block:: python
-
-    # SCsub
+    :caption: godot/modules/summator/SCsub
 
     Import('env')
 
@@ -201,6 +194,7 @@ And finally, the configuration file for the module, this is a
 Python script that must be named ``config.py``:
 
 .. code-block:: python
+    :caption: godot/modules/summator/config.py
 
     # config.py
 
@@ -228,10 +222,6 @@ this:
 You can then zip it and share the module with everyone else. When
 building for every platform (instructions in the previous sections),
 your module will be included.
-
-.. note:: There is a parameter limit of 5 in C++ modules for things such
-          as subclasses. This can be raised to 13 by including the header
-          file ``core/method_bind_ext.gen.inc``.
 
 Using the module
 ----------------
@@ -342,7 +332,7 @@ type registration methods:
     ScriptServer::init_languages();
 
 Our ``Summator`` class is initialized during the ``register_module_types()``
-call. Imagine that we need to satisfy some common module run-time dependency
+call. Imagine that we need to satisfy some common module runtime dependency
 (like singletons), or allow us to override existing engine method callbacks
 before they can be assigned by the engine itself. In that case, we want to
 ensure that our module classes are registered *before* any other built-in type.
@@ -354,8 +344,7 @@ method which will be called before anything else during the
 We now need to add this method to ``register_types`` header and source files:
 
 .. code-block:: cpp
-
-    /* register_types.h */
+    :caption: godot/modules/summator/register_types.h
 
     #define MODULE_SUMMATOR_HAS_PREREGISTER
     void preregister_summator_types();
@@ -369,8 +358,7 @@ We now need to add this method to ``register_types`` header and source files:
           has to be converted to uppercase as well.
 
 .. code-block:: cpp
-
-    /* register_types.cpp */
+    :caption: godot/modules/summator/register_types.cpp
 
     #include "register_types.h"
 
@@ -413,8 +401,7 @@ The solution to avoid such a cost is to build our own module as a shared
 library that will be dynamically loaded when starting our game's binary.
 
 .. code-block:: python
-
-    # SCsub
+    :caption: godot/modules/summator/SCsub
 
     Import('env')
 
@@ -470,8 +457,7 @@ module as shared library (for development) or as a part of the Godot binary
 using the ``ARGUMENT`` command:
 
 .. code-block:: python
-
-    # SCsub
+    :caption: godot/modules/summator/SCsub
 
     Import('env')
 
@@ -545,11 +531,15 @@ main ``doc/classes`` directory.
 .. tip::
 
     You can use Git to check if you have missed some of your classes by checking the
-    untracked files with ``git status``. For example::
+    untracked files with ``git status``. For example:
 
-        user@host:~/godot$ git status
+    ::
 
-    Example output::
+        git status
+
+    Example output:
+
+    ::
 
         Untracked files:
             (use "git add <file>..." to include in what will be committed)
@@ -571,9 +561,9 @@ to an another folder, and just copy over the files that you need.
 
 Run command:
 
-   ::
+::
 
-      user@host:~/godot$ ./bin/<godot_binary> --doctool .
+    bin/<godot_binary> --doctool .
 
 Now if you go to the ``godot/modules/summator/doc_classes`` folder, you will see
 that it contains a ``Summator.xml`` file, or any other classes, that you referenced
@@ -626,10 +616,9 @@ The procedure is the following:
 3. Write some test cases. Here's an example:
 
 .. code-block:: cpp
+    :caption: godot/modules/summator/tests/test_summator.h
 
-    // test_summator.h
-    #ifndef TEST_SUMMATOR_H
-    #define TEST_SUMMATOR_H
+    #pragma once
 
     #include "tests/test_macros.h"
 
@@ -655,8 +644,6 @@ The procedure is the following:
     }
 
     } // namespace TestSummator
-
-    #endif // TEST_SUMMATOR_H
 
 4. Compile the engine with ``scons tests=yes``, and run the tests with the
    following command:

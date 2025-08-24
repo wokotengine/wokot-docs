@@ -3,6 +3,8 @@
 Exporting for dedicated servers
 ===============================
 
+.. highlight:: none
+
 If you want to run a dedicated server for your project on a machine that doesn't
 have a GPU or display server available, you'll need to run Godot with the ``headless``
 display server and ``Dummy`` :ref:`audio driver <class_ProjectSettings_property_audio/driver/driver>`.
@@ -96,7 +98,7 @@ option is currently inherited, you must tick the box next to it first.
 - **Strip Visuals:** Export this resource, with visual files (textures and materials)
   replaced by placeholder classes. Placeholder classes store the image size
   (as it's sometimes used to position elements in a 2D scene), but nothing else.
-- **Keep:** Export this resource as usual, with visual files interact.
+- **Keep:** Export this resource as usual, with visual files intact.
 - **Remove:** The file is not included in the PCK. This is useful to ignore
   scenes and resources that only the client needs. If you do so, make sure the
   server doesn't reference these client-only scenes and resources in any way.
@@ -129,8 +131,6 @@ use **Keep** for that particular image.
 With the above options used, a PCK for the client (which exports all resources
 normally) will look as follows:
 
-.. highlight:: none
-
 ::
 
     .
@@ -158,8 +158,6 @@ normally) will look as follows:
     ├── scene.tscn.remap
 
 The PCK's file structure for the server will look as follows:
-
-.. highlight:: none
 
 ::
 
@@ -217,7 +215,7 @@ main scene (or an autoload)'s ``_ready()`` method:
 .. tabs::
  .. code-tab:: gdscript
 
-    if "--headless" in OS.get_cmdline_args():
+    if DisplayServer.get_name() == "headless":
         # Run your server startup code here...
         #
         # Using this check, you can start a dedicated server by running
@@ -229,7 +227,7 @@ main scene (or an autoload)'s ``_ready()`` method:
 
     using System.Linq;
 
-    if (OS.GetCmdlineArgs().Contains("--headless"))
+    if (DisplayServer.GetName() == "headless")
     {
         // Run your server startup code here...
         //
@@ -281,7 +279,10 @@ On Linux, to make your dedicated server restart after a crash or system reboot,
 you can
 `create a systemd service <https://medium.com/@benmorel/creating-a-linux-service-with-systemd-611b5c8b91d6>`__.
 This also lets you view server logs in a more convenient fashion, with automatic
-log rotation provided by systemd.
+log rotation provided by systemd. When making your project hostable as a systemd service,
+you should also enable the ``application/run/flush_stdout_on_print``
+project setting. This way, journald (the systemd logging service) can collect
+logs while the process is running.
 
 If you have experience with containers, you could also look into wrapping your
 dedicated server in a `Docker <https://www.docker.com/>`__ container. This way,

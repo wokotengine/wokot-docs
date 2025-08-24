@@ -108,11 +108,13 @@ access.
         };
 
         // Warn users if the value hasn't been set.
-        public String _GetConfigurationWarnings()
+        public string[] _GetConfigurationWarnings()
         {
             if (EnemyScn == null)
-                return "Must initialize property 'EnemyScn'.";
-            return "";
+            {
+                return ["Must initialize property 'EnemyScn'."];
+            }
+            return [];
         }
     }
 

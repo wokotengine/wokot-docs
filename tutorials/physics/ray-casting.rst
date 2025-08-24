@@ -11,7 +11,7 @@ custom shaped object) and checking what it hits. This enables complex
 behaviors, AI, etc. to take place. This tutorial will explain how to
 do this in 2D and 3D.
 
-Godot stores all the low level game information in servers, while the
+Godot stores all the low-level game information in servers, while the
 scene is only a frontend. As such, ray casting is generally a
 lower-level task. For simple raycasts, nodes like
 :ref:`RayCast3D <class_RayCast3D>` and :ref:`RayCast2D <class_RayCast2D>`
@@ -24,7 +24,7 @@ so a way to do this by code must exist.
 Space
 -----
 
-In the physics world, Godot stores all the low level collision and
+In the physics world, Godot stores all the low-level collision and
 physics information in a *space*. The current 2d space (for 2D Physics)
 can be obtained by accessing
 :ref:`CanvasItem.get_world_2d().space <class_CanvasItem_method_get_world_2d>`.
@@ -40,7 +40,7 @@ Accessing space
 Godot physics runs by default in the same thread as game logic, but may
 be set to run on a separate thread to work more efficiently. Due to
 this, the only time accessing space is safe is during the
-:ref:`Node._physics_process() <class_Node_method__physics_process>`
+:ref:`Node._physics_process() <class_Node_private_method__physics_process>`
 callback. Accessing it from outside this function may result in an error
 due to space being *locked*.
 
@@ -63,7 +63,7 @@ Use the following code in 2D:
     public override void _PhysicsProcess(double delta)
     {
         var spaceRid = GetWorld2D().Space;
-        var spaceState = Physics2DServer.SpaceGetDirectState(spaceRid);
+        var spaceState = PhysicsServer2D.SpaceGetDirectState(spaceRid);
     }
 
 Or more directly:
@@ -134,7 +134,9 @@ be empty. If it did hit something, it will contain collision information:
  .. code-tab:: csharp
 
         if (result.Count > 0)
+        {
             GD.Print("Hit at point: ", result["position"]);
+        }
 
 The ``result`` dictionary when a collision occurs contains the following
 data:
@@ -158,18 +160,36 @@ with Area3D, the boolean parameter ``collide_with_areas`` must be set to ``true`
  .. code-tab:: gdscript GDScript
 
         const RAY_LENGTH = 1000
-        
+
         func _physics_process(delta):
             var space_state = get_world_3d().direct_space_state
             var cam = $Camera3D
             var mousepos = get_viewport().get_mouse_position()
-        
+
             var origin = cam.project_ray_origin(mousepos)
             var end = origin + cam.project_ray_normal(mousepos) * RAY_LENGTH
             var query = PhysicsRayQueryParameters3D.create(origin, end)
             query.collide_with_areas = true
-            
+
             var result = space_state.intersect_ray(query)
+
+ .. code-tab:: csharp
+
+    private const int RayLength = 1000;
+
+    public override void _PhysicsProcess(double delta)
+    {
+        var spaceState = GetWorld3D().DirectSpaceState;
+        var cam = GetNode<Camera3D>("Camera3D");
+        var mousePos = GetViewport().GetMousePosition();
+
+        var origin = cam.ProjectRayOrigin(mousePos);
+        var end = origin + cam.ProjectRayNormal(mousePos) * RayLength;
+        var query = PhysicsRayQueryParameters3D.Create(origin, end);
+        query.CollideWithAreas = true;
+
+        var result = spaceState.IntersectRay(query);
+    }
 
 Collision exceptions
 --------------------
@@ -182,7 +202,7 @@ as shown in the following image:
 .. image:: img/raycast_falsepositive.webp
 
 To avoid self-intersection, the ``intersect_ray()`` parameters object can take an
-array of exceptions via its ``exclude`` property. This is an example of how to use it 
+array of exceptions via its ``exclude`` property. This is an example of how to use it
 from a CharacterBody2D or any other collision object node:
 
 .. tabs::
@@ -206,7 +226,7 @@ from a CharacterBody2D or any other collision object node:
         {
             var spaceState = GetWorld2D().DirectSpaceState;
             var query = PhysicsRayQueryParameters2D.Create(globalPosition, playerPosition);
-            query.Exclude = new Godot.Collections.Array<Rid> { GetRid() };
+            query.Exclude = [GetRid()];
             var result = spaceState.IntersectRay(query);
         }
     }
@@ -231,8 +251,8 @@ member variable. The array of exceptions can be supplied as the last argument as
 
     func _physics_process(delta):
         var space_state = get_world_2d().direct_space_state
-        var query = PhysicsRayQueryParameters2D.create(global_position, target_position, 
-            collision_mask, [self]) 
+        var query = PhysicsRayQueryParameters2D.create(global_position, target_position,
+            collision_mask, [self])
         var result = space_state.intersect_ray(query)
 
  .. code-tab:: csharp
@@ -245,7 +265,7 @@ member variable. The array of exceptions can be supplied as the last argument as
         {
             var spaceState = GetWorld2D().DirectSpaceState;
             var query = PhysicsRayQueryParameters2D.Create(globalPosition, targetPosition,
-                CollisionMask, new Godot.Collections.Array<Rid> { GetRid() });
+                CollisionMask, [GetRid()]);
             var result = spaceState.IntersectRay(query);
         }
     }
@@ -278,9 +298,9 @@ To obtain it using a camera, the following code can be used:
 
     func _input(event):
         if event is InputEventMouseButton and event.pressed and event.button_index == 1:
-              var camera3d = $Camera3D
-              var from = camera3d.project_ray_origin(event.position)
-              var to = from + camera3d.project_ray_normal(event.position) * RAY_LENGTH
+            var camera3d = $Camera3D
+            var from = camera3d.project_ray_origin(event.position)
+            var to = from + camera3d.project_ray_normal(event.position) * RAY_LENGTH
 
  .. code-tab:: csharp
 

@@ -1,3 +1,5 @@
+:allow_comments: False
+
 .. _doc_importing_3d_scenes:
 
 Importing 3D scenes
@@ -19,3 +21,10 @@ dialog, and inherited scenes.
    model_export_considerations
    node_type_customization
    import_configuration
+   advanced_import_settings
+
+.. seealso::
+
+    3D scenes can be loaded at runtime using
+    :ref:`runtime file loading and saving <doc_runtime_file_loading_and_saving_3d_scenes>`,
+    including from an exported project.

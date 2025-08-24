@@ -17,7 +17,7 @@ arrange user interfaces, etc. **Resources** are **data containers**. They don't
 do anything on their own: instead, nodes use the data contained in resources.
 
 Anything Godot saves or loads from disk is a resource. Be it a scene (a ``.tscn``
-or an ``.scn`` file), an image, a script... Here are some :ref:`Resource <class_Resource>` examples:
+or a ``.scn`` file), an image, a script... Here are some :ref:`Resource <class_Resource>` examples:
 
 - :ref:`Texture <class_Texture>`
 - :ref:`Script <class_Script>`
@@ -160,7 +160,7 @@ Creating your own resources
 Like any Object in Godot, users can also script Resources. Resource scripts
 inherit the ability to freely translate between object properties and serialized
 text or binary data (\*.tres, \*.res). They also inherit the reference-counting
-memory management from the Reference type.
+memory management from the RefCounted type.
 
 This comes with many distinct advantages over alternative data
 structures, such as JSON, CSV, or custom TXT files. Users can only import these
@@ -189,12 +189,12 @@ and :ref:`Resource <class_Resource>` features:
 
 Godot makes it easy to create custom Resources in the Inspector.
 
-1. Create a plain Resource object in the Inspector. This can even be a type that derives Resource, so long as your script is extending that type.
+1. Create a new Resource object in the Inspector. This can even be a type that derives Resource, so long as your script is extending that type.
 2. Set the ``script`` property in the Inspector to be your script.
 
 The Inspector will now display your Resource script's custom properties. If one edits
 those values and saves the resource, the Inspector serializes the custom properties
-too! To save a resource from the Inspector, click the Inspector's tools menu (top right),
+too! To save a resource from the Inspector, click the save icon at the top of the Inspector,
 and select "Save" or "Save As...".
 
 If the script's language supports :ref:`script classes <doc_gdscript_basics_class_name>`,
@@ -208,9 +208,13 @@ It should appear in your file tab with the full name ``bot_stats.tres``.
 Without a script, it's useless, so let's add some data and logic!
 Attach a script to it named ``bot_stats.gd`` (or just create a new script, and then drag it to it).
 
+.. note::
+    To make the new resource class appear in the Create Resource GUI you need to provide a class name for GDScript, or use the [GlobalClass] attribute in C#.
+
 .. tabs::
   .. code-tab:: gdscript GDScript
 
+    class_name BotStats
     extends Resource
 
     @export var health: int
@@ -232,6 +236,7 @@ Attach a script to it named ``bot_stats.gd`` (or just create a new script, and t
 
         namespace ExampleProject
         {
+            [GlobalClass]
             public partial class BotStats : Resource
             {
                 [Export]
@@ -330,9 +335,10 @@ Now, select the :ref:`CharacterBody3D <class_CharacterBody3D>` node which we nam
 
         using Godot;
 
+        [GlobalClass]
         public partial class BotStatsTable : Resource
         {
-            private Godot.Dictionary<string, BotStats> _stats = new Godot.Dictionary<string, BotStats>();
+            private Godot.Collections.Dictionary<string, BotStats> _stats = new Godot.Collections.Dictionary<string, BotStats>();
 
             public BotStatsTable()
             {
@@ -356,9 +362,9 @@ Now, select the :ref:`CharacterBody3D <class_CharacterBody3D>` node which we nam
 
     Beware that resource files (\*.tres/\*.res) will store the path of the script
     they use in the file. When loaded, they will fetch and load this script as an
-    extension of their type. This means that trying to assign a subclass, i.e. an
-    inner class of a script (such as using the ``class`` keyword in GDScript) won't
-    work. Godot will not serialize the custom properties on the script subclass properly.
+    extension of their type. This means that trying to assign an
+    inner class of a script (i.e. using the ``class`` keyword in GDScript) won't
+    work. Godot will not serialize the custom properties on the script inner class properly.
 
     In the example below, Godot would load the ``Node`` script, see that it doesn't
     extend ``Resource``, and then determine that the script failed to load for the
@@ -384,6 +390,7 @@ Now, select the :ref:`CharacterBody3D <class_CharacterBody3D>` node which we nam
 
         public partial class MyNode : Node
         {
+            [GlobalClass]
             public partial class MyResource : Resource
             {
                 [Export]

@@ -23,7 +23,13 @@ Post-processing effects are shaders applied to a frame after Godot has rendered
 it. To apply a shader to a frame, create a :ref:`CanvasLayer
 <class_CanvasLayer>`, and give it a :ref:`ColorRect <class_ColorRect>`. Assign a
 new :ref:`ShaderMaterial <class_ShaderMaterial>` to the newly created
-``ColorRect``, and set the ``ColorRect``'s layout to "Full Rect".
+``ColorRect``, and set the ``ColorRect``'s anchor preset to Full Rect:
+
+.. figure:: img/custom_postprocessing_anchors_preset_full_rect.webp
+   :align: center
+   :alt: Setting the anchor preset to Full Rect on the ColorRect node
+
+   Setting the anchor preset to Full Rect on the ColorRect node
 
 Your scene tree will look something like this:
 
@@ -40,8 +46,9 @@ Your scene tree will look something like this:
 
     As of the time of writing, Godot does not support rendering to multiple
     buffers at the same time. Your post-processing shader will not have access
-    to normals or other render passes. You only have access to the rendered
-    frame.
+    to other render passes and buffers not exposed by Godot (such as depth or
+    normal/roughness). You only have access to the rendered frame and buffers
+    exposed by Godot as samplers.
 
 For this demo, we will use this :ref:`Sprite <class_Sprite2D>` of a sheep.
 
@@ -49,7 +56,7 @@ For this demo, we will use this :ref:`Sprite <class_Sprite2D>` of a sheep.
 
 Assign a new :ref:`Shader <class_Shader>` to the ``ColorRect``'s
 ``ShaderMaterial``. You can access the frame's texture and UV with a
-``sampler2D`` using ``hint_screen_texture`` and the built in ``SCREEN_UV``
+``sampler2D`` using ``hint_screen_texture`` and the built-in ``SCREEN_UV``
 uniforms.
 
 Copy the following code to your shader. The code below is a hex pixelization
@@ -60,12 +67,14 @@ shader by `arlez80 <https://bitbucket.org/arlez80/hex-mosaic/src/master/>`_,
     shader_type canvas_item;
 
     uniform vec2 size = vec2(32.0, 28.0);
+    // If you intend to read from mipmaps with `textureLod()` LOD values greater than `0.0`,
+    // use `filter_nearest_mipmap` instead. This shader doesn't require it.
     uniform sampler2D screen_texture : hint_screen_texture, repeat_disable, filter_nearest;
 
     void fragment() {
             vec2 norm_size = size * SCREEN_PIXEL_SIZE;
-            bool half = mod(SCREEN_UV.y / 2.0, norm_size.y) / norm_size.y < 0.5;
-            vec2 uv = SCREEN_UV + vec2(norm_size.x * 0.5 * float(half), 0.0);
+            bool less_than_half = mod(SCREEN_UV.y / 2.0, norm_size.y) / norm_size.y < 0.5;
+            vec2 uv = SCREEN_UV + vec2(norm_size.x * 0.5 * float(less_than_half), 0.0);
             vec2 center_uv = floor(uv / norm_size) * norm_size;
             vec2 norm_uv = mod(uv, norm_size) / norm_size;
             center_uv += mix(vec2(0.0, 0.0),
@@ -75,7 +84,7 @@ shader by `arlez80 <https://bitbucket.org/arlez80/hex-mosaic/src/master/>`_,
                                  mix(vec2(0.0, -norm_size.y),
                                      vec2(-norm_size.x, -norm_size.y),
                                      float(norm_uv.x < 0.5)),
-                                 float(half)),
+                                 float(less_than_half)),
                              float(norm_uv.y < 0.3333333) * float(norm_uv.y / 0.3333333 < (abs(norm_uv.x - 0.5) * 2.0)));
 
             COLOR = textureLod(screen_texture, center_uv, 0.0);

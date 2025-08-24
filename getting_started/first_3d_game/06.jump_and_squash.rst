@@ -1,5 +1,3 @@
-:article_outdated: True
-
 .. _doc_first_3d_game_jumping_and_squashing_monsters:
 
 Jumping and squashing monsters
@@ -183,17 +181,22 @@ collisions with the floor. To do so, we can use Godot's :ref:`group
 Open the scene ``mob.tscn`` again and select the *Mob* node. Go to the *Node*
 dock on the right to see a list of signals. The *Node* dock has two tabs:
 *Signals*, which you've already used, and *Groups*, which allows you to assign
-tags to nodes.
-
-Click on it to reveal a field where you can write a tag name. Enter "mob" in the
-field and click the *Add* button.
+tags to nodes. Click on the *+* button to open the *Create new Group* dialog.
 
 |image7|
+
+Enter "mob" in the *Name* field and click the *Ok* button.
+
+|image8|
+
+The "mob" group is now shown under the *Scene Groups* section.
+
+|image9|
 
 An icon appears in the *Scene* dock to indicate the node is part of at least one
 group.
 
-|image8|
+|image10|
 
 We can now use the group from the code to distinguish collisions with monsters
 from collisions with the floor.
@@ -236,25 +239,31 @@ With this code, if no collisions occurred on a given frame, the loop won't run.
  .. code-tab:: gdscript GDScript
 
     func _physics_process(delta):
-       #...
+        #...
 
-       # Iterate through all collisions that occurred this frame
-       for index in range(get_slide_collision_count()):
-           # We get one of the collisions with the player
-           var collision = get_slide_collision(index)
+        # Iterate through all collisions that occurred this frame
+        for index in range(get_slide_collision_count()):
+            # We get one of the collisions with the player
+            var collision = get_slide_collision(index)
 
-           # If the collision is with ground
-           if collision.get_collider() == null:
-               continue
+            # If there are duplicate collisions with a mob in a single frame
+            # the mob will be deleted after the first collision, and a second call to 
+            # get_collider will return null, leading to a null pointer when calling 
+            # collision.get_collider().is_in_group("mob").
+            # This block of code prevents processing duplicate collisions.
+            if collision.get_collider() == null:
+                continue
 
-           # If the collider is with a mob
-           if collision.get_collider().is_in_group("mob"):
-               var mob = collision.get_collider()
-               # we check that we are hitting it from above.
-               if Vector3.UP.dot(collision.get_normal()) > 0.1:
-                   # If so, we squash it and bounce.
-                   mob.squash()
-                   target_velocity.y = bounce_impulse
+            # If the collider is with a mob
+            if collision.get_collider().is_in_group("mob"):
+                var mob = collision.get_collider()
+                # we check that we are hitting it from above.
+                if Vector3.UP.dot(collision.get_normal()) > 0.1:
+                    # If so, we squash it and bounce.
+                    mob.squash()
+                    target_velocity.y = bounce_impulse
+                    # Prevent further duplicate calls.
+                    break
 
  .. code-tab:: csharp
 
@@ -279,12 +288,14 @@ With this code, if no collisions occurred on a given frame, the loop won't run.
                     // If so, we squash it and bounce.
                     mob.Squash();
                     _targetVelocity.Y = BounceImpulse;
+                    // Prevent further duplicate calls.
+                    break;
                 }
             }
         }
     }
 
- That's a lot of new functions. Here's some more information about them.
+That's a lot of new functions. Here's some more information about them.
 
 The functions ``get_slide_collision_count()`` and ``get_slide_collision()`` both come from
 the :ref:`CharacterBody3D <class_CharacterBody3D>` class and are related to
@@ -309,10 +320,14 @@ With dot products, when the result is greater than ``0``, the two vectors are at
 an angle of fewer than 90 degrees. A value higher than ``0.1`` tells us that we
 are roughly above the monster.
 
+After handling the squash and bounce logic, we terminate the loop early via the ``break`` statement
+to prevent further duplicate calls to ``mob.squash()``, which may otherwise result in unintended bugs
+such as counting the score multiple times for one kill.
+
 We are calling one undefined function, ``mob.squash()``, so we have to add it to
 the Mob class.
 
-Open the script ``Mob.gd`` by double-clicking on it in the *FileSystem* dock. At
+Open the script ``mob.gd`` by double-clicking on it in the *FileSystem* dock. At
 the top of the script, we want to define a new signal named ``squashed``. And at
 the bottom, you can add the squash function, where we emit the signal and
 destroy the mob.
@@ -357,12 +372,14 @@ With that, you should be able to kill monsters by jumping on them. You can press
 
 However, the player won't die yet. We'll work on that in the next part.
 
-.. |image0| image:: img/06.jump_and_squash/02.project_settings.png
+.. |image0| image:: img/06.jump_and_squash/02.project_settings.webp
 .. |image1| image:: img/06.jump_and_squash/03.physics_layers.webp
 .. |image2| image:: img/06.jump_and_squash/04.default_physics_properties.webp
 .. |image3| image:: img/06.jump_and_squash/05.toggle_layer_and_mask.webp
-.. |image4| image:: img/06.jump_and_squash/06.named_checkboxes.png
+.. |image4| image:: img/06.jump_and_squash/06.named_checkboxes.webp
 .. |image5| image:: img/06.jump_and_squash/07.player_physics_mask.webp
 .. |image6| image:: img/06.jump_and_squash/08.mob_physics_mask.webp
-.. |image7| image:: img/06.jump_and_squash/09.groups_tab.png
-.. |image8| image:: img/06.jump_and_squash/10.group_scene_icon.png
+.. |image7| image:: img/06.jump_and_squash/09.groups_tab.webp
+.. |image8| image:: img/06.jump_and_squash/10.group_create_new.webp
+.. |image9| image:: img/06.jump_and_squash/11.group_scene_groups.webp
+.. |image10| image:: img/06.jump_and_squash/12.group_scene_icon.webp

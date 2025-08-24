@@ -1,5 +1,3 @@
-:article_outdated: True
-
 .. Intention: only introduce one necessary input method at this point. The
    Inputs section of the docs should provide more guides comparing the various
    tools you have to manage the complexity of user input.
@@ -9,7 +7,7 @@
 Listening to player input
 =========================
 
-Building upon the previous lesson :ref:`doc_scripting_first_script`, let's look
+Building upon the previous lesson, :ref:`doc_scripting_first_script`, let's look
 at another important feature of any game: giving control to the player.
 To add this, we need to modify our ``sprite_2d.gd`` code.
 
@@ -63,9 +61,10 @@ which the player wants to turn. A value of ``0`` means the player isn't pressing
 the left or the right arrow key. A value of ``1`` means the player wants to turn
 right, and ``-1`` means they want to turn left.
 
-To produce these values, we introduce conditions and the use of ``Input``. A
-condition starts with the ``if`` keyword in GDScript and ends with a colon. The
-condition is the expression between the keyword and the end of the line.
+To produce these values, we introduce conditional statements and the use of ``Input``.
+A conditional statement starts with the ``if`` keyword in GDScript and ends with a colon. The
+condition is specifically the expression between the keyword and the colon at
+the end of the line.
 
 To check if a key was pressed this frame, we call ``Input.is_action_pressed()``.
 The method takes a text string representing an input action and returns ``true``
@@ -75,11 +74,29 @@ The two actions we use above, "ui_left" and "ui_right", are predefined in every
 Godot project. They respectively trigger when the player presses the left and
 right arrows on the keyboard or left and right on a gamepad's D-pad.
 
-.. note:: You can see and edit input actions in your project by going to Project
-          -> Project Settings and clicking on the Input Map tab.
+.. note:: You can see and edit input actions in your project by going to
+          :menu:`Project > Project Settings` and clicking on the :ui:`Input Map` tab.
 
 Finally, we use the ``direction`` as a multiplier when we update the node's
 ``rotation``: ``rotation += angular_speed * direction * delta``.
+
+Comment out the lines ``var velocity = Vector2.UP.rotated(rotation) * speed`` and ``position += velocity * delta`` like this:
+
+.. tabs::
+
+ .. code-tab:: gdscript GDScript
+
+    #var velocity = Vector2.UP.rotated(rotation) * speed
+
+    #position += velocity * delta
+
+ .. code-tab:: csharp C#
+
+    //var velocity = Vector2.Up.Rotated(Rotation) * _speed;
+
+    //Position += velocity * (float)delta;
+
+This will ignore the code that moved the icon's position in a circle without user input from the previous exercise.
 
 If you run the scene with this code, the icon should rotate when you press
 :kbd:`Left` and :kbd:`Right`.
@@ -88,7 +105,7 @@ Moving when pressing "up"
 -------------------------
 
 To only move when pressing a key, we need to modify the code that calculates the
-velocity. Replace the line starting with ``var velocity`` with the code below.
+velocity. Uncomment the code and replace the line starting with ``var velocity`` with the code below.
 
 .. tabs::
  .. code-tab:: gdscript GDScript
@@ -144,7 +161,7 @@ Here is the complete ``sprite_2d.gd`` file for reference.
 
     using Godot;
 
-    public partial class Sprite : Sprite2D
+    public partial class MySprite2D : Sprite2D
     {
         private float _speed = 400;
         private float _angularSpeed = Mathf.Pi;
@@ -183,7 +200,7 @@ Summary
 
 In summary, every script in Godot represents a class and extends one of the
 engine's built-in classes. The node types your classes inherit from give you
-access to properties like ``rotation`` and ``position`` in our sprite's case.
+access to properties, such as ``rotation`` and ``position`` in our sprite's case.
 You also inherit many functions, which we didn't get to use in this example.
 
 In GDScript, the variables you put at the top of the file are your class's
@@ -195,8 +212,8 @@ with the engine. These include ``_process()``, to apply changes to the node
 every frame, and ``_unhandled_input()``, to receive input events like key and
 button presses from the users. There are quite a few more.
 
-The ``Input`` singleton allows you to react to the players' input anywhere in
+The ``Input`` singleton allows you to react to the player's input anywhere in
 your code. In particular, you'll get to use it in the ``_process()`` loop.
 
-In the next lesson :ref:`doc_signals`, we'll build upon the relationship between
+In the next lesson, :ref:`doc_signals`, we'll build upon the relationship between
 scripts and nodes by having our nodes trigger code in scripts.

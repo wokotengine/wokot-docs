@@ -10,15 +10,15 @@ Godot provides 3 options to import your audio data: WAV, Ogg Vorbis and MP3.
 
 Each format has different advantages:
 
-- WAV files use raw data or light compression (IMA-ADPCM). They are lightweight
-  on the CPU to play back (hundreds of simultaneous voices in this format are
-  fine). The downside is that they take up a lot of disk space.
-- Ogg Vorbis files use a stronger compression that results in much
-  smaller file size, but require significantly more processing power to
-  play back.
-- MP3 files use better compression than WAV with IMA-ADPCM, but worse than
-  Ogg Vorbis. This means that a MP3 file with roughly equal quality to
-  Ogg Vorbis will be significantly larger. On the bright side, MP3 requires
+- WAV files use raw data or light compression (IMA ADPCM or Quite OK Audio). Currently
+  they can only be imported in raw format, but Godot allows compression after import.
+  They are lightweight to play back on the CPU (hundreds of simultaneous voices
+  in this format are fine). The downside is that they take up a lot of disk space.
+- Ogg Vorbis files use a stronger compression that results in much smaller file
+  size, but require significantly more processing power to play back.
+- MP3 files use better compression than WAV with IMA ADPCM or Quite OK Audio, but
+  worse than Ogg Vorbis. This means that an MP3 file with roughly equal quality 
+  to Ogg Vorbis will be significantly larger. On the bright side, MP3 requires
   less CPU usage to play back compared to Ogg Vorbis.
 
 .. note::
@@ -29,21 +29,23 @@ Each format has different advantages:
 Here is a comparative chart representing the file size of 1 second of audio with
 each format:
 
-+-----------------------------+-------------------+
-| Format                      | 1 second of audio |
-+=============================+===================+
-| WAV 24-bit, 96 kHz, stereo  | 576 KB            |
-+-----------------------------+-------------------+
-| WAV 16-bit, 44 kHz, mono    | 88 KB             |
-+-----------------------------+-------------------+
-| WAV 16-bit, IMA-ADPCM, mono | 22 KB             |
-+-----------------------------+-------------------+
-| MP3 192 Kb/s, stereo        | 24 KB             |
-+-----------------------------+-------------------+
-| Ogg Vorbis 128 Kb/s, stereo | 16 KB             |
-+-----------------------------+-------------------+
-| Ogg Vorbis 96 Kb/s, stereo  | 12 KB             |
-+-----------------------------+-------------------+
++------------------------------+-------------------+
+| Format                       | 1 second of audio |
++==============================+===================+
+| WAV 24-bit, 96 kHz, stereo   | 576 KB            |
++------------------------------+-------------------+
+| WAV 16-bit, 44 kHz, mono     | 88 KB             |
++------------------------------+-------------------+
+| WAV IMA ADPCM, 44 kHz, mono  | 22 KB             |
++------------------------------+-------------------+
+| Quite OK Audio, 44 kHz, mono | 17 KB             |
++------------------------------+-------------------+
+| MP3 192 Kb/s, stereo         | 24 KB             |
++------------------------------+-------------------+
+| Ogg Vorbis 128 Kb/s, stereo  | 16 KB             |
++------------------------------+-------------------+
+| Ogg Vorbis 96 Kb/s, stereo   | 12 KB             |
++------------------------------+-------------------+
 
 Note that the MP3 and Ogg Vorbis figures can vary depending on the encoding
 type. The above figures use :abbr:`CBR (Constant Bit Rate)` encoding for
@@ -71,13 +73,13 @@ the FileSystem dock:
 
    Import options in the Import dock after selecting a WAV file in the FileSystem dock
 
-The set of options available after selecting a Ogg Vorbis or MP3 file is different:
+The set of options available after selecting an Ogg Vorbis or MP3 file is different:
 
 .. figure:: img/importing_audio_samples_import_options_mp3.webp
    :align: center
-   :alt: Import options in the Import dock after selecting a MP3 file in the FileSystem dock
+   :alt: Import options in the Import dock after selecting an MP3 file in the FileSystem dock
 
-   Import options in the Import dock after selecting a MP3 file in the
+   Import options in the Import dock after selecting an MP3 file in the
    FileSystem dock. Options are identical for Ogg Vorbis files.
 
 After importing a sound, you can play it back using the AudioStreamPlayer,
@@ -122,8 +124,8 @@ saving to a waveform, which increases their size unnecessarily and add latency
 to the moment they are played back.
 
 Enabling **Trim** will automatically trim the beginning and end of the audio if
-it's lower than -50 dB *after* normalization (see **Edit > Normalize** below). A
-fade-in/fade-out period of 500 samples is also used during trimming to avoid
+it's lower than -50 dB *after* normalization (see **Edit > Normalize** below).
+A fade-in/fade-out period of 500 samples is also used during trimming to avoid
 audible pops.
 
 Edit > Normalize
@@ -140,13 +142,15 @@ Unlike Ogg Vorbis and MP3, WAV files can contain metadata to indicate whether
 they're looping (in addition to loop points). By default, Godot will follow this
 metadata, but you can choose to apply a specific loop mode:
 
+- **Detect from WAV:** Uses loop information from the WAV metadata.
 - **Disabled:** Don't loop audio, even if metadata indicates the file should be
   played back looping.
-- **Forward:** Standard audio looping.
-- **Ping-Pong:** Play audio forward until it's done playing, then play it
-  backward and repeat. This is similar to mirrored texture repeat, but for
-  audio.
-- **Backward:** Play audio in reverse and loop back to the end when done playing.
+- **Forward:** Standard audio looping. Plays the audio forward from the beginning 
+  to the loop end, then returns to the loop beginning and repeats.
+- **Ping-Pong:** Plays the audio forward until the loop end, then backwards to 
+  the loop beginning, repeating this cycle.
+- **Backward:** Plays the audio backwards from the loop end to the loop beginning, 
+  then repeats.
 
 When choosing one of the **Forward**, **Ping-Pong** or **Backward** loop modes,
 loop points can also be defined to make only a specific part of the sound loop.
@@ -163,9 +167,12 @@ the end of the audio file if set to ``-1``.
 Compress > Mode
 ---------------
 
-Two compression modes can be chosen for WAV files: **Disabled** (default) or
-**RAM (Ima-ADPCM)**. **RAM (Ima-ADPCM)** reduces file size and memory usage a
-little, at the cost of decreasing quality in an audible manner.
+Three compression modes can be chosen from for WAV files: **PCM (Uncompressed)**,
+**IMA ADPCM**, or **Quite OK Audio** (default). **IMA ADPCM** reduces file size
+and memory usage a little, at the cost of decreasing quality in an audible manner.
+**Quite OK Audio** reduces file size a bit more than **IMA ADPCM** and the quality
+decrease is much less noticeable, at the cost of slightly higher CPU usage (still
+much lower than MP3).
 
 Ogg Vorbis and MP3 don't decrease quality as much and can provide greater file
 size reductions, at the cost of higher CPU usage during playback. This higher
@@ -176,7 +183,7 @@ Import options (Ogg Vorbis and MP3)
 -----------------------------------
 
 Loop
-^^^^
+~~~~
 
 If enabled, the audio will begin playing at the beginning after playback ends by
 reaching the end of the audio.
@@ -188,7 +195,7 @@ reaching the end of the audio.
     playing indefinitely.
 
 Loop Offset
-^^^^^^^^^^^
+~~~~~~~~~~~
 
 The loop offset determines where audio will start to loop after playback reaches
 the end of the audio. This can be used to only loop a part of the audio file,
@@ -203,11 +210,11 @@ A more convenient editor for **Loop Offset** is provided in the
 dialog, as it lets you preview your changes without having to reimport the audio.
 
 BPM
-^^^
+~~~
 
 The Beats Per Minute of the audio track. This should match the BPM measure that
 was used to compose the track. This is only relevant for music that wishes to
-make use of interactive music functionality (not implemented yet), not sound
+make use of interactive music functionality, not sound
 effects.
 
 A more convenient editor for **BPM** is provided in the
@@ -215,10 +222,10 @@ A more convenient editor for **BPM** is provided in the
 dialog, as it lets you preview your changes without having to reimport the audio.
 
 Beat Count
-^^^^^^^^^^
+~~~~~~~~~~
 
 The beat count of the audio track. This is only relevant for music that wishes
-to make use of interactive music functionality (not implemented yet), not sound
+to make use of interactive music functionality, not sound
 effects.
 
 A more convenient editor for **Beat Count** is provided in the
@@ -226,11 +233,11 @@ A more convenient editor for **Beat Count** is provided in the
 dialog, as it lets you preview your changes without having to reimport the audio.
 
 Bar Beats
-^^^^^^^^^
+~~~~~~~~~
 
 The number of bars within a single beat in the audio track. This is only
 relevant for music that wishes to make use of interactive music functionality
-(not implemented yet), not sound effects.
+, not sound effects.
 
 A more convenient editor for **Bar Beats** is provided in the
 :ref:`Advanced import settings <doc_importing_audio_samples_advanced_import_settings>`
@@ -246,9 +253,9 @@ If you double-click an Ogg Vorbis or MP3 file in the FileSystem dock (or choose
 
 .. figure:: img/importing_audio_samples_advanced_import_settings.webp
    :align: center
-   :alt: Advanced dialog when double-clicking a Ogg Vorbis or MP3 file in the FileSystem dock
+   :alt: Advanced dialog when double-clicking an Ogg Vorbis or MP3 file in the FileSystem dock
 
-   Advanced dialog when double-clicking a Ogg Vorbis or MP3 file in the FileSystem dock
+   Advanced dialog when double-clicking an Ogg Vorbis or MP3 file in the FileSystem dock
 
 This dialog allows you to edit the audio's loop point with a real-time preview,
 in addition to the :abbr:`BPM (Beats Per Minute)`, beat count and bar beats.
@@ -259,8 +266,8 @@ music tracks).
 .. note::
 
     Unlike WAV files, Ogg Vorbis and MP3 only support a "loop begin" loop point,
-    not a "loop end" point. Looping can also be only be standard forward
-    looping, not ping-pong or backward.
+    not a "loop end" point. Looping can also be only be standard forward looping,
+    not ping-pong or backward.
 
 .. _doc_importing_audio_samples_best_practices:
 
@@ -268,7 +275,7 @@ Best practices
 --------------
 
 Use appropriate quality settings
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 While keeping pristine-quality audio sources is important if you're performing
 editing, using the same quality in the exported project is not necessary. For
@@ -281,7 +288,7 @@ sample rate and number of channels for your audio:
 - There's no *audible* benefit to using 24-bit audio, especially in a game
   where several sounds are often playing at the same time (which makes it
   harder to appreciate individual sounds).
-- Unless you are slowing down the audio at run-time, there's no *audible*
+- Unless you are slowing down the audio at runtime, there's no *audible*
   benefit to using a sample rate greater than 48 kHz. If you wish to keep a
   source with a higher sample rate for editing, use the **Force > Max Rate**
   import option to limit the sample rate of the imported sound (only available
@@ -294,7 +301,7 @@ sample rate and number of channels for your audio:
   very high-pitched). This is because most human voices never go past 11 kHz.
 
 Use real-time audio effects to reduce file size
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Godot has an :ref:`extensive bus system <doc_audio_buses>` with built-in effects.
 This saves SFX artists the need to add reverb to the sound effects,
@@ -304,3 +311,9 @@ reducing their size greatly and ensuring correct trimming.
 
 As you can see above, sound effects become much larger in file size with reverb
 added.
+
+.. seealso::
+
+    Audio samples can be loaded and saved at runtime using
+    :ref:`runtime file loading and saving <doc_runtime_file_loading_and_saving_audio_video_files>`,
+    including from an exported project.
