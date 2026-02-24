@@ -27,7 +27,7 @@ with the original one.
 
     This section covers compliance with licenses from a user perspective.
     If you are interested in licence compliance as a contributor, you can find
-    guidelines :ref:`here <doc_best_practices_for_engine_contributors_license_compliance>`.
+    guidelines `here <https://contributing.godotengine.org/en/latest/engine/guidelines/best_practices.html#don-t-use-complex-canned-solutions-for-simple-problems>`__.
 
 .. tip::
 
@@ -44,7 +44,7 @@ text somewhere in your game or derivative project.
 
 This text reads as follows:
 
-::
+.. code-block:: none
 
     This game uses Godot Engine, available under the following license:
 

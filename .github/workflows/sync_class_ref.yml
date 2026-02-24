@@ -30,10 +30,10 @@ jobs:
 
     steps:
       - name: Checkout the documentation repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
 
       - name: Checkout the engine repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           repository: 'godotengine/godot'
           # Use the appropriate branch for the documentation version.
@@ -56,10 +56,10 @@ jobs:
 
       - name: Build new documentation
         run: |
-          ./.engine-src/doc/tools/make_rst.py --color -o ./classes -l en ./.engine-src/doc/classes ./.engine-src/modules ./.engine-src/platform
+          python ./.engine-src/doc/tools/make_rst.py --color -o ./classes -l en ./.engine-src/doc/classes ./.engine-src/modules ./.engine-src/platform
 
       - name: Submit a pull-request
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           commit-message: 'classref: Sync with current ${{ env.engine_rev }} branch (${{ steps.engine.outputs.rev_hash_short }})'
           branch: 'classref/sync-${{ steps.engine.outputs.rev_hash_short }}'

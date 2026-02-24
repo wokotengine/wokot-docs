@@ -113,6 +113,8 @@ Theme Properties
    +-----------------------------------+---------------------------------------------------------------------------------------------------------+---------------------------+
    | :ref:`Texture2D<class_Texture2D>` | :ref:`bar_arrow<class_ColorPicker_theme_icon_bar_arrow>`                                                |                           |
    +-----------------------------------+---------------------------------------------------------------------------------------------------------+---------------------------+
+   | :ref:`Texture2D<class_Texture2D>` | :ref:`color_copy<class_ColorPicker_theme_icon_color_copy>`                                              |                           |
+   +-----------------------------------+---------------------------------------------------------------------------------------------------------+---------------------------+
    | :ref:`Texture2D<class_Texture2D>` | :ref:`color_hue<class_ColorPicker_theme_icon_color_hue>`                                                |                           |
    +-----------------------------------+---------------------------------------------------------------------------------------------------------+---------------------------+
    | :ref:`Texture2D<class_Texture2D>` | :ref:`color_script<class_ColorPicker_theme_icon_color_script>`                                          |                           |
@@ -438,7 +440,7 @@ If ``true``, shows an alpha channel slider (opacity).
 - |void| **set_edit_intensity**\ (\ value\: :ref:`bool<class_bool>`\ )
 - :ref:`bool<class_bool>` **is_editing_intensity**\ (\ )
 
-If ``true``, shows an intensity slider. The intensity is applied as follows: multiply the color by ``2 ** intensity`` in linear RGB space, and then convert it back to sRGB.
+If ``true``, shows an intensity slider. The intensity is applied as follows: convert the color to linear encoding, multiply it by ``2 ** intensity``, and then convert it back to nonlinear sRGB encoding.
 
 .. rst-class:: classref-item-separator
 
@@ -718,6 +720,18 @@ The icon for the "Add Preset" button.
 :ref:`Texture2D<class_Texture2D>` **bar_arrow** :ref:`🔗<class_ColorPicker_theme_icon_bar_arrow>`
 
 The texture for the arrow grabber.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_ColorPicker_theme_icon_color_copy:
+
+.. rst-class:: classref-themeproperty
+
+:ref:`Texture2D<class_Texture2D>` **color_copy** :ref:`🔗<class_ColorPicker_theme_icon_color_copy>`
+
+The icon for the button that copies the color in text format to the clipboard.
 
 .. rst-class:: classref-item-separator
 

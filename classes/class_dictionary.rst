@@ -134,7 +134,7 @@ To add a key to an existing dictionary, access it like an existing key and assig
 
 
 
-Finally, dictionaries can contain different types of keys and values in the same dictionary:
+Finally, untyped dictionaries can contain different types of keys and values in the same dictionary:
 
 
 .. tabs::
@@ -185,9 +185,50 @@ The keys of a dictionary can be iterated with the ``for`` keyword:
 
 
 
+To enforce a certain type for keys and values, you can create a *typed dictionary*. Typed dictionaries can only contain keys and values of the given types, or that inherit from the given classes:
+
+
+.. tabs::
+
+ .. code-tab:: gdscript
+
+    # Creates a typed dictionary with String keys and int values.
+    # Attempting to use any other type for keys or values will result in an error.
+    var typed_dict: Dictionary[String, int] = {
+        "some_key": 1,
+        "some_other_key": 2,
+    }
+
+    # Creates a typed dictionary with String keys and values of any type.
+    # Attempting to use any other type for keys will result in an error.
+    var typed_dict_key_only: Dictionary[String, Variant] = {
+        "some_key": 12.34,
+        "some_other_key": "string",
+    }
+
+ .. code-tab:: csharp
+
+    // Creates a typed dictionary with String keys and int values.
+    // Attempting to use any other type for keys or values will result in an error.
+    var typedDict = new Godot.Collections.Dictionary<String, int> {
+        {"some_key", 1},
+        {"some_other_key", 2},
+    };
+
+    // Creates a typed dictionary with String keys and values of any type.
+    // Attempting to use any other type for keys will result in an error.
+    var typedDictKeyOnly = new Godot.Collections.Dictionary<String, Variant> {
+        {"some_key", 12.34},
+        {"some_other_key", "string"},
+    };
+
+
+
 \ **Note:** Dictionaries are always passed by reference. To get a copy of a dictionary which can be modified independently of the original dictionary, use :ref:`duplicate()<class_Dictionary_method_duplicate>`.
 
 \ **Note:** Erasing elements while iterating over dictionaries is **not** supported and will result in unpredictable behavior.
+
+\ **Note:** In a boolean context, a dictionary will evaluate to ``false`` if it's empty (``{}``). Otherwise, a dictionary will always evaluate to ``true``.
 
 .. note::
 
@@ -406,7 +447,7 @@ If ``deep`` is ``true``, a **deep** copy is returned: all nested arrays and dict
 
 :ref:`Dictionary<class_Dictionary>` **duplicate_deep**\ (\ deep_subresources_mode\: :ref:`int<class_int>` = 1\ ) |const| :ref:`🔗<class_Dictionary_method_duplicate_deep>`
 
-Duplicates this dictionary, deeply, like :ref:`duplicate()<class_Dictionary_method_duplicate>`\ ``(true)``, with extra control over how subresources are handled.
+Duplicates this dictionary, deeply, like :ref:`duplicate()<class_Dictionary_method_duplicate>` when passing ``true``, with extra control over how subresources are handled.
 
 \ ``deep_subresources_mode`` must be one of the values from :ref:`DeepDuplicateMode<enum_Resource_DeepDuplicateMode>`. By default, only internal resources will be duplicated (recursively).
 
@@ -449,6 +490,15 @@ Finds and returns the first key whose associated value is equal to ``value``, or
 :ref:`Variant<class_Variant>` **get**\ (\ key\: :ref:`Variant<class_Variant>`, default\: :ref:`Variant<class_Variant>` = null\ ) |const| :ref:`🔗<class_Dictionary_method_get>`
 
 Returns the corresponding value for the given ``key`` in the dictionary. If the ``key`` does not exist, returns ``default``, or ``null`` if the parameter is omitted.
+
+\ **Note:** If the ``default`` argument is computationally expensive or has unwanted side effects, consider using the :ref:`has()<class_Dictionary_method_has>` method instead:
+
+::
+
+    # Always calls `expensive_function()`.
+    dict.get("key", expensive_function())
+    # Calls `expensive_function()` only if the key does not exist.
+    dict.get("key") if dict.has("key") else expensive_function()
 
 .. rst-class:: classref-item-separator
 
@@ -855,7 +905,7 @@ Returns ``true`` if the two dictionaries contain the same keys and values, inner
 
 :ref:`bool<class_bool>` **set**\ (\ key\: :ref:`Variant<class_Variant>`, value\: :ref:`Variant<class_Variant>`\ ) :ref:`🔗<class_Dictionary_method_set>`
 
-Sets the value of the element at the given ``key`` to the given ``value``. This is the same as using the ``[]`` operator (``array[index] = value``).
+Sets the value of the element at the given ``key`` to the given ``value``. Returns ``true`` if the value is set successfully. Fails and returns ``false`` if the dictionary is read-only, or if ``key`` and ``value`` don't match the dictionary's types. This is the same as using the ``[]`` operator (``dict[key] = value``).
 
 .. rst-class:: classref-item-separator
 

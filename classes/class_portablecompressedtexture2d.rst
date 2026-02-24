@@ -90,7 +90,7 @@ enum **CompressionMode**: :ref:`🔗<enum_PortableCompressedTexture2D_Compressio
 
 .. container:: contribute
 
-	There is currently no description for this enum. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+	There is currently no description for this enum. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 
 
@@ -102,7 +102,7 @@ enum **CompressionMode**: :ref:`🔗<enum_PortableCompressedTexture2D_Compressio
 
 .. container:: contribute
 
-	There is currently no description for this enum. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+	There is currently no description for this enum. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 
 
@@ -114,7 +114,7 @@ enum **CompressionMode**: :ref:`🔗<enum_PortableCompressedTexture2D_Compressio
 
 .. container:: contribute
 
-	There is currently no description for this enum. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+	There is currently no description for this enum. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 
 
@@ -126,7 +126,7 @@ enum **CompressionMode**: :ref:`🔗<enum_PortableCompressedTexture2D_Compressio
 
 .. container:: contribute
 
-	There is currently no description for this enum. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+	There is currently no description for this enum. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 
 
@@ -138,7 +138,7 @@ enum **CompressionMode**: :ref:`🔗<enum_PortableCompressedTexture2D_Compressio
 
 .. container:: contribute
 
-	There is currently no description for this enum. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+	There is currently no description for this enum. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 
 
@@ -150,7 +150,7 @@ enum **CompressionMode**: :ref:`🔗<enum_PortableCompressedTexture2D_Compressio
 
 .. container:: contribute
 
-	There is currently no description for this enum. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+	There is currently no description for this enum. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 
 
@@ -162,7 +162,7 @@ enum **CompressionMode**: :ref:`🔗<enum_PortableCompressedTexture2D_Compressio
 
 .. container:: contribute
 
-	There is currently no description for this enum. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+	There is currently no description for this enum. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 
 
@@ -186,11 +186,9 @@ Property Descriptions
 - |void| **set_keep_compressed_buffer**\ (\ value\: :ref:`bool<class_bool>`\ )
 - :ref:`bool<class_bool>` **is_keeping_compressed_buffer**\ (\ )
 
-When running on the editor, this class will keep the source compressed data in memory. Otherwise, the source compressed data is lost after loading and the resource can't be re saved.
+If ``true``, when running in the editor, this texture will keep the source-compressed data in memory, allowing the data to persist after loading. Otherwise, the source-compressed data is lost after loading and the texture can't be re-saved.
 
-This flag allows to keep the compressed data in memory if you intend it to persist after loading.
-
-\ **Note:** This must be set before :ref:`create_from_image()<class_PortableCompressedTexture2D_method_create_from_image>` to take effect.
+\ **Note:** This property must be set before :ref:`create_from_image()<class_PortableCompressedTexture2D_method_create_from_image>` for this to work.
 
 .. rst-class:: classref-item-separator
 
@@ -207,7 +205,7 @@ This flag allows to keep the compressed data in memory if you intend it to persi
 - |void| **set_size_override**\ (\ value\: :ref:`Vector2<class_Vector2>`\ )
 - :ref:`Vector2<class_Vector2>` **get_size_override**\ (\ )
 
-Allow overriding the texture size (for 2D only).
+Allows overriding the texture's size (for 2D only).
 
 .. rst-class:: classref-section-separator
 
@@ -264,7 +262,7 @@ Return the image format used (valid after initialized).
 
 :ref:`bool<class_bool>` **is_keeping_all_compressed_buffers**\ (\ ) |static| :ref:`🔗<class_PortableCompressedTexture2D_method_is_keeping_all_compressed_buffers>`
 
-Return whether the flag is overridden for all textures of this type.
+Returns ``true`` if the flag is overridden for all textures of this type.
 
 .. rst-class:: classref-item-separator
 
@@ -278,7 +276,7 @@ Return whether the flag is overridden for all textures of this type.
 
 Sets the compressor parameters for Basis Universal compression. See also the settings in :ref:`ResourceImporterTexture<class_ResourceImporterTexture>`.
 
-\ **Note:** This must be set before :ref:`create_from_image()<class_PortableCompressedTexture2D_method_create_from_image>` to take effect.
+\ **Note:** This method must be called before :ref:`create_from_image()<class_PortableCompressedTexture2D_method_create_from_image>` for this to work.
 
 .. rst-class:: classref-item-separator
 
@@ -290,7 +288,7 @@ Sets the compressor parameters for Basis Universal compression. See also the set
 
 |void| **set_keep_all_compressed_buffers**\ (\ keep\: :ref:`bool<class_bool>`\ ) |static| :ref:`🔗<class_PortableCompressedTexture2D_method_set_keep_all_compressed_buffers>`
 
-Overrides the flag globally for all textures of this type. This is used primarily by the editor.
+If ``keep`` is ``true``, overrides the flag globally for all textures of this type. This is used primarily by the editor.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

@@ -50,7 +50,7 @@ its value in the Inspector. This can be handy for values that you want to be
 able to adjust just like a node's built-in properties. Click on the ``Player``
 node and you'll see the property now appears in the Inspector in a new section
 with the name of the script. Remember, if you change the value here, it will
-override the value written in the script.
+override the default value specified in the script (the script won't be modified).
 
 .. warning::
 
@@ -364,7 +364,7 @@ Add the following at the top of the script. If you're using GDScript, add it aft
 
 This defines a custom signal called "hit" that we will have our player emit
 (send out) when it collides with an enemy. We will use ``Area2D`` to detect the
-collision. Select the ``Player`` node and click the "Node" tab next to the
+collision. Select the ``Player`` node and click the :ui:`Signals` tab next to the
 Inspector tab to see the list of signals the player can emit:
 
 .. image:: img/player_signals.webp

@@ -77,11 +77,8 @@ This documentation is organized into several sections:
   if you're new!**
 - The **Manual** can be read or referenced as needed,
   in any order. It contains feature-specific tutorials and documentation.
-- **Contributing** gives information related to contributing to
-  Godot, whether to the core engine, documentation, demos or other parts.
-  It describes how to report bugs, how contributor workflows are organized, etc.
-  It also contains sections intended for advanced users and contributors,
-  with information on compiling the engine, contributing to the editor,
+- **Engine details** contains sections intended for advanced users and contributors,
+  with information on compiling the engine, working on the editor,
   or developing C++ modules.
 - **Community** is dedicated to the life of Godot's community and contains a list of
   recommended third-party tutorials and materials outside of this documentation.
@@ -100,8 +97,8 @@ About this documentation
 Members of the Godot Engine community continuously write, correct, edit, and
 improve this documentation. We are always looking for more help. You can also
 contribute by opening Github issues or translating the documentation into your language.
-If you are interested in helping, see :ref:`Ways to contribute <doc_ways_to_contribute>`
-and :ref:`Writing documentation <doc_contributing_writing_documentation>`,
+If you are interested in helping, see `How to contribute <https://contributing.godotengine.org/en/latest/organization/how_to_contribute.html>`__
+and `Writing documentation <https://contributing.godotengine.org/en/latest/documentation/manual/index.html>`__,
 or get in touch with the `Documentation team <https://godotengine.org/teams/#documentation>`_
 on `Godot Contributors Chat <https://chat.godotengine.org/>`_.
 

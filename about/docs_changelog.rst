@@ -10,8 +10,34 @@ include new pages, fixes and updates to existing pages, and many updates
 to the :ref:`class reference <doc_class_reference>`. Below is a list of new pages
 added since version 3.0.
 
-.. note:: This document only contains new pages so not all changes are reflected,
-          many pages have been substantially updated but are not reflected in this document.
+.. note::
+
+    This document only contains new pages, so not all changes are reflected.
+    Many pages have been substantially updated but are not reflected in this document.
+
+New pages since version 4.4
+---------------------------
+
+Editor
+~~~~~~
+
+- :ref:`doc_engine_compilation_configuration_editor`
+
+GDExtension
+~~~~~~~~~~~
+
+- :ref:`doc_gdextension_c_example`
+
+Migrating
+~~~~~~~~~
+
+- :ref:`doc_upgrading_to_godot_4.5`
+
+
+Scripting
+~~~~~~~~~
+
+- :ref:`doc_logging`
 
 New pages since version 4.3
 ---------------------------
@@ -35,6 +61,11 @@ Editor
 ~~~~~~
 
 - :ref:`doc_using_the_xr_editor`
+
+Migrating
+~~~~~~~~~
+
+- :ref:`doc_upgrading_to_godot_4.4`
 
 Performance
 ~~~~~~~~~~~
@@ -78,7 +109,6 @@ Contributing
 ~~~~~~~~~~~~
 
 - :ref:`doc_handling_compatibility_breakages`
-- :ref:`doc_ways_to_contribute`
 
 GDExtension
 ~~~~~~~~~~~
@@ -215,11 +245,6 @@ Shaders
 
 - :ref:`doc_compute_shaders`
 
-Workflow
-~~~~~~~~
-
-- :ref:`doc_pr_review_guidelines`
-
 XR
 ~~
 
@@ -253,11 +278,6 @@ Editor
 New pages since version 3.3
 ---------------------------
 
-C++
-~~~
-
-- :ref:`doc_cpp_usage_guidelines`
-
 GDScript
 ~~~~~~~~
 
@@ -283,19 +303,10 @@ Best practices
 
 - :ref:`doc_version_control_systems`
 
-Community
-~~~~~~~~~
-
-- :ref:`doc_best_practices_for_engine_contributors`
-- :ref:`doc_bisecting_regressions`
-- :ref:`doc_editor_and_docs_localization`
-
 Development
 ~~~~~~~~~~~
 
-- :ref:`doc_introduction_to_editor_development`
-- :ref:`doc_editor_style_guide`
-- :ref:`doc_common_engine_methods_and_macros`
+- :ref:`doc_common_engine_methods_and_macros_error_macros`
 - :ref:`doc_vulkan_validation_layers`
 - :ref:`doc_gdscript_grammar`
 - Configuring an IDE: :ref:`doc_configuring_an_ide_code_blocks`

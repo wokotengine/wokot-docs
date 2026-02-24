@@ -231,7 +231,7 @@ enum **RenderingDriver**: :ref:`🔗<enum_OS_RenderingDriver>`
 
 :ref:`RenderingDriver<enum_OS_RenderingDriver>` **RENDERING_DRIVER_VULKAN** = ``0``
 
-The Vulkan rendering driver. It requires Vulkan 1.0 support and automatically uses features from Vulkan 1.1 and 1.2 if available.
+The Vulkan rendering driver. It requires Vulkan 1.0 support and automatically uses features from Vulkan 1.1, 1.2, and 1.3 if available.
 
 .. _class_OS_constant_RENDERING_DRIVER_OPENGL3:
 
@@ -247,7 +247,7 @@ The OpenGL 3 rendering driver. It uses OpenGL 3.3 Core Profile on desktop platfo
 
 :ref:`RenderingDriver<enum_OS_RenderingDriver>` **RENDERING_DRIVER_D3D12** = ``2``
 
-The Direct3D 12 rendering driver.
+The Direct3D 12 rendering driver. It requires the 12_0 feature level and Shader Model 6.0 support.
 
 .. _class_OS_constant_RENDERING_DRIVER_METAL:
 
@@ -744,7 +744,13 @@ Not to be confused with :ref:`get_user_data_dir()<class_OS_method_get_user_data_
 
 :ref:`PackedStringArray<class_PackedStringArray>` **get_cmdline_args**\ (\ ) :ref:`🔗<class_OS_method_get_cmdline_args>`
 
-Returns the command-line arguments passed to the engine.
+Returns the command-line arguments passed to the engine, excluding arguments processed by the engine, such as ``--headless`` and ``--fullscreen``.
+
+::
+
+    # Godot has been executed with the following command:
+    # godot --headless --verbose --scene my_scene.tscn --custom
+    OS.get_cmdline_args() # Returns ["--scene", "my_scene.tscn", "--custom"]
 
 Command-line arguments can be written in any form, including both ``--key value`` and ``--key=value`` forms so they can be properly parsed, as long as custom command-line arguments do not conflict with engine arguments.
 
@@ -806,12 +812,12 @@ Returns the command-line user arguments passed to the engine. User arguments are
 ::
 
     # Godot has been executed with the following command:
-    # godot --fullscreen -- --level=2 --hardcore
+    # godot --fullscreen --custom -- --level=2 --hardcore
 
-    OS.get_cmdline_args()      # Returns ["--fullscreen", "--level=2", "--hardcore"]
+    OS.get_cmdline_args()      # Returns ["--custom"]
     OS.get_cmdline_user_args() # Returns ["--level=2", "--hardcore"]
 
-To get all passed arguments, use :ref:`get_cmdline_args()<class_OS_method_get_cmdline_args>`.
+To get arguments passed before ``--`` or ``++``, use :ref:`get_cmdline_args()<class_OS_method_get_cmdline_args>`.
 
 .. rst-class:: classref-item-separator
 

@@ -93,6 +93,10 @@ Methods
    +--------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`bool<class_bool>`                                                  | :ref:`is_hand_tracking_supported<class_OpenXRInterface_method_is_hand_tracking_supported>`\ (\ )                                                                                                                              |
    +--------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>`                                                  | :ref:`is_user_presence_supported<class_OpenXRInterface_method_is_user_presence_supported>`\ (\ ) |const|                                                                                                                      |
+   +--------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`bool<class_bool>`                                                  | :ref:`is_user_present<class_OpenXRInterface_method_is_user_present>`\ (\ ) |const|                                                                                                                                            |
+   +--------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                                                   | :ref:`set_action_set_active<class_OpenXRInterface_method_set_action_set_active>`\ (\ name\: :ref:`String<class_String>`, active\: :ref:`bool<class_bool>`\ )                                                                  |
    +--------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                                                   | :ref:`set_cpu_level<class_OpenXRInterface_method_set_cpu_level>`\ (\ level\: :ref:`PerfSettingsLevel<enum_OpenXRInterface_PerfSettingsLevel>`\ )                                                                              |
@@ -241,6 +245,20 @@ Informs our OpenXR session has been synchronized.
 
 Informs our OpenXR session is now visible, for example output is sent to the HMD but we don't receive XR input.
 
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_OpenXRInterface_signal_user_presence_changed:
+
+.. rst-class:: classref-signal
+
+**user_presence_changed**\ (\ is_user_present\: :ref:`bool<class_bool>`\ ) :ref:`🔗<class_OpenXRInterface_signal_user_presence_changed>`
+
+Signal emitted when the user presence value changes.
+
+\ **Note:** This signal will not be emitted during application startup and application shutdown. Developers should assume user presence is gained on startup and lost on shutdown.
+
 .. rst-class:: classref-section-separator
 
 ----
@@ -330,7 +348,7 @@ The session is about to be lost. :ref:`session_loss_pending<class_OpenXRInterfac
 
 :ref:`SessionState<enum_OpenXRInterface_SessionState>` **SESSION_STATE_EXITING** = ``8``
 
-The OpenXR instance is about to be destroyed and we're existing. :ref:`instance_exiting<class_OpenXRInterface_signal_instance_exiting>` is emitted when we change to this state.
+The OpenXR instance is about to be destroyed and we're exiting. :ref:`instance_exiting<class_OpenXRInterface_signal_instance_exiting>` is emitted when we change to this state.
 
 .. rst-class:: classref-item-separator
 
@@ -881,7 +899,7 @@ The display refresh rate for the current HMD. Only functional if this feature is
 - |void| **set_foveation_dynamic**\ (\ value\: :ref:`bool<class_bool>`\ )
 - :ref:`bool<class_bool>` **get_foveation_dynamic**\ (\ )
 
-Enable dynamic foveation adjustment, the interface must be initialized before this is accessible. If enabled foveation will automatically adjusted between low and :ref:`foveation_level<class_OpenXRInterface_property_foveation_level>`.
+If ``true``, enables dynamic foveation adjustment. The interface must be initialized before this is accessible. If enabled, foveation will automatically be adjusted between low and :ref:`foveation_level<class_OpenXRInterface_property_foveation_level>`.
 
 \ **Note:** Only works on the Compatibility renderer.
 
@@ -900,7 +918,7 @@ Enable dynamic foveation adjustment, the interface must be initialized before th
 - |void| **set_foveation_level**\ (\ value\: :ref:`int<class_int>`\ )
 - :ref:`int<class_int>` **get_foveation_level**\ (\ )
 
-Set foveation level from 0 (off) to 3 (high), the interface must be initialized before this is accessible.
+The foveation level, from ``0`` (off) to ``3`` (high). The interface must be initialized before this is accessible.
 
 \ **Note:** Only works on the Compatibility renderer.
 
@@ -986,7 +1004,7 @@ Returns a list of action sets registered with Godot (loaded from the action map 
 
 :ref:`Array<class_Array>` **get_available_display_refresh_rates**\ (\ ) |const| :ref:`🔗<class_OpenXRInterface_method_get_available_display_refresh_rates>`
 
-Returns display refresh rates supported by the current HMD. Only returned if this feature is supported by the OpenXR runtime and after the interface has been initialized.
+Returns a list of display refresh rates supported by the current HMD. Only returned if this feature is supported by the OpenXR runtime and after the interface has been initialized.
 
 .. rst-class:: classref-item-separator
 
@@ -1146,9 +1164,9 @@ Returns the capabilities of the eye gaze interaction extension.
 
 :ref:`bool<class_bool>` **is_foveation_supported**\ (\ ) |const| :ref:`🔗<class_OpenXRInterface_method_is_foveation_supported>`
 
-Returns ``true`` if OpenXR's foveation extension is supported, the interface must be initialized before this returns a valid value.
+Returns ``true`` if OpenXR's foveation extension is supported. The interface must be initialized before this returns a valid value.
 
-\ **Note:** This feature is only available on the Compatibility renderer and currently only available on some stand alone headsets. For Vulkan set :ref:`Viewport.vrs_mode<class_Viewport_property_vrs_mode>` to ``VRS_XR`` on desktop.
+\ **Note:** When using the Vulkan rendering driver, :ref:`Viewport.vrs_mode<class_Viewport_property_vrs_mode>` must be set to :ref:`Viewport.VRS_XR<class_Viewport_constant_VRS_XR>` to support foveation.
 
 .. rst-class:: classref-item-separator
 
@@ -1177,6 +1195,32 @@ Returns ``true`` if OpenXR's hand interaction profile is supported and enabled.
 Returns ``true`` if OpenXR's hand tracking is supported and enabled.
 
 \ **Note:** This only returns a valid value after OpenXR has been initialized.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_OpenXRInterface_method_is_user_presence_supported:
+
+.. rst-class:: classref-method
+
+:ref:`bool<class_bool>` **is_user_presence_supported**\ (\ ) |const| :ref:`🔗<class_OpenXRInterface_method_is_user_presence_supported>`
+
+Returns ``true`` if OpenXR's user presence extension is supported and enabled.
+
+\ **Note:** This only returns a valid value after OpenXR has been initialized.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_OpenXRInterface_method_is_user_present:
+
+.. rst-class:: classref-method
+
+:ref:`bool<class_bool>` **is_user_present**\ (\ ) |const| :ref:`🔗<class_OpenXRInterface_method_is_user_present>`
+
+Returns ``true`` if system has detected the presence of a user in the XR experience.
 
 .. rst-class:: classref-item-separator
 

@@ -64,6 +64,8 @@ Properties
    +-----------------------------------------------------------------+-----------------------------------------------------------------------------------+--------------------------+
    | :ref:`bool<class_bool>`                                         | :ref:`force_native<class_Window_property_force_native>`                           | ``false``                |
    +-----------------------------------------------------------------+-----------------------------------------------------------------------------------+--------------------------+
+   | :ref:`bool<class_bool>`                                         | :ref:`hdr_output_requested<class_Window_property_hdr_output_requested>`           | ``false``                |
+   +-----------------------------------------------------------------+-----------------------------------------------------------------------------------+--------------------------+
    | :ref:`WindowInitialPosition<enum_Window_WindowInitialPosition>` | :ref:`initial_position<class_Window_property_initial_position>`                   | ``0``                    |
    +-----------------------------------------------------------------+-----------------------------------------------------------------------------------+--------------------------+
    | :ref:`bool<class_bool>`                                         | :ref:`keep_title_visible<class_Window_property_keep_title_visible>`               | ``false``                |
@@ -81,6 +83,8 @@ Properties
    | :ref:`bool<class_bool>`                                         | :ref:`mouse_passthrough<class_Window_property_mouse_passthrough>`                 | ``false``                |
    +-----------------------------------------------------------------+-----------------------------------------------------------------------------------+--------------------------+
    | :ref:`PackedVector2Array<class_PackedVector2Array>`             | :ref:`mouse_passthrough_polygon<class_Window_property_mouse_passthrough_polygon>` | ``PackedVector2Array()`` |
+   +-----------------------------------------------------------------+-----------------------------------------------------------------------------------+--------------------------+
+   | :ref:`Rect2i<class_Rect2i>`                                     | :ref:`nonclient_area<class_Window_property_nonclient_area>`                       | ``Rect2i(0, 0, 0, 0)``   |
    +-----------------------------------------------------------------+-----------------------------------------------------------------------------------+--------------------------+
    | :ref:`bool<class_bool>`                                         | :ref:`popup_window<class_Window_property_popup_window>`                           | ``false``                |
    +-----------------------------------------------------------------+-----------------------------------------------------------------------------------+--------------------------+
@@ -151,6 +155,8 @@ Methods
    | :ref:`Window<class_Window>`                         | :ref:`get_focused_window<class_Window_method_get_focused_window>`\ (\ ) |static|                                                                                                                                                                        |
    +-----------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`LayoutDirection<enum_Window_LayoutDirection>` | :ref:`get_layout_direction<class_Window_method_get_layout_direction>`\ (\ ) |const|                                                                                                                                                                     |
+   +-----------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`float<class_float>`                           | :ref:`get_output_max_linear_value<class_Window_method_get_output_max_linear_value>`\ (\ ) |const|                                                                                                                                                       |
    +-----------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`Vector2i<class_Vector2i>`                     | :ref:`get_position_with_decorations<class_Window_method_get_position_with_decorations>`\ (\ ) |const|                                                                                                                                                   |
    +-----------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -261,6 +267,10 @@ Methods
    | |void|                                              | :ref:`set_ime_position<class_Window_method_set_ime_position>`\ (\ position\: :ref:`Vector2i<class_Vector2i>`\ )                                                                                                                                         |
    +-----------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                              | :ref:`set_layout_direction<class_Window_method_set_layout_direction>`\ (\ direction\: :ref:`LayoutDirection<enum_Window_LayoutDirection>`\ )                                                                                                            |
+   +-----------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                              | :ref:`set_taskbar_progress_state<class_Window_method_set_taskbar_progress_state>`\ (\ state\: :ref:`ProgressState<enum_DisplayServer_ProgressState>`\ )                                                                                                 |
+   +-----------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                              | :ref:`set_taskbar_progress_value<class_Window_method_set_taskbar_progress_value>`\ (\ value\: :ref:`float<class_float>`\ )                                                                                                                              |
    +-----------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                              | :ref:`set_unparent_when_invisible<class_Window_method_set_unparent_when_invisible>`\ (\ unparent\: :ref:`bool<class_bool>`\ )                                                                                                                           |
    +-----------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -435,6 +445,18 @@ Emitted when the mouse cursor enters the **Window**'s visible area, that is not 
 **mouse_exited**\ (\ ) :ref:`🔗<class_Window_signal_mouse_exited>`
 
 Emitted when the mouse cursor leaves the **Window**'s visible area, that is not occluded behind other :ref:`Control<class_Control>`\ s or windows, provided its :ref:`Viewport.gui_disable_input<class_Viewport_property_gui_disable_input>` is ``false`` and regardless if it's currently focused or not.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_Window_signal_nonclient_window_input:
+
+.. rst-class:: classref-signal
+
+**nonclient_window_input**\ (\ event\: :ref:`InputEvent<class_InputEvent>`\ ) :ref:`🔗<class_Window_signal_nonclient_window_input>`
+
+Emitted when the mouse event is received by the custom decoration area defined by :ref:`nonclient_area<class_Window_property_nonclient_area>`, and normal input to the window is blocked (such as when it has an exclusive child opened). ``event``'s position is in the embedder's coordinate system.
 
 .. rst-class:: classref-item-separator
 
@@ -737,7 +759,7 @@ enum **ContentScaleMode**: :ref:`🔗<enum_Window_ContentScaleMode>`
 
 :ref:`ContentScaleMode<enum_Window_ContentScaleMode>` **CONTENT_SCALE_MODE_DISABLED** = ``0``
 
-The content will not be scaled to match the **Window**'s size.
+The content will not be scaled to match the **Window**'s size (:ref:`content_scale_size<class_Window_property_content_scale_size>` is ignored).
 
 .. _class_Window_constant_CONTENT_SCALE_MODE_CANVAS_ITEMS:
 
@@ -1148,7 +1170,11 @@ Specifies how the content is scaled when the **Window** is resized.
 - |void| **set_content_scale_size**\ (\ value\: :ref:`Vector2i<class_Vector2i>`\ )
 - :ref:`Vector2i<class_Vector2i>` **get_content_scale_size**\ (\ )
 
-Base size of the content (i.e. nodes that are drawn inside the window). If non-zero, **Window**'s content will be scaled when the window is resized to a different size.
+The content's base size in "virtual" pixels. Not to be confused with :ref:`size<class_Window_property_size>`, which sets the actual window's physical size in pixels. If set to a value greater than ``0`` and :ref:`content_scale_mode<class_Window_property_content_scale_mode>` is set to a value other than :ref:`CONTENT_SCALE_MODE_DISABLED<class_Window_constant_CONTENT_SCALE_MODE_DISABLED>`, the **Window**'s content will be scaled when the window is resized to a different size. Higher values will make the content appear *smaller*, as it will be able to fit more of the project in view. On the root **Window**, this is set to match :ref:`ProjectSettings.display/window/size/viewport_width<class_ProjectSettings_property_display/window/size/viewport_width>` and :ref:`ProjectSettings.display/window/size/viewport_height<class_ProjectSettings_property_display/window/size/viewport_height>` by default.
+
+For example, when using :ref:`CONTENT_SCALE_MODE_CANVAS_ITEMS<class_Window_constant_CONTENT_SCALE_MODE_CANVAS_ITEMS>` and :ref:`content_scale_size<class_Window_property_content_scale_size>` set to ``Vector2i(1280, 720)``, using a window size of ``2560×1440`` will make 2D elements appear at double their original size, as the content is scaled by a factor of ``2.0`` (``2560.0 / 1280.0 = 2.0``, ``1440.0 / 720.0 = 2.0``).
+
+See `the Base size section of the Multiple resolutions documentation <../tutorials/rendering/multiple_resolutions.html#base-size>`__ for details.
 
 .. rst-class:: classref-item-separator
 
@@ -1261,6 +1287,23 @@ If ``true``, the **Window** contents is expanded to the full size of the window,
 - :ref:`bool<class_bool>` **get_force_native**\ (\ )
 
 If ``true``, native window will be used regardless of parent viewport and project settings.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_Window_property_hdr_output_requested:
+
+.. rst-class:: classref-property
+
+:ref:`bool<class_bool>` **hdr_output_requested** = ``false`` :ref:`🔗<class_Window_property_hdr_output_requested>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_hdr_output_requested**\ (\ value\: :ref:`bool<class_bool>`\ )
+- :ref:`bool<class_bool>` **is_hdr_output_requested**\ (\ )
+
+If ``true``, requests HDR output for the **Window**, falling back to SDR if not supported, and automatically switching between HDR and SDR as the window moves between screens, screen capabilities change, or system settings are modified. This will internally force :ref:`Viewport.use_hdr_2d<class_Viewport_property_use_hdr_2d>` to be enabled on the main :ref:`Viewport<class_Viewport>`. All other :ref:`SubViewport<class_SubViewport>` of this **Window** must have their :ref:`Viewport.use_hdr_2d<class_Viewport_property_use_hdr_2d>` property enabled to produce HDR output.
 
 .. rst-class:: classref-item-separator
 
@@ -1476,6 +1519,23 @@ Passing an empty array will disable passthrough support (all mouse events will b
 
 ----
 
+.. _class_Window_property_nonclient_area:
+
+.. rst-class:: classref-property
+
+:ref:`Rect2i<class_Rect2i>` **nonclient_area** = ``Rect2i(0, 0, 0, 0)`` :ref:`🔗<class_Window_property_nonclient_area>`
+
+.. rst-class:: classref-property-setget
+
+- |void| **set_nonclient_area**\ (\ value\: :ref:`Rect2i<class_Rect2i>`\ )
+- :ref:`Rect2i<class_Rect2i>` **get_nonclient_area**\ (\ )
+
+If set, defines the window's custom decoration area which will receive mouse input, even if normal input to the window is blocked (such as when it has an exclusive child opened). See also :ref:`nonclient_window_input<class_Window_signal_nonclient_window_input>`.
+
+.. rst-class:: classref-item-separator
+
+----
+
 .. _class_Window_property_popup_window:
 
 .. rst-class:: classref-property
@@ -1563,7 +1623,7 @@ If ``true``, the **Window** will override the OS window style to display sharp c
 - |void| **set_size**\ (\ value\: :ref:`Vector2i<class_Vector2i>`\ )
 - :ref:`Vector2i<class_Vector2i>` **get_size**\ (\ )
 
-The window's size in pixels.
+The window's size in pixels. See also :ref:`content_scale_size<class_Window_property_content_scale_size>`, which doesn't set the window's physical size but affects how scaling works relative to the current :ref:`content_scale_mode<class_Window_property_content_scale_mode>`.
 
 .. rst-class:: classref-item-separator
 
@@ -1943,6 +2003,51 @@ Returns the focused window.
 :ref:`LayoutDirection<enum_Window_LayoutDirection>` **get_layout_direction**\ (\ ) |const| :ref:`🔗<class_Window_method_get_layout_direction>`
 
 Returns layout direction and text writing direction.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_Window_method_get_output_max_linear_value:
+
+.. rst-class:: classref-method
+
+:ref:`float<class_float>` **get_output_max_linear_value**\ (\ ) |const| :ref:`🔗<class_Window_method_get_output_max_linear_value>`
+
+Returns the maximum value for linear color components that can be displayed in this window, regardless of SDR or HDR output. Returns ``1.0`` if HDR is not enabled or not supported. This value is used by tonemapping and other :ref:`Environment<class_Environment>` effects to ensure that bright colors are presented in the range that can be displayed by this window.
+
+When using the Linear tonemapper without :ref:`Environment<class_Environment>` effects or no :ref:`WorldEnvironment<class_WorldEnvironment>`, use the returned value to scale content to maximize the screen's brightness, such as for lasers or other bright effects. The following is an example that produces the brightest purple color that the screen can produce:
+
+
+.. tabs::
+
+ .. code-tab:: gdscript
+
+    func _process(_delta):
+        # output_max_linear_value may change often, so do this every frame.
+        var max_linear_value = get_window().get_output_max_linear_value()
+        # Replace this with your color:
+        var original_color = Color.PURPLE
+        # Normalize to max_linear_value to produce the brightest color possible,
+        # regardless of SDR or HDR output:
+        var bright_color = normalize_color(original_color, max_linear_value)
+
+
+    func normalize_color(srgb_color, max_linear_value = 1.0):
+        # Color must be linear-encoded to use math operations.
+        var linear_color = srgb_color.srgb_to_linear()
+        var max_rgb_value = maxf(linear_color.r, maxf(linear_color.g, linear_color.b))
+        var brightness_scale = max_linear_value / max_rgb_value
+        linear_color *= brightness_scale
+        # Undo changes to the alpha channel, which should not be modified.
+        linear_color.a = srgb_color.a
+        # Convert back to nonlinear sRGB encoding, which is required for Color in
+        # Godot unless stated otherwise.
+        return linear_color.linear_to_srgb()
+
+
+
+\ **Note:** You will need to convert sRGB colors to linear before multiplying by this value to get correct results.
 
 .. rst-class:: classref-item-separator
 
@@ -2372,7 +2477,7 @@ Returns ``true`` if font oversampling is enabled. See :ref:`set_use_font_oversam
 
 |void| **move_to_center**\ (\ ) :ref:`🔗<class_Window_method_move_to_center>`
 
-Centers a native window on the current screen and an embedded window on its embedder :ref:`Viewport<class_Viewport>`.
+Centers the window in the current screen. If the window is embedded, it is centered in the embedder :ref:`Viewport<class_Viewport>` instead.
 
 .. rst-class:: classref-item-separator
 
@@ -2673,6 +2778,36 @@ Moves IME to the given position.
 |void| **set_layout_direction**\ (\ direction\: :ref:`LayoutDirection<enum_Window_LayoutDirection>`\ ) :ref:`🔗<class_Window_method_set_layout_direction>`
 
 Sets layout direction and text writing direction. Right-to-left layouts are necessary for certain languages (e.g. Arabic and Hebrew).
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_Window_method_set_taskbar_progress_state:
+
+.. rst-class:: classref-method
+
+|void| **set_taskbar_progress_state**\ (\ state\: :ref:`ProgressState<enum_DisplayServer_ProgressState>`\ ) :ref:`🔗<class_Window_method_set_taskbar_progress_state>`
+
+Sets the type and state of the progress bar on the taskbar/dock icon of the **Window**. See :ref:`ProgressState<enum_DisplayServer_ProgressState>` for possible values and how each mode behaves.
+
+\ **Note:** This method is implemented only on Windows and macOS.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_Window_method_set_taskbar_progress_value:
+
+.. rst-class:: classref-method
+
+|void| **set_taskbar_progress_value**\ (\ value\: :ref:`float<class_float>`\ ) :ref:`🔗<class_Window_method_set_taskbar_progress_value>`
+
+Creates a progress bar on the taskbar/dock icon of the **Window** if it does not exist, sets the progress of the icon.
+
+\ ``value`` acts as a relative percentage value, ranges from ``0.0`` (lowest) to ``1.0`` (highest).
+
+\ **Note:** This method is implemented only on Windows and macOS.
 
 .. rst-class:: classref-item-separator
 
