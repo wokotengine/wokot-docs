@@ -38,7 +38,7 @@ Download and install the Android SDK.
   - Ensure that the `required packages <https://developer.android.com/studio/intro/update#required>`__ are installed as well.
 
     - Android SDK Platform-Tools version 35.0.0 or later
-    - Android SDK Build-Tools version 35.0.0
+    - Android SDK Build-Tools version 35.0.1
     - Android SDK Platform 35
     - Android SDK Command-line Tools (latest)
 
@@ -54,7 +54,7 @@ Download and install the Android SDK.
 
 ::
 
-    sdkmanager --sdk_root=<android_sdk_path> "platform-tools" "build-tools;35.0.0" "platforms;android-35" "cmdline-tools;latest" "cmake;3.10.2.4988404" "ndk;28.1.13356709"
+    sdkmanager --sdk_root=<android_sdk_path> "platform-tools" "build-tools;35.0.1" "platforms;android-35" "cmdline-tools;latest" "cmake;3.10.2.4988404" "ndk;28.1.13356709"
 
 .. note::
 
@@ -79,7 +79,7 @@ In that screen, 2 paths need to be set:
 
 - ``Java SDK Path`` should be the location where OpenJDK 17 was installed.
 
-- ``Android Sdk Path`` should be the location where the Android SDK was installed.
+- ``Android SDK Path`` should be the location where the Android SDK was installed. This directory should contain ``platform-tools/adb``.
   - For example ``%LOCALAPPDATA%\Android\Sdk\`` on Windows or ``/Users/$USER/Library/Android/sdk/`` on macOS.
 
 Once that is configured, everything is ready to export to Android!

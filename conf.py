@@ -19,6 +19,7 @@ extensions = [
     "sphinxext.opengraph",
     "sphinx_copybutton",
     "sphinxcontrib.video",
+    "gdscript",
 ]
 
 # Warning when the Sphinx Tabs extension is used with unknown
@@ -38,14 +39,14 @@ on_rtd = os.environ.get("READTHEDOCS", None) == "True"
 if not on_rtd:
     notfound_urls_prefix = ''
 
+if on_rtd:
+    extensions.append("override_jobs")
+
 # Specify the site name for the Open Graph extension.
 ogp_site_name = "Godot Engine documentation"
 ogp_social_cards = {
     "enable": False
 }
-
-if not os.getenv("SPHINX_NO_GDSCRIPT"):
-    extensions.append("gdscript")
 
 if not os.getenv("SPHINX_NO_DESCRIPTIONS"):
     extensions.append("godot_descriptions")
@@ -94,12 +95,15 @@ supported_languages = {
     "pt_BR": "Documentação da Godot Engine %s em Português Brasileiro",
     "ru": "Документация Godot Engine %s на русском языке",
     "uk": "Документація до Godot Engine %s українською мовою",
+    "zh_Hans": "Godot Engine %s 简体中文文档",
+    "zh_Hant": "Godot Engine %s 正體中文 (台灣) 文件",
+    # Keeping those as RTD doesn't support Hans/Hant names yet.
     "zh_CN": "Godot Engine %s 简体中文文档",
     "zh_TW": "Godot Engine %s 正體中文 (台灣) 文件",
 }
 
-# RTD normalized their language codes to ll-cc (e.g. zh-cn),
-# but Sphinx did not and still uses ll_CC (e.g. zh_CN).
+# RTD normalized their language codes to ll-cc (e.g. pt-br),
+# but Sphinx did not and still uses ll_CC (e.g. pt_BR).
 # `language` is the Sphinx configuration so it needs to be converted back.
 language = os.getenv("READTHEDOCS_LANGUAGE", "en")
 if "-" in language:
@@ -118,16 +122,6 @@ is_i18n = tags.has("i18n")  # noqa: F821
 print("Build language: {}, i18n tag: {}".format(language, is_i18n))
 
 exclude_patterns = [".*", "**/.*", "_build", "_tools"]
-
-# fmt: off
-# These imports should *not* be moved to the start of the file,
-# they depend on the sys.path.append call registering "_extensions".
-# GDScript syntax highlighting
-from gdscript import GDScriptLexer
-from sphinx.highlighting import lexers
-
-lexers["gdscript"] = GDScriptLexer()
-# fmt: on
 
 smartquotes = False
 
@@ -172,7 +166,7 @@ html_context = {
     # Set this to `True` when in the `latest` branch to clearly indicate to the reader
     # that they are not reading the `stable` documentation.
     "godot_is_latest": True,
-    "godot_version": "4.5",
+    "godot_version": "4.7",
     # Enables a banner that displays the up-to-date status of each article.
     "godot_show_article_status": True,
     # Display user-contributed notes at the bottom of pages that don't have `:allow_comments: False` at the top.

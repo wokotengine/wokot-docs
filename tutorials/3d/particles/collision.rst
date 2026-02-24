@@ -28,12 +28,6 @@ on each system's :ref:`visibility layers <class_VisualInstance3D>`. A particle s
 collision node only if at least one of the system's visibility layers is enabled in the
 collider's cull mask.
 
-.. warning::
-
-   There is a `known issue <https://github.com/godotengine/godot/issues/61014>`_ with
-   GPU particle collision that prevent the cull mask from working properly in Godot 4.0. We will
-   update the documentation as soon as it is fixed.
-
 Box collision
 ~~~~~~~~~~~~~
 
@@ -129,6 +123,11 @@ around the player while not wasting performance on regions that are out of sight
 SDF collision
 ~~~~~~~~~~~~~
 
+.. note::
+
+     Particle SDF collision is only supported in the Forward+ and Mobile renderers,
+     not Compatibility.
+
 .. figure:: img/particle_collision_sdf_entry.webp
    :alt: Particle collision SDF
    :align: right
@@ -143,7 +142,7 @@ performance overhead is larger compared to height fields, so they're best suited
 
 To create an SDF collision node, add a new child node to your scene and select ``GPUParticlesCollisionSDF3D``
 from the list of available nodes. SDF collision nodes have to be baked in order to have any effect on particles
-in the level. To do that, click the ``Bake SDF`` button in the viewport toolbar
+in the level. To do that, click the :button:`Bake SDF` button in the viewport toolbar
 while the SDF collision node is selected and choose a directory to store the baked data. Since SDF collision needs
 to be baked in the editor, it's static and cannot change at runtime.
 

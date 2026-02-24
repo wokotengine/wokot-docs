@@ -74,6 +74,8 @@ Methods
    +-------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`AutowrapMode<enum_TextServer_AutowrapMode>`                 | :ref:`get_autowrap_mode<class_TreeItem_method_get_autowrap_mode>`\ (\ column\: :ref:`int<class_int>`\ ) |const|                                                                                                                                                                                                     |
    +-------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |bitfield|\[:ref:`LineBreakFlag<enum_TextServer_LineBreakFlag>`\] | :ref:`get_autowrap_trim_flags<class_TreeItem_method_get_autowrap_trim_flags>`\ (\ column\: :ref:`int<class_int>`\ ) |const|                                                                                                                                                                                         |
+   +-------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`Texture2D<class_Texture2D>`                                 | :ref:`get_button<class_TreeItem_method_get_button>`\ (\ column\: :ref:`int<class_int>`, button_index\: :ref:`int<class_int>`\ ) |const|                                                                                                                                                                             |
    +-------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`int<class_int>`                                             | :ref:`get_button_by_id<class_TreeItem_method_get_button_by_id>`\ (\ column\: :ref:`int<class_int>`, id\: :ref:`int<class_int>`\ ) |const|                                                                                                                                                                           |
@@ -103,6 +105,8 @@ Methods
    | :ref:`Font<class_Font>`                                           | :ref:`get_custom_font<class_TreeItem_method_get_custom_font>`\ (\ column\: :ref:`int<class_int>`\ ) |const|                                                                                                                                                                                                         |
    +-------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`int<class_int>`                                             | :ref:`get_custom_font_size<class_TreeItem_method_get_custom_font_size>`\ (\ column\: :ref:`int<class_int>`\ ) |const|                                                                                                                                                                                               |
+   +-------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | :ref:`StyleBox<class_StyleBox>`                                   | :ref:`get_custom_stylebox<class_TreeItem_method_get_custom_stylebox>`\ (\ column\: :ref:`int<class_int>`\ ) |const|                                                                                                                                                                                                 |
    +-------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | :ref:`String<class_String>`                                       | :ref:`get_description<class_TreeItem_method_get_description>`\ (\ column\: :ref:`int<class_int>`\ ) |const|                                                                                                                                                                                                         |
    +-------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -196,6 +200,8 @@ Methods
    +-------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                                            | :ref:`set_autowrap_mode<class_TreeItem_method_set_autowrap_mode>`\ (\ column\: :ref:`int<class_int>`, autowrap_mode\: :ref:`AutowrapMode<enum_TextServer_AutowrapMode>`\ )                                                                                                                                          |
    +-------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                                            | :ref:`set_autowrap_trim_flags<class_TreeItem_method_set_autowrap_trim_flags>`\ (\ column\: :ref:`int<class_int>`, flags\: |bitfield|\[:ref:`LineBreakFlag<enum_TextServer_LineBreakFlag>`\]\ )                                                                                                                      |
+   +-------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                                            | :ref:`set_button<class_TreeItem_method_set_button>`\ (\ column\: :ref:`int<class_int>`, button_index\: :ref:`int<class_int>`, button\: :ref:`Texture2D<class_Texture2D>`\ )                                                                                                                                         |
    +-------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                                            | :ref:`set_button_color<class_TreeItem_method_set_button_color>`\ (\ column\: :ref:`int<class_int>`, button_index\: :ref:`int<class_int>`, color\: :ref:`Color<class_Color>`\ )                                                                                                                                      |
@@ -225,6 +231,8 @@ Methods
    | |void|                                                            | :ref:`set_custom_font<class_TreeItem_method_set_custom_font>`\ (\ column\: :ref:`int<class_int>`, font\: :ref:`Font<class_Font>`\ )                                                                                                                                                                                 |
    +-------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                                            | :ref:`set_custom_font_size<class_TreeItem_method_set_custom_font_size>`\ (\ column\: :ref:`int<class_int>`, font_size\: :ref:`int<class_int>`\ )                                                                                                                                                                    |
+   +-------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+   | |void|                                                            | :ref:`set_custom_stylebox<class_TreeItem_method_set_custom_stylebox>`\ (\ column\: :ref:`int<class_int>`, stylebox\: :ref:`StyleBox<class_StyleBox>`\ )                                                                                                                                                             |
    +-------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
    | |void|                                                            | :ref:`set_description<class_TreeItem_method_set_description>`\ (\ column\: :ref:`int<class_int>`, description\: :ref:`String<class_String>`\ )                                                                                                                                                                      |
    +-------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -552,6 +560,18 @@ Returns the text autowrap mode in the given ``column``. By default it is :ref:`T
 
 ----
 
+.. _class_TreeItem_method_get_autowrap_trim_flags:
+
+.. rst-class:: classref-method
+
+|bitfield|\[:ref:`LineBreakFlag<enum_TextServer_LineBreakFlag>`\] **get_autowrap_trim_flags**\ (\ column\: :ref:`int<class_int>`\ ) |const| :ref:`🔗<class_TreeItem_method_get_autowrap_trim_flags>`
+
+Returns the autowrap trim flags for the given ``column``. By default, both :ref:`TextServer.BREAK_TRIM_START_EDGE_SPACES<class_TextServer_constant_BREAK_TRIM_START_EDGE_SPACES>` and :ref:`TextServer.BREAK_TRIM_END_EDGE_SPACES<class_TextServer_constant_BREAK_TRIM_END_EDGE_SPACES>` are enabled.
+
+.. rst-class:: classref-item-separator
+
+----
+
 .. _class_TreeItem_method_get_button:
 
 .. rst-class:: classref-method
@@ -729,6 +749,18 @@ Returns custom font used to draw text in the column ``column``.
 :ref:`int<class_int>` **get_custom_font_size**\ (\ column\: :ref:`int<class_int>`\ ) |const| :ref:`🔗<class_TreeItem_method_get_custom_font_size>`
 
 Returns custom font size used to draw text in the column ``column``.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_TreeItem_method_get_custom_stylebox:
+
+.. rst-class:: classref-method
+
+:ref:`StyleBox<class_StyleBox>` **get_custom_stylebox**\ (\ column\: :ref:`int<class_int>`\ ) |const| :ref:`🔗<class_TreeItem_method_get_custom_stylebox>`
+
+Returns the given column's custom :ref:`StyleBox<class_StyleBox>` used to draw the background.
 
 .. rst-class:: classref-item-separator
 
@@ -1304,6 +1336,18 @@ Sets the autowrap mode in the given ``column``. If set to something other than :
 
 ----
 
+.. _class_TreeItem_method_set_autowrap_trim_flags:
+
+.. rst-class:: classref-method
+
+|void| **set_autowrap_trim_flags**\ (\ column\: :ref:`int<class_int>`, flags\: |bitfield|\[:ref:`LineBreakFlag<enum_TextServer_LineBreakFlag>`\]\ ) :ref:`🔗<class_TreeItem_method_set_autowrap_trim_flags>`
+
+Sets the autowrap trim flags for the given ``column``. These flags control whether leading and trailing spaces are trimmed on wrapped lines. Set to ``0`` to disable all trimming.
+
+.. rst-class:: classref-item-separator
+
+----
+
 .. _class_TreeItem_method_set_button:
 
 .. rst-class:: classref-method
@@ -1420,6 +1464,8 @@ Makes a cell with :ref:`CELL_MODE_CUSTOM<class_TreeItem_constant_CELL_MODE_CUSTO
 
 Sets the given column's custom background color and whether to just use it as an outline.
 
+\ **Note:** If a custom :ref:`StyleBox<class_StyleBox>` is set, the background color will be drawn behind it.
+
 .. rst-class:: classref-item-separator
 
 ----
@@ -1485,6 +1531,20 @@ Sets custom font used to draw text in the given ``column``.
 |void| **set_custom_font_size**\ (\ column\: :ref:`int<class_int>`, font_size\: :ref:`int<class_int>`\ ) :ref:`🔗<class_TreeItem_method_set_custom_font_size>`
 
 Sets custom font size used to draw text in the given ``column``.
+
+.. rst-class:: classref-item-separator
+
+----
+
+.. _class_TreeItem_method_set_custom_stylebox:
+
+.. rst-class:: classref-method
+
+|void| **set_custom_stylebox**\ (\ column\: :ref:`int<class_int>`, stylebox\: :ref:`StyleBox<class_StyleBox>`\ ) :ref:`🔗<class_TreeItem_method_set_custom_stylebox>`
+
+Sets the given column's custom :ref:`StyleBox<class_StyleBox>` used to draw the background.
+
+\ **Note:** If a custom background color is set, the :ref:`StyleBox<class_StyleBox>` will be drawn in front of it.
 
 .. rst-class:: classref-item-separator
 
@@ -1620,7 +1680,7 @@ If ``indeterminate`` is ``true``, the given ``column`` is marked indeterminate.
 
 |void| **set_language**\ (\ column\: :ref:`int<class_int>`, language\: :ref:`String<class_String>`\ ) :ref:`🔗<class_TreeItem_method_set_language>`
 
-Sets language code of item's text used for line-breaking and text shaping algorithms, if left empty current locale is used instead.
+Sets the language code of the given ``column``'s text to ``language``. This is used for line-breaking and text shaping algorithms. If ``language`` is empty, the current locale is used.
 
 .. rst-class:: classref-item-separator
 

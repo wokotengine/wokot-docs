@@ -15,7 +15,7 @@ Where to start
 
 The Godot video tutorials by `GDQuest <https://www.youtube.com/channel/UCxboW7x0jZqFdvMdCFKTMsQ/playlists>`_ are well-regarded in the community and often recommended as a gentle introduction to beginners.
 
-GDQuest's *Learn GDScript From Zero* is a free and open source interactive tutorial for absolute beginners to learn to program with Godot's GDScript language. It is available as a `desktop application <https://gdquest.itch.io/learn-godot-gdscript>`_  or `in the browser <https://gdquest.github.io/learn-gdscript>`_.
+GDQuest's *Learn GDScript From Zero* is a free and open source interactive tutorial for absolute beginners to learn to program with Godot's GDScript language. It is available as a `desktop application <https://gdquest.itch.io/learn-godot-gdscript>`__  or `in the browser <https://gdquest.github.io/learn-gdscript>`__.
 
 Some tutorials mentioned below cover more advanced subjects, e.g. on 3D or shaders.
 
@@ -35,7 +35,6 @@ Text tutorials
 - `Godot Tutorials by SomethingLikeGames <https://www.somethinglikegames.de/en/tags/godot-engine/>`__
 - `GameDev Academy by Zenva <https://gamedevacademy.org/category/godot-tutorials/godot-4/>`__
 - `Game Dev Artisan website <https://gamedevartisan.com/>`__
-- `Night Quest Games Blog <https://www.nightquestgames.com/blog-articles/>`__
 
 Resources
 ---------

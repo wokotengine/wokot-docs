@@ -21,10 +21,7 @@ on desktop or mobile, as well as on the web.
 You can also create console games with it, although you either need strong
 programming skills or a developer to port the game for you.
 
-.. note:: The Godot team can't provide an open source console export due to the
-          licensing terms imposed by console manufacturers. Regardless of the
-          engine you use, though, releasing games on consoles is always a lot of
-          work. You can read more on that here: :ref:`doc_consoles`.
+.. note:: For information about console support, see the `Godot website <https://godotengine.org/consoles/>`_.
 
 What can the engine do?
 -----------------------
@@ -89,9 +86,10 @@ Godot-specific and tightly integrated language with a lightweight syntax, or
 :ref:`C# <doc_c_sharp>`, which is popular in the games industry.
 These are the two main scripting languages we support.
 
-With the GDExtension technology, you can also write
-gameplay or high-performance algorithms in C or C++ without recompiling the
-engine. You can use this technology to integrate third-party libraries and other
+With the :ref:`GDExtension <doc_what_is_gdextension>` technology, you can also
+write gameplay or high-performance algorithms in :ref:`C++ <doc_godot_cpp>` or
+:ref:`other languages <doc_scripting_languages>` without recompiling the engine.
+You can use this technology to integrate third-party libraries and other
 Software Development Kits (SDK) in the engine.
 
 Of course, you can also directly add modules and features to the engine, as it's
@@ -110,14 +108,11 @@ how to think like a programmer first.
 Godot relies on the object-oriented programming paradigm. Being comfortable with
 concepts such as classes and objects will help you code efficiently in it.
 
-If you are entirely new to programming, we recommend following the `CS50 open
-courseware`_ from Harvard University. It's a great free course that will teach
-you everything you need to know to be off to a good start. It will save you
-countless hours and hurdles learning any game engine afterward.
-
-.. note:: In CS50, you will learn multiple programming languages. Don't be
-          afraid of that: programming languages have many similarities. The
-          skills you learn with one language transfer well to others.
+If you are entirely new to programming, GDQuest's *Learn GDScript From Zero*
+is a free and open source interactive tutorial for absolute beginners to
+learn to program with Godot's GDScript language. It is available as a
+`desktop application <https://gdquest.itch.io/learn-godot-gdscript>`__
+or `in the browser <https://gdquest.github.io/learn-gdscript>`__.
 
 We will provide you with more Godot-specific learning resources in
 :ref:`doc_learning_new_features`.
@@ -128,4 +123,3 @@ In the next part, you will get an overview of the engine's essential concepts.
 .. _VSCode: https://github.com/godotengine/godot-vscode-plugin
 .. _Emacs: https://github.com/godotengine/emacs-gdscript-mode
 .. _official showcase videos: https://www.youtube.com/playlist?list=PLeG_dAglpVo6EpaO9A1nkwJZOwrfiLdQ8
-.. _CS50 open courseware: https://cs50.harvard.edu/x

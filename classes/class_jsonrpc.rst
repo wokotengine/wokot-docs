@@ -12,6 +12,8 @@ JSONRPC
 
 **Inherits:** :ref:`Object<class_Object>`
 
+**Inherited By:** :ref:`GDScriptLanguageProtocol<class_GDScriptLanguageProtocol>`
+
 A helper to handle dictionaries which look like JSONRPC documents.
 
 .. rst-class:: classref-introduction-group
@@ -201,7 +203,7 @@ To add new supported methods extend the JSONRPC class and call :ref:`process_act
 
 .. container:: contribute
 
-	There is currently no description for this method. Please help us by :ref:`contributing one <doc_updating_the_class_reference>`!
+	There is currently no description for this method. Please help us by `contributing one <https://contributing.godotengine.org/en/latest/documentation/class_reference.html>`__!
 
 .. rst-class:: classref-item-separator
 
@@ -215,9 +217,9 @@ To add new supported methods extend the JSONRPC class and call :ref:`process_act
 
 Registers a callback for the given method name.
 
-- ``name`` The name that clients can use to access the callback.
+- ``name``: The name that clients can use to access the callback.
 
-- ``callback`` The callback which will handle the specific method.
+- ``callback``: The callback which will handle the specified method.
 
 .. |virtual| replace:: :abbr:`virtual (This method should typically be overridden by the user to have any effect.)`
 .. |required| replace:: :abbr:`required (This method is required to be overridden when extending its base class.)`

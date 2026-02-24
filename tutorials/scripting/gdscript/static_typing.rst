@@ -132,7 +132,7 @@ as a type in a constant:
     const Rifle = preload("res://player/weapons/rifle.gd")
     var my_rifle: Rifle
 
-The second method is to use the ``class_name`` keyword when you create.
+The second method is to use the ``class_name`` keyword when you create the script.
 For the example above, your ``rifle.gd`` would look like this:
 
 ::
@@ -218,10 +218,11 @@ Specify the element type of an ``Array``
 To define the type of an ``Array``, enclose the type name in ``[]``.
 
 An array's type applies to ``for`` loop variables, as well as some operators like
-``[]``, ``[]=``, and ``+``. Array methods (such as ``push_back``) and other operators
-(such as ``==``) are still untyped. Built-in types, native and custom classes,
-and enums may be used as element types. Nested array types
-(like ``Array[Array[int]]``) are not supported.
+``[]``, ``[...] =`` (assignment), and ``+``. Array methods
+(such as ``push_back``) and other operators (such as ``==``)
+are still untyped. Built-in types, native and custom classes,
+and enums may be used as element types. Nested array types (like ``Array[Array[int]]``)
+are not supported.
 
 
 ::
@@ -259,9 +260,9 @@ To define the type of a ``Dictionary``'s keys and values, enclose the type name 
 and separate the key and value type with a comma.
 
 A dictionary's value type applies to ``for`` loop variables, as well as some operators like
-``[]`` and ``[]=``. Dictionary methods that return values and other operators
-(such as ``==``) are still untyped. Built-in types, native and custom classes,
-and enums may be used as element types. Nested typed collections
+``[]`` and ``[...] =`` (assignment). Dictionary methods that return values
+and other operators (such as ``==``) are still untyped. Built-in types, native
+and custom classes, and enums may be used as element types. Nested typed collections
 (like ``Dictionary[String, Dictionary[String, int]]``) are not supported.
 
 
@@ -449,6 +450,7 @@ signal in a dynamic style:
 And the same callback, with type hints:
 
 ::
+
     func _on_area_2d_body_entered(body: PhysicsBody2D) -> void:
         pass
 
@@ -477,6 +479,86 @@ Currently, ``UNSAFE_*`` warnings do not cover all cases that unsafe lines cover.
 
 Common unsafe operations and their safe counterparts
 ----------------------------------------------------
+
+Global scope methods
+~~~~~~~~~~~~~~~~~~~~
+
+The following global scope methods are not statically typed, but they have
+typed counterparts available. These methods return statically typed values:
+
++------------------------------------------------------+-------------------------------------------------------------------------------------+
+| Method                                               | Statically typed equivalents                                                        |
++======================================================+=====================================================================================+
+| :ref:`abs()<class_@GlobalScope_method_abs>`          | | :ref:`absf() <class_@GlobalScope_method_absf>`,                                   |
+|                                                      |   :ref:`absi() <class_@GlobalScope_method_absi>`                                    |
+|                                                      | | :ref:`Vector2.abs() <class_Vector2_method_abs>`,                                  |
+|                                                      |   :ref:`Vector2i.abs() <class_Vector2i_method_abs>`                                 |
+|                                                      | | :ref:`Vector3.abs() <class_Vector3_method_abs>`,                                  |
+|                                                      |   :ref:`Vector3i.abs() <class_Vector3i_method_abs>`                                 |
+|                                                      | | :ref:`Vector4.abs() <class_Vector4_method_abs>`,                                  |
+|                                                      |   :ref:`Vector4i.abs() <class_Vector4i_method_abs>`                                 |
++------------------------------------------------------+-------------------------------------------------------------------------------------+
+| :ref:`ceil() <class_@GlobalScope_method_ceil>`       | | :ref:`ceilf() <class_@GlobalScope_method_ceilf>`,                                 |
+|                                                      |   :ref:`ceili() <class_@GlobalScope_method_ceili>`                                  |
+|                                                      | | :ref:`Vector2.ceil() <class_Vector2_method_ceil>`                                 |
+|                                                      | | :ref:`Vector3.ceil() <class_Vector3_method_ceil>`                                 |
+|                                                      | | :ref:`Vector4.ceil() <class_Vector4_method_ceil>`                                 |
++------------------------------------------------------+-------------------------------------------------------------------------------------+
+| :ref:`clamp() <class_@GlobalScope_method_clamp>`     | | :ref:`clampf() <class_@GlobalScope_method_clampf>`,                               |
+|                                                      |   :ref:`clampi() <class_@GlobalScope_method_clampi>`                                |
+|                                                      | | :ref:`Vector2.clamp() <class_Vector2_method_clamp>`,                              |
+|                                                      |   :ref:`Vector2i.clamp() <class_Vector2i_method_clamp>`                             |
+|                                                      | | :ref:`Vector3.clamp() <class_Vector3_method_clamp>`,                              |
+|                                                      |   :ref:`Vector3i.clamp() <class_Vector3i_method_clamp>`                             |
+|                                                      | | :ref:`Vector4.clamp() <class_Vector4_method_clamp>`,                              |
+|                                                      |   :ref:`Vector4i.clamp() <class_Vector4i_method_clamp>`                             |
+|                                                      | | :ref:`Color.clamp() <class_Color_method_clamp>`                                   |
+|                                                      | | (untyped ``clamp()`` does not work on Color)                                      |
++------------------------------------------------------+-------------------------------------------------------------------------------------+
+| :ref:`floor() <class_@GlobalScope_method_floor>`     | | :ref:`floorf() <class_@GlobalScope_method_floorf>`,                               |
+|                                                      |   :ref:`floori() <class_@GlobalScope_method_floori>`                                |
+|                                                      | | :ref:`Vector2.floor() <class_Vector2_method_floor>`                               |
+|                                                      | | :ref:`Vector3.floor() <class_Vector3_method_floor>`                               |
+|                                                      | | :ref:`Vector4.floor() <class_Vector4_method_floor>`                               |
++------------------------------------------------------+-------------------------------------------------------------------------------------+
+| :ref:`lerp() <class_@GlobalScope_method_lerp>`       | | :ref:`lerpf() <class_@GlobalScope_method_lerpf>`                                  |
+|                                                      | | :ref:`Vector2.lerp() <class_Vector2_method_lerp>`                                 |
+|                                                      | | :ref:`Vector3.lerp() <class_Vector3_method_lerp>`                                 |
+|                                                      | | :ref:`Vector4.lerp() <class_Vector4_method_lerp>`                                 |
+|                                                      | | :ref:`Color.lerp() <class_Color_method_lerp>`                                     |
+|                                                      | | :ref:`Quaternion.slerp() <class_Quaternion_method_slerp>`                         |
+|                                                      | | :ref:`Basis.slerp() <class_Basis_method_slerp>`                                   |
+|                                                      | | :ref:`Transform2D.interpolate_with() <class_Transform2D_method_interpolate_with>` |
+|                                                      | | :ref:`Transform3D.interpolate_with() <class_Transform3D_method_interpolate_with>` |
++------------------------------------------------------+-------------------------------------------------------------------------------------+
+| :ref:`round() <class_@GlobalScope_method_round>`     | | :ref:`roundf() <class_@GlobalScope_method_roundf>`,                               |
+|                                                      |   :ref:`roundi() <class_@GlobalScope_method_roundi>`                                |
+|                                                      | | :ref:`Vector2.round() <class_Vector2_method_round>`                               |
+|                                                      | | :ref:`Vector3.round() <class_Vector3_method_round>`                               |
+|                                                      | | :ref:`Vector4.round() <class_Vector4_method_round>`                               |
++------------------------------------------------------+-------------------------------------------------------------------------------------+
+| :ref:`sign() <class_@GlobalScope_method_sign>`       | | :ref:`signf() <class_@GlobalScope_method_signf>`                                  |
+|                                                      | | :ref:`signi() <class_@GlobalScope_method_signi>`                                  |
+|                                                      | | :ref:`Vector2.sign() <class_Vector2_method_sign>`,                                |
+|                                                      |   :ref:`Vector2i.sign() <class_Vector2i_method_sign>`                               |
+|                                                      | | :ref:`Vector3.sign() <class_Vector3_method_sign>`,                                |
+|                                                      |   :ref:`Vector3i.sign() <class_Vector3i_method_sign>`                               |
+|                                                      | | :ref:`Vector4.sign() <class_Vector4_method_sign>`,                                |
+|                                                      |   :ref:`Vector4i.sign() <class_Vector4i_method_sign>`                               |
++------------------------------------------------------+-------------------------------------------------------------------------------------+
+| :ref:`snapped() <class_@GlobalScope_method_snapped>` | | :ref:`snappedf() <class_@GlobalScope_method_snappedf>`                            |
+|                                                      | | :ref:`snappedi() <class_@GlobalScope_method_snappedi>`                            |
+|                                                      | | :ref:`Vector2.snapped() <class_Vector2_method_snapped>`,                          |
+|                                                      |   :ref:`Vector2i.snapped() <class_Vector2i_method_snapped>`                         |
+|                                                      | | :ref:`Vector3.snapped() <class_Vector3_method_snapped>`,                          |
+|                                                      |   :ref:`Vector3i.snapped() <class_Vector3i_method_snapped>`                         |
+|                                                      | | :ref:`Vector4.snapped() <class_Vector4_method_snapped>`,                          |
+|                                                      |   :ref:`Vector4i.snapped() <class_Vector4i_method_snapped>`                         |
++------------------------------------------------------+-------------------------------------------------------------------------------------+
+
+When using static typing, use the typed global scope methods whenever possible.
+This ensures you have safe lines and benefit from typed instructions for
+better performance.
 
 ``UNSAFE_PROPERTY_ACCESS`` and ``UNSAFE_METHOD_ACCESS`` warnings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
